@@ -262,19 +262,29 @@
   const db = getFirestore(app);
   window.db = db; // نخلي db متاحة عالمياً لكود app.js
 </script>
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-  function initMap() {
-    window.map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 31.9454, lng: 35.9284 }, // مركز افتراضي
-      zoom: 12,
-    });
-  }
-</script>
+  // إنشاء الخريطة
+  const map = L.map('map').setView([31.9454, 35.9284], 13);
 
-<script async
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_KEY&callback=initMap">
-</script>
+  // إضافة خرائط OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
+  // إضافة علامة للمندوب
+  let driverMarker = L.marker([31.9454, 35.9284]).addTo(map)
+    .bindPopup("🚚 المندوب في الطريق")
+    .openPopup();
+</script>
 
   <script src="js/app.js"></script>
 
