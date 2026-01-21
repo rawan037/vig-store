@@ -351,6 +351,23 @@ document.getElementById("card").addEventListener("click", async () => {
   </div>
 </div>
 
+
+
+<script>
+document.getElementById("cod").addEventListener("click", () => {
+
+  const phoneNumber = "962789119926"; // ← رقم صاحب المتجر
+  const message = `
+🛒 طلب جديد!
+💵 طريقة الدفع: الدفع عند الاستلام
+⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
+`;
+
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+
+});
+</script>
 <script>
 document.getElementById("wallet").addEventListener("click", () => {
 
@@ -375,23 +392,6 @@ document.getElementById("wallet").addEventListener("click", () => {
 
 
 </div>
-
-<script>
-document.getElementById("cod").addEventListener("click", () => {
-
-  const phoneNumber = "962789119926"; // ← رقم صاحب المتجر
-  const message = `
-🛒 طلب جديد!
-💵 طريقة الدفع: الدفع عند الاستلام
-⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
-`;
-
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-
-});
-</script>
-
   <script src="js/app.js"></script>
 
 </body>
