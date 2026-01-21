@@ -326,12 +326,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (cod) {
     cod.addEventListener("click", function () {
-      const phone = "962789119926"; // رقم صاحب المتجر
-      const msg = `
-🛒 طلب جديد
+      const phone = "962789119926";
+      const msg =
+`🛒 طلب جديد
 💵 طريقة الدفع: الدفع عند الاستلام
-⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
-`;
+⏰ الوقت: ${new Date().toLocaleString('ar-EG')}`;
       window.open(
         "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg),
         "_blank"
@@ -341,17 +340,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (wallet) {
     wallet.addEventListener("click", function () {
-      const phone = "962789119926"; // نفس الرقم أو غيره
-      const msg = `
-💳 طلب دفع إلكتروني
+      const phone = "962789119926";
+      const msg =
+`💳 طلب دفع إلكتروني
 المحافظ المتوفرة:
 1️⃣ فواتيركم
 2️⃣ دينارك
 3️⃣ Orange Money
 4️⃣ Umniah Wallet
 
-🧾 الرجاء إرسال رقم الطلب والمبلغ
-`;
+🧾 الرجاء إرسال رقم الطلب والمبلغ`;
       window.open(
         "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg),
         "_blank"
