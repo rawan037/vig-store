@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>المنتجات - أسواق دير العسل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:'Cairo',sans-serif
+    }
+
+    body{
+      background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
+      color:#fff
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:30px;
+      color:#8bdc65
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+      gap:20px
+    }
+
+    .product{
+      background:#f6fff7;
+      color:#333;
+      border-radius:12px;
+      padding:12px;
+      text-align:center
+    }
+
+    .product img{
+      width:100%;
+      height:130px;
+      object-fit:cover;
+      border-radius:10px;
+      margin-bottom:10px
+    }
+
+    .product button{
+      background:#4caf50;
+      color:#fff;
+      border:none;
+      padding:8px 15px;
+      border-radius:20px;
+      margin-top:10px;
+      cursor:pointer
+    }
+
+    .back{
+      display:inline-block;
+      margin-bottom:25px;
+      background:#ff8c1a;
+      color:#fff;
+      padding:10px 25px;
+      border-radius:25px;
+      text-decoration:none
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <a href="index.html" class="back">⬅ الرجوع للرئيسية</a>
+
+  <h1>🛒 المنتجات المتوفرة</h1>
+
+  <div class="products">
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce">
+      <strong>بندورة</strong>
+      <p>$3.50</p>
+      <button>أضف للسلة</button>
+    </div>
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1582515073490-dc84f0f4d6c4">
+      <strong>خيار</strong>
+      <p>$3.00</p>
+      <button>أضف للسلة</button>
+    </div>
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4">
+      <strong>بطاطا</strong>
+      <p>$2.50</p>
+      <button>أضف للسلة</button>
+    </div>
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2">
+      <strong>تفاح</strong>
+      <p>$4.00</p>
+      <button>أضف للسلة</button>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
