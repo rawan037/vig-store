@@ -206,6 +206,75 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+  
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const cartCountElement = document.getElementById("cartCount");
+  const cartTotalElement = document.getElementById("cartTotal");
+
+  let count = 0;
+  let total = 0;
+
+  // رقم الطلب
+  let orderNumber = 152; // ابدأ بالرقم 152 أو 1 حسب رغبتك
+
+  // أزرار "أضف للسلة"
+  const buttons = document.querySelectorAll(".product button");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", function() {
+      const product = btn.closest(".product");
+      const price = parseFloat(product.getAttribute("data-price"));
+      const name = product.getAttribute("data-name");
+
+      count += 1;
+      total += price;
+
+      cartCountElement.textContent = count;
+      cartTotalElement.textContent = total.toFixed(2);
+
+      alert(`✅ تمت إضافة "${name}" إلى السلة!`);
+    });
+  });
+
+  // عند النقر على المجموع النهائي
+  cartTotalElement.style.cursor = "pointer";
+  cartTotalElement.addEventListener("click", function() {
+    if (total === 0) {
+      alert("⚠️ لم يتم إضافة أي منتج إلى السلة!");
+      return;
+    }
+
+    const paymentMethod = prompt(
+      `🛒 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nاختر طريقة الدفع:\n1️⃣ الدفع عند الاستلام\n2️⃣ الدفع الإلكتروني`
+    );
+
+    const phone = "962789119926";
+    const currentOrder = orderNumber; // رقم الطلب الحالي
+
+    if (paymentMethod === "1") {
+      const msg = `🛒 طلب #${currentOrder}\n💵 طريقة الدفع: الدفع عند الاستلام\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD`;
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    } 
+    else if (paymentMethod === "2") {
+      const msg = `💳 طلب #${currentOrder}\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nالمحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ`;
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    } 
+    else {
+      alert("❌ لم يتم اختيار طريقة دفع صحيحة.");
+      return;
+    }
+
+    // بعد إرسال الطلب، نزيد رقم الطلب تلقائيًا وننظف السلة
+    orderNumber += 1;
+    count = 0;
+    total = 0;
+    cartCountElement.textContent = count;
+    cartTotalElement.textContent = total.toFixed(2);
+  });
+
+});
 </script>
 
 </body>
