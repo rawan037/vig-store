@@ -248,22 +248,21 @@
   </div>
 
 </div>
-  <!-- Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID"
+    apiKey: "YOUR_FIREBASE_API_KEY",          <!-- استبدل بمفتاحك -->
+    authDomain: "YOUR_PROJECT.firebaseapp.com", <!-- استبدل باسم مشروعك -->
+    projectId: "YOUR_PROJECT_ID"              <!-- استبدل بالـ Project ID -->
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  window.db = db; // نخلي db متاحة في app.js
+  window.db = db; // نخلي db متاحة عالمياً لكود app.js
 </script>
-  <script>
+<script>
   function initMap() {
     window.map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 31.9454, lng: 35.9284 }, // مركز افتراضي
