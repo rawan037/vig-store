@@ -346,9 +346,34 @@ document.getElementById("card").addEventListener("click", async () => {
     💵 الدفع عند الاستلام
   </div>
 
-  <div class="pay">
-    💳 دفع إلكتروني
+ <div class="payments">
+  <div id="wallet" class="pay" style="cursor:pointer">
+    💳 الدفع الإلكتروني
   </div>
+</div>
+
+<script>
+document.getElementById("wallet").addEventListener("click", () => {
+
+  const phoneNumber = "970599123456"; // رقم صاحب المتجر
+  const message = `
+💳 طلب دفع إلكتروني
+المحفظة المطلوبة:
+1️⃣ فواتيركم
+2️⃣ دينارك
+3️⃣ Orange Money
+4️⃣ Umniah Wallet
+
+🧾 الرجاء إرسال رقم الطلب والمبلغ
+`;
+
+  window.open(
+    `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
+});
+</script>
+
 </div>
 
 <script>
