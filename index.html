@@ -313,61 +313,23 @@
     .bindPopup("🚚 المندوب في الطريق")
     .openPopup();
 </script>
-<script type="module">
-import { getFirestore, collection, addDoc, serverTimestamp } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const db = window.db;
 
-// عند الضغط على الدفع عند الاستلام
-document.getElementById("cod").addEventListener("click", async () => {
-  await addDoc(collection(db, "orders"), {
-    paymentMethod: "الدفع عند الاستلام",
-    status: "بانتظار التأكيد",
-    createdAt: serverTimestamp()
-  });
 
-  alert("✅ تم اختيار الدفع عند الاستلام");
-});
-
-// عند الضغط على الدفع الإلكتروني
-document.getElementById("card").addEventListener("click", async () => {
-  await addDoc(collection(db, "orders"), {
-    paymentMethod: "دفع إلكتروني",
-    status: "بانتظار الدفع",
-    createdAt: serverTimestamp()
-  });
-
-  alert("💳 تم اختيار الدفع الإلكتروني");
-});
-</script>
-<div class="payments">
-  <div id="cod" class="pay" style="cursor:pointer">
-    💵 الدفع عند الاستلام
-  </div>
-<div class="payments">
-  <div id="wallet" class="pay" style="cursor:pointer">
-    💳 الدفع الإلكتروني
-  </div>
 </div>
 
 
 
-<script>
-document.getElementById("cod").addEventListener("click", () => {
 
-  const phoneNumber = "962789119926"; // ← رقم صاحب المتجر
-  const message = `
-🛒 طلب جديد!
-💵 طريقة الدفع: الدفع عند الاستلام
-⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
-`;
+  <div class="section">
+    <h2>اختر طريقة الدفع</h2>
 
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-
-});
-</script>
+    <div class="payments">
+      <div id="codBtn" class="pay">💵 الدفع عند الاستلام</div>
+      <div id="walletBtn" class="pay">💳 الدفع الإلكتروني</div>
+    </div>
+  </div>
+</div>
 
 <!-- JavaScript -->
 <script>
@@ -406,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+
 </div>
   <script src="js/app.js"></script>
 
