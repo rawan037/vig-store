@@ -259,13 +259,13 @@
         </div>
       </div>
     </div>
-  <div class="payments">
+<div class="payments">
   <div id="cod" class="pay" style="cursor:pointer">
     💵 الدفع عند الاستلام
   </div>
 
-  <div id="card" class="pay" style="cursor:pointer">
-    💳 دفع إلكتروني
+  <div id="wallet" class="pay" style="cursor:pointer">
+    💳 الدفع الإلكتروني
   </div>
 </div>
 
@@ -318,55 +318,33 @@ import { getFirestore, collection, addDoc, serverTimestamp }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const db = window.db;
-
-// عند الضغط على الدفع عند الاستلام
-document.getElementById("cod").addEventListener("click", async () => {
-  await addDoc(collection(db, "orders"), {
-    paymentMethod: "الدفع عند الاستلام",
-    status: "بانتظار التأكيد",
-    createdAt: serverTimestamp()
-  });
-
-  alert("✅ تم اختيار الدفع عند الاستلام");
-});
-
-// عند الضغط على الدفع الإلكتروني
-document.getElementById("card").addEventListener("click", async () => {
-  await addDoc(collection(db, "orders"), {
-    paymentMethod: "دفع إلكتروني",
-    status: "بانتظار الدفع",
-    createdAt: serverTimestamp()
-  });
-
-  alert("💳 تم اختيار الدفع الإلكتروني");
-});
-</script>
-
-
-
-
 <script>
-document.getElementById("cod").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-  const phoneNumber = "962789119926"; // ← رقم صاحب المتجر
-  const message = `
-🛒 طلب جديد!
+  const cod = document.getElementById("cod");
+  const wallet = document.getElementById("wallet");
+
+  if (cod) {
+    cod.addEventListener("click", function () {
+      const phone = "962789119926"; // رقم صاحب المتجر
+      const msg = `
+🛒 طلب جديد
 💵 طريقة الدفع: الدفع عند الاستلام
 ⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
 `;
+      window.open(
+        "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg),
+        "_blank"
+      );
+    });
+  }
 
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-
-});
-</script>
-<script>
-document.getElementById("wallet").addEventListener("click", () => {
-
-  const phoneNumber = "970599123456"; // رقم صاحب المتجر
-  const message = `
+  if (wallet) {
+    wallet.addEventListener("click", function () {
+      const phone = "962789119926"; // نفس الرقم أو غيره
+      const msg = `
 💳 طلب دفع إلكتروني
-المحفظة المطلوبة:
+المحافظ المتوفرة:
 1️⃣ فواتيركم
 2️⃣ دينارك
 3️⃣ Orange Money
@@ -374,13 +352,16 @@ document.getElementById("wallet").addEventListener("click", () => {
 
 🧾 الرجاء إرسال رقم الطلب والمبلغ
 `;
+      window.open(
+        "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg),
+        "_blank"
+      );
+    });
+  }
 
-  window.open(
-    `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
-    "_blank"
-  );
 });
 </script>
+
 
 
 </div>
