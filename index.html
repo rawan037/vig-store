@@ -2,128 +2,187 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>أسواق دير العسل للخضار والفواكه</title>
+  <title>اسواق دير العسل للخضار والفواكه</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:'Cairo',sans-serif
     }
 
-    body {
-      background: linear-gradient(180deg, #0b5fa5, #0f8f6e);
-      color: #fff;
+    body{
+      background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
+      color:#fff
     }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 40px 20px;
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px
     }
 
-    .logo {
-      text-align: center;
-      margin-bottom: 20px;
+    .logo{
+      text-align:center;
+      margin-bottom:20px
     }
 
-    .logo h1 {
-      color: #8bdc65;
-      font-size: 42px;
+    .logo h1{
+      color:#8bdc65;
+      font-size:42px
     }
 
-    .hero {
-      text-align: center;
+    .hero{
+      text-align:center
     }
 
-    .hero h2 {
-      font-size: 36px;
-      margin: 20px 0;
+    .hero h2{
+      font-size:36px;
+      margin:20px 0
     }
 
-    .features {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
-      margin: 30px 0;
+    .features{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:25px;
+      margin:30px 0
     }
 
-    .feature {
-      font-size: 18px;
+    .feature{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px
     }
 
-    .cta {
-      background: #6bcf63;
-      color: #fff;
-      display: inline-block;
-      padding: 18px 50px;
-      border-radius: 40px;
-      font-size: 22px;
-      margin: 30px auto;
-      text-decoration: none;
+    .cta{
+      background:#6bcf63;
+      color:#fff;
+      display:inline-block;
+      padding:18px 50px;
+      border-radius:40px;
+      font-size:22px;
+      margin:30px auto;
+      text-decoration:none
     }
 
-    .section {
-      background: #0fa36b;
-      margin: 40px 0;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
+    .section{
+      background:#0fa36b;
+      margin:40px 0;
+      padding:30px;
+      border-radius:20px
     }
 
-    .payments {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 30px;
-      flex-wrap: wrap;
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px
     }
 
-    .pay {
-      background: #fff;
-      color: #333;
-      padding: 20px 40px;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 20px;
-      transition: 0.3s;
+    .card{
+      background:#fff;
+      color:#333;
+      border-radius:15px;
+      padding:20px;
+      text-align:center
     }
 
-    .pay:hover {
-      transform: scale(1.05);
-      background: #f1f1f1;
+    .card h3{
+      margin-bottom:20px;
+      color:#0fa36b
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 40px;
+    /* ⭐ المنتجات */
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+      gap:20px;
+      width:100%;
     }
 
-    .footer .btn {
-      background: #ff8c1a;
-      color: #fff;
-      padding: 18px 60px;
-      border-radius: 40px;
-      font-size: 22px;
-      display: inline-block;
+    .product{
+      background:#f6fff7;
+      border-radius:12px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between
     }
 
-    .contact {
-      margin-top: 15px;
-      background: #083d66;
-      padding: 14px 40px;
-      border-radius: 30px;
-      display: inline-block;
+    .product img{
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      border-radius:10px;
+      margin-bottom:10px
+    }
+
+    .product strong{
+      margin-bottom:5px
+    }
+
+    .product button{
+      background:#4caf50;
+      color:#fff;
+      border:none;
+      padding:8px;
+      border-radius:20px;
+      margin-top:10px;
+      cursor:pointer
+    }
+
+    .payments{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      margin-top:30px
+    }
+
+    .pay{
+      background:#fff;
+      color:#333;
+      padding:20px 40px;
+      border-radius:15px
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:40px
+    }
+
+    .footer .btn{
+      background:#ff8c1a;
+      color:#fff;
+      padding:18px 60px;
+      border-radius:40px;
+      font-size:22px;
+      display:inline-block
+    }
+
+    .contact{
+      margin-top:15px;
+      background:#083d66;
+      padding:14px 40px;
+      border-radius:30px;
+      display:inline-block
+    }
+
+    @media(max-width:768px){
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-
 <div class="container">
 
   <div class="logo">
@@ -134,68 +193,206 @@
     <h2>أسواق دير العسل للخضار والفواكه</h2>
 
     <div class="features">
-      <div class="feature">🚚 توصيل سريع</div>
+      <div class="feature">💻 موقع احترافي</div>
+      <div class="feature">⚙️ لوحة تحكم</div>
+      <div class="feature">🚚 توصيل</div>
       <div class="feature">💵 دفع عند الاستلام</div>
-      <div class="feature">💳 دفع إلكتروني</div>
     </div>
+
+    <a href="#products" class="cta">🛍️ اطلب بكل سهولة</a>
   </div>
 
   <div class="section">
-    <h2>اختر طريقة الدفع</h2>
+    <div class="grid">
 
-    <div class="payments">
-      <div id="codBtn" class="pay">💵 الدفع عند الاستلام</div>
-      <div id="walletBtn" class="pay">💳 الدفع الإلكتروني</div>
+      <div class="card" id="products">
+        <a href="products.html" class="cta">🛍️ عرض المنتجات</a>
+        <div class="products">
+
+          <div class="product">
+             <img src="images/تفاح.jpg" alt="تفاح">
+            <strong>بندورة</strong>
+          </div>
+
+          <div class="product">
+           <img src="images/موز.jpg" alt="موز">
+            <strong>موز</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>لوحة تحكم كاملة</h3>
+        <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
+      </div>
+      </div>
     </div>
+    <div class="section">
+      <div class="grid">
+        <div class="card">
+          <h3>تتبع وتوصيل الطلبات</h3>
+          <p>تتبع مباشر لحالة الطلب والمندوب</p>
+          <h2>حالة الطلب: <span id="orderStatus">–</span></h2>
+<div id="map" style="width:100%; height:400px;"></div>
+<!-- مكان ظهور الخريطة -->
+<div id="map" style="width:100%; height:400px;"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  const map = L.map('map').setView([31.9454, 35.9284], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.marker([31.9454, 35.9284]).addTo(map)
+    .bindPopup("🚚 المندوب في الطريق")
+    .openPopup();
+</script>
+
+        </div>
+        <div class="card">
+          <h3>طلب #152</h3>
+          <p>المندوب: بهاء الدين  بني عامر<br><span style="color:green">في الطريق</span></p>
+        </div>
+      </div>
+    </div>
+  <div class="payments">
+  <div id="cod" class="pay" style="cursor:pointer">
+    💵 الدفع عند الاستلام
   </div>
+
+  <div id="card" class="pay" style="cursor:pointer">
+    💳 دفع إلكتروني
+  </div>
+</div>
+
 
   <div class="footer">
     <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
-    <div class="contact"><a href="tel:962789119926" class="contact" style="text-decoration:none; color:#fff;">
-  📞 اتصل الآن
-</a>
-</div>
+    <div class="contact">📞 اتصل الآن</div>
   </div>
 
 </div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<!-- JavaScript -->
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_API_KEY",          <!-- استبدل بمفتاحك -->
+    authDomain: "YOUR_PROJECT.firebaseapp.com", <!-- استبدل باسم مشروعك -->
+    projectId: "YOUR_PROJECT_ID"              <!-- استبدل بالـ Project ID -->
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window.db = db; // نخلي db متاحة عالمياً لكود app.js
+</script>
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+  // إنشاء الخريطة
+  const map = L.map('map').setView([31.9454, 35.9284], 13);
 
-  const phoneNumber = "962789119926"; // 🔴 غيّر رقم الواتساب هنا
+  // إضافة خرائط OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-  document.getElementById("codBtn").addEventListener("click", () => {
-    const message =
-`🛒 طلب جديد
-💵 طريقة الدفع: الدفع عند الاستلام
-⏰ الوقت: ${new Date().toLocaleString("ar-EG")}`;
+  // إضافة علامة للمندوب
+  let driverMarker = L.marker([31.9454, 35.9284]).addTo(map)
+    .bindPopup("🚚 المندوب في الطريق")
+    .openPopup();
+</script>
+<script type="module">
+import { getFirestore, collection, addDoc, serverTimestamp } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    window.open(
-      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
-      "_blank"
-    );
+const db = window.db;
+
+// عند الضغط على الدفع عند الاستلام
+document.getElementById("cod").addEventListener("click", async () => {
+  await addDoc(collection(db, "orders"), {
+    paymentMethod: "الدفع عند الاستلام",
+    status: "بانتظار التأكيد",
+    createdAt: serverTimestamp()
   });
 
-  document.getElementById("walletBtn").addEventListener("click", () => {
-    const message =
-`💳 طلب دفع إلكتروني
-المحافظ المتوفرة:
+  alert("✅ تم اختيار الدفع عند الاستلام");
+});
+
+// عند الضغط على الدفع الإلكتروني
+document.getElementById("card").addEventListener("click", async () => {
+  await addDoc(collection(db, "orders"), {
+    paymentMethod: "دفع إلكتروني",
+    status: "بانتظار الدفع",
+    createdAt: serverTimestamp()
+  });
+
+  alert("💳 تم اختيار الدفع الإلكتروني");
+});
+</script>
+<div class="payments">
+  <div id="cod" class="pay" style="cursor:pointer">
+    💵 الدفع عند الاستلام
+  </div>
+<div class="payments">
+  <div id="wallet" class="pay" style="cursor:pointer">
+    💳 الدفع الإلكتروني
+  </div>
+</div>
+
+
+
+<script>
+document.getElementById("cod").addEventListener("click", () => {
+
+  const phoneNumber = "962789119926"; // ← رقم صاحب المتجر
+  const message = `
+🛒 طلب جديد!
+💵 طريقة الدفع: الدفع عند الاستلام
+⏰ الوقت: ${new Date().toLocaleString('ar-EG')}
+`;
+
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+
+});
+</script>
+<script>
+document.getElementById("wallet").addEventListener("click", () => {
+
+  const phoneNumber = "970599123456"; // رقم صاحب المتجر
+  const message = `
+💳 طلب دفع إلكتروني
+المحفظة المطلوبة:
 1️⃣ فواتيركم
 2️⃣ دينارك
 3️⃣ Orange Money
 4️⃣ Umniah Wallet
 
-🧾 الرجاء إرسال رقم الطلب والمبلغ`;
+🧾 الرجاء إرسال رقم الطلب والمبلغ
+`;
 
-    window.open(
-      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
-      "_blank"
-    );
-  });
-
+  window.open(
+    `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
 });
 </script>
 
+
+</div>
+  <script src="js/app.js"></script>
+
 </body>
-</html>
+</html> هيك الكود صح لسا لانه لمشكله ما انحلت شو الغلط 
