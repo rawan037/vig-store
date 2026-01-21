@@ -5,141 +5,269 @@
   <title>اسواق دير العسل للخضار والفواكه</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
-    body{background:linear-gradient(180deg,#0b5fa5,#0f8f6e);color:#fff}
-    .container{max-width:1200px;margin:auto;padding:40px 20px}
-    .logo{text-align:center;margin-bottom:20px}
-    .logo h1{color:#8bdc65;font-size:42px}
-    .hero{text-align:center}
-    .hero h2{font-size:36px;margin:20px 0}
-    .features{display:flex;justify-content:center;flex-wrap:wrap;gap:25px;margin:30px 0}
-    .feature{display:flex;align-items:center;gap:10px;font-size:18px}
-    .cta{background:#6bcf63;color:#fff;display:inline-block;padding:18px 50px;border-radius:40px;font-size:22px;margin:30px auto}
-    .section{background:#0fa36b;margin:40px 0;padding:30px;border-radius:20px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
-    .card{background:#fff;color:#333;border-radius:15px;padding:20px;text-align:center}
-    .card h3{margin-bottom:10px;color:#0fa36b}
-    .products{display:flex;gap:20px;justify-content:center}
-    .product{background:#f6fff7;padding:15px;border-radius:12px;width:160px}
-    .product button{background:#4caf50;color:#fff;border:none;padding:8px 15px;border-radius:20px;margin-top:8px}
-    .payments{display:flex;gap:20px;justify-content:center;margin-top:30px}
-    .pay{background:#fff;color:#333;padding:20px 40px;border-radius:15px}
-    .footer{text-align:center;margin-top:40px}
-    .footer .btn{background:#ff8c1a;color:#fff;padding:18px 60px;border-radius:40px;font-size:22px;display:inline-block}
-    .contact{margin-top:15px;background:#083d66;padding:14px 40px;border-radius:30px;display:inline-block}
-    @media(max-width:768px){.grid{grid-template-columns:1fr}}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:'Cairo',sans-serif
+    }
+
+    body{
+      background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
+      color:#fff
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px
+    }
+
+    .logo{
+      text-align:center;
+      margin-bottom:20px
+    }
+
+    .logo h1{
+      color:#8bdc65;
+      font-size:42px
+    }
+
+    .hero{
+      text-align:center
+    }
+
+    .hero h2{
+      font-size:36px;
+      margin:20px 0
+    }
+
+    .features{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:25px;
+      margin:30px 0
+    }
+
+    .feature{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px
+    }
+
+    .cta{
+      background:#6bcf63;
+      color:#fff;
+      display:inline-block;
+      padding:18px 50px;
+      border-radius:40px;
+      font-size:22px;
+      margin:30px auto;
+      text-decoration:none
+    }
+
+    .section{
+      background:#0fa36b;
+      margin:40px 0;
+      padding:30px;
+      border-radius:20px
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px
+    }
+
+    .card{
+      background:#fff;
+      color:#333;
+      border-radius:15px;
+      padding:20px;
+      text-align:center
+    }
+
+    .card h3{
+      margin-bottom:20px;
+      color:#0fa36b
+    }
+
+    /* ⭐ المنتجات */
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+      gap:20px;
+      width:100%;
+    }
+
+    .product{
+      background:#f6fff7;
+      border-radius:12px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between
+    }
+
+    .product img{
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      border-radius:10px;
+      margin-bottom:10px
+    }
+
+    .product strong{
+      margin-bottom:5px
+    }
+
+    .product button{
+      background:#4caf50;
+      color:#fff;
+      border:none;
+      padding:8px;
+      border-radius:20px;
+      margin-top:10px;
+      cursor:pointer
+    }
+
+    .payments{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      margin-top:30px
+    }
+
+    .pay{
+      background:#fff;
+      color:#333;
+      padding:20px 40px;
+      border-radius:15px
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:40px
+    }
+
+    .footer .btn{
+      background:#ff8c1a;
+      color:#fff;
+      padding:18px 60px;
+      border-radius:40px;
+      font-size:22px;
+      display:inline-block
+    }
+
+    .contact{
+      margin-top:15px;
+      background:#083d66;
+      padding:14px 40px;
+      border-radius:30px;
+      display:inline-block
+    }
+
+    @media(max-width:768px){
+      .grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="logo">
-      <h1>🛒متجر للخضار والفواكة</h1>
+<div class="container">
+
+  <div class="logo">
+    <h1>🛒 متجر للخضار والفواكه</h1>
+  </div>
+
+  <div class="hero">
+    <h2>أسواق دير العسل للخضار والفواكه</h2>
+
+    <div class="features">
+      <div class="feature">💻 موقع احترافي</div>
+      <div class="feature">⚙️ لوحة تحكم</div>
+      <div class="feature">🚚 توصيل</div>
+      <div class="feature">💵 دفع عند الاستلام</div>
     </div>
 
-    <div class="hero">
-      <h2>أسواق دير العسل للخضار والفواكة</h2>
-      <div class="features">
-        <div class="feature">💻 موقع احترافي</div>
-        <div class="feature">⚙️ لوحة تحكم</div>
-        <div class="feature">🚚 توصيل</div>
-        <div class="feature">💵 دفع عند الاستلام</div>
-      </div>
-      <a href="#products" class="cta">🛍️ اطلب بكل سهولة</a>
-    </div>
+    <a href="#products" class="cta">🛍️ اطلب بكل سهولة</a>
+  </div>
 
-    <div class="section">
-      <div class="grid">
-        <div class="card" id="products">
-          <h3>موقع احترافي لبيع الخضار والفواكه</h3>
-          <div class="products">
-            <div class="product">
-              <strong>بندورة</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>خيار</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>بطاطا</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>كوسا</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>ملفوف</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>زهرة</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>بيتنجان</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>برتقال</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>تفاح</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>موز</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>بطاط حلوه</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>نعنع</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-              <div class="product">
-              <strong>بقدونس</strong><br>$3.50
-              <button>أضف للسلة</button>
-            </div>
-            <div class="product">
-              <strong>بروكلي</strong><br>$2.00
-              <button>أضف للسلة</button>
-            </div>
+  <div class="section">
+    <div class="grid">
+
+      <div class="card" id="products">
+        <h3>المنتجات المتوفرة</h3>
+
+        <div class="products">
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce" alt="بندورة">
+            <strong>بندورة</strong>
+            <span>$3.50</span>
+            <button>أضف للسلة</button>
           </div>
-        </div>
-        <div class="card">
-          <h3>لوحة تحكم كاملة</h3>
-          <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1582515073490-dc84f0f4d6c4" alt="خيار">
+            <strong>خيار</strong>
+            <span>$3.00</span>
+            <button>أضف للسلة</button>
+          </div>
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4" alt="بطاطا">
+            <strong>بطاطا</strong>
+            <span>$2.50</span>
+            <button>أضف للسلة</button>
+          </div>
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2" alt="تفاح">
+            <strong>تفاح</strong>
+            <span>$4.00</span>
+            <button>أضف للسلة</button>
+          </div>
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1574226516831-e1dff420e43e" alt="موز">
+            <strong>موز</strong>
+            <span>$3.80</span>
+            <button>أضف للسلة</button>
+          </div>
+
+          <div class="product">
+            <img src="https://images.unsplash.com/photo-1615486363973-f79d875780cf" alt="برتقال">
+            <strong>برتقال</strong>
+            <span>$3.20</span>
+            <button>أضف للسلة</button>
+          </div>
+
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="grid">
-        <div class="card">
-          <h3>تتبع وتوصيل الطلبات</h3>
-          <p>تتبع مباشر لحالة الطلب والمندوب</p>
-        </div>
-        <div class="card">
-          <h3>طلب #152</h3>
-          <p>المندوب: أحمد<br><span style="color:green">في الطريق</span></p>
-        </div>
+      <div class="card">
+        <h3>لوحة تحكم كاملة</h3>
+        <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
       </div>
-    </div>
 
-    <div class="payments">
-      <div class="pay">💵 الدفع عند الاستلام</div>
-      <div class="pay">💳 دفع إلكتروني</div>
-    </div>
-
-    <div class="footer">
-      <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
-      <div class="contact">📞 اتصل الآن</div>
     </div>
   </div>
+
+  <div class="payments">
+    <div class="pay">💵 الدفع عند الاستلام</div>
+    <div class="pay">💳 دفع إلكتروني</div>
+  </div>
+
+  <div class="footer">
+    <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
+    <div class="contact">📞 اتصل الآن</div>
+  </div>
+
+</div>
 </body>
 </html>
