@@ -8,82 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:'Cairo',sans-serif
-    }
-
-    body{
-      background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
-      color:#fff
-    }
-
-    .container{
-      max-width:1200px;
-      margin:auto;
-      padding:40px 20px
-    }
-
-    h1{
-      text-align:center;
-      margin-bottom:30px;
-      color:#8bdc65
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-      gap:20px
-    }
-
-    .product{
-      background:#f6fff7;
-      color:#333;
-      border-radius:12px;
-      padding:12px;
-      text-align:center
-    }
-
-    .product img{
-      width:100%;
-      height:130px;
-      object-fit:cover;
-      border-radius:10px;
-      margin-bottom:10px
-    }
-
-    .product button{
-      background:#4caf50;
-      color:#fff;
-      border:none;
-      padding:8px 15px;
-      border-radius:20px;
-      margin-top:10px;
-      cursor:pointer
-    }
-
-    .back{
-      display:inline-block;
-      margin-bottom:25px;
-      background:#ff8c1a;
-      color:#fff;
-      padding:10px 25px;
-      border-radius:25px;
-      text-decoration:none
-    }
-
-    /* سلة التسوق */
-    .cart{
-      margin-top:20px;
-      padding:15px;
-      background:#f6fff7;
-      border-radius:10px;
-      color:#333;
-      font-weight:bold;
-      text-align:center;
-    }
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif }
+    body{ background:linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff }
+    .container{ max-width:1200px; margin:auto; padding:40px 20px }
+    h1{ text-align:center; margin-bottom:30px; color:#8bdc65 }
+    .products{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px }
+    .product{ background:#f6fff7; color:#333; border-radius:12px; padding:12px; text-align:center }
+    .product img{ width:100%; height:130px; object-fit:cover; border-radius:10px; margin-bottom:10px }
+    .product button{ background:#4caf50; color:#fff; border:none; padding:8px 15px; border-radius:20px; margin-top:10px; cursor:pointer }
+    .back{ display:inline-block; margin-bottom:25px; background:#ff8c1a; color:#fff; padding:10px 25px; border-radius:25px; text-decoration:none }
+    .cart{ margin-top:20px; padding:15px; background:#f6fff7; border-radius:10px; color:#333; font-weight:bold; text-align:center; cursor:pointer }
   </style>
 </head>
 
@@ -96,6 +30,7 @@
 
   <div class="products">
 
+    <!-- مثال لبعض المنتجات، أضف الباقي بنفس الطريقة -->
     <div class="product" data-name="بندورة" data-price="0.80">
       <img src="images/بندوره.jpg" alt="بندوره">
       <strong>بندورة</strong>
@@ -107,13 +42,6 @@
       <img src="images/خيار.jpg" alt="خيار">
       <strong>خيار</strong>
       <p>0.75 JOD</p>
-      <button>أضف للسلة</button>
-    </div>
-
-    <div class="product" data-name="بطاطا" data-price="0.90">
-      <img src="images/بطاطا.jpg" alt="بطاطا">
-      <strong>بطاطا</strong>
-      <p>0.90 JOD</p>
       <button>أضف للسلة</button>
     </div>
 
@@ -131,10 +59,9 @@
       <button>أضف للسلة</button>
     </div>
 
-    <!-- يمكنك إضافة بقية المنتجات بنفس الطريقة -->
   </div>
 
-  <!-- عرض السلة -->
+  <!-- سلة التسوق -->
   <div class="cart">
     🛒 عدد المنتجات: <span id="cartCount">0</span> | المجموع: <span id="cartTotal">0.00</span> JOD
   </div>
@@ -143,12 +70,13 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const cartCount = document.getElementById("cartCount");
-  const cartTotal = document.getElementById("cartTotal");
 
+  const cartCountElement = document.getElementById("cartCount");
+  const cartTotalElement = document.getElementById("cartTotal");
   let count = 0;
   let total = 0;
 
+  // أزرار "أضف للسلة"
   const buttons = document.querySelectorAll(".product button");
   buttons.forEach(btn => {
     btn.addEventListener("click", function() {
@@ -159,12 +87,40 @@ document.addEventListener("DOMContentLoaded", function() {
       count += 1;
       total += price;
 
-      cartCount.textContent = count;
-      cartTotal.textContent = total.toFixed(2);
+      cartCountElement.textContent = count;
+      cartTotalElement.textContent = total.toFixed(2);
 
       alert(`✅ تمت إضافة "${name}" إلى السلة!`);
     });
   });
+
+  // عند النقر على المجموع النهائي
+  cartTotalElement.style.cursor = "pointer";
+  cartTotalElement.addEventListener("click", function() {
+    if (total === 0) {
+      alert("⚠️ لم يتم إضافة أي منتج إلى السلة!");
+      return;
+    }
+
+    const paymentMethod = prompt(
+      `🛒 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nاختر طريقة الدفع:\n1️⃣ الدفع عند الاستلام\n2️⃣ الدفع الإلكتروني`
+    );
+
+    const phone = "962789119926";
+
+    if (paymentMethod === "1") {
+      const msg = `🛒 طلب جديد\n💵 طريقة الدفع: الدفع عند الاستلام\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD`;
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    } 
+    else if (paymentMethod === "2") {
+      const msg = `💳 طلب دفع إلكتروني\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nالمحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ`;
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    } 
+    else {
+      alert("❌ لم يتم اختيار طريقة دفع صحيحة.");
+    }
+  });
+
 });
 </script>
 
