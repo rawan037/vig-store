@@ -159,5 +159,31 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 window.db = db; // متاحة عالميًا
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const cartCount = document.getElementById("cartCount");
+  const cartTotal = document.getElementById("cartTotal");
+
+  let count = 0;
+  let total = 0;
+
+  const buttons = document.querySelectorAll(".add-to-cart");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", function() {
+      const product = btn.closest(".product");
+      const price = parseFloat(product.getAttribute("data-price"));
+      count += 1;
+      total += price;
+
+      cartCount.textContent = count;
+      cartTotal.textContent = total.toFixed(2);
+      alert(`✅ تمت إضافة "${product.getAttribute("data-name")}" إلى السلة!`);
+    });
+  });
+
+});
+</script>
+
 </body>
 </html>
