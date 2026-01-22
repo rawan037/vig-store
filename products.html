@@ -390,6 +390,61 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const cod = document.getElementById("cod");
+  const wallet = document.getElementById("wallet");
+
+  const phone = "962789119926";
+
+  if (cod) {
+    cod.addEventListener("click", function () {
+      const total = document.getElementById("cartTotal").textContent;
+      const count = document.getElementById("cartCount").textContent;
+
+      if (parseFloat(total) === 0) {
+        alert("⚠️ السلة فارغة");
+        return;
+      }
+
+      const msg =
+`🛒 طلب جديد
+💵 الدفع عند الاستلام
+🧾 عدد المنتجات: ${count}
+💰 المجموع: ${total} JOD`;
+
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    });
+  }
+
+  if (wallet) {
+    wallet.addEventListener("click", function () {
+      const total = document.getElementById("cartTotal").textContent;
+      const count = document.getElementById("cartCount").textContent;
+
+      if (parseFloat(total) === 0) {
+        alert("⚠️ السلة فارغة");
+        return;
+      }
+
+      const msg =
+`💳 طلب دفع إلكتروني
+🧾 عدد المنتجات: ${count}
+💰 المجموع: ${total} JOD
+
+المحافظ:
+1️⃣ فواتيركم
+2️⃣ دينارك
+3️⃣ Orange Money
+4️⃣ Umniah Wallet`;
+
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+    });
+  }
+
+});
+</script>
 
 
 <script>
