@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>المنتجات - أسواق دير العسل</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -96,7 +97,41 @@
   width:100%;
 }
 
+    img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* قاعدة */
+}
 
+h1 {
+  font-size: 4vw; /* يتغير حسب عرض الشاشة */
+}
+
+p {
+  font-size: 1rem; /* 1rem = حجم النص الأساسي */
+}
+.container {
+  display: flex;
+  flex-wrap: wrap; /* يسمح بالانتقال للسطر التالي إذا ضاق المكان */
+  gap: 20px; /* فراغ بين العناصر */
+}
+
+.item {
+  flex: 1 1 300px; /* عرض مرن مع حد أدنى 300px */
+}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 6vw;
+  }
+
+  .container {
+    flex-direction: column; /* العناصر تصطف عموديًا على الشاشات الصغيرة */
+  }
+}
   </style>
 </head>
 
