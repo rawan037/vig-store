@@ -447,6 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
+
 <script>
 let cart = [];
 
@@ -500,7 +501,13 @@ function payCOD(){
 
 function payOnline(){
   if(cart.length===0) return alert("السلة فارغة");
-  sendOrder("💳 الدفع الإلكتروني");
+
+  let msg = `💳 طلب دفع إلكتروني\n\n`;
+  cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
+  msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD\n\n`;
+  msg += "المحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ";
+
+  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 
 function sendOrder(method){
