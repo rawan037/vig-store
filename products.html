@@ -444,10 +444,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <script>
 let cart = [];
-function addToCart(name, price, imgSrc){
+function addToCart(name, price, imgSrc) {
   // إضافة المنتج للسلة
-  cart.push({name, price, img: imgSrc});
+  cart.push({ name, price, img: imgSrc });
   updateCart();
+
+  // العثور على صورة المنتج في الصفحة
+  const productImgs = document.querySelectorAll(".product img");
+  let productImg = null;
+  productImgs.forEach(img => {
+    if (img.getAttribute("alt") === name) productImg = img;
+  });
+  if (!productImg) return;
+
+  // إنشاء نسخة من الصورة للطيران
+  const flyingImg = productImg.cloneNode(true);
+  flyingImg.classList.add("flying-img");
+  document.body.appendChild(flyingImg);
+
+  const rect = productImg.getBoundingClientRect();
+  flyingImg.style.top = rect.top + "px";
+  flyingImg.style.left = rect.left + "px";
+
+  // مكان السلة
+  const cartDiv = document.querySelector(".cart");
+  const cartRect = cartDiv.getBoundingClientRect();
+
+  // الانتقال إلى السلة مع تصغير الصورة
+  setTimeout(() => {
+    flyingImg.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
+    flyingImg.style.opacity = 0;
+  }, 10);
+
+  // إزالة الصورة بعد انتهاء الحركة
+  setTimeout(() => {
+    flyingImg.remove();
+  }, 900);
+}
+
 
   // تحريك الصورة إلى السلة
   const productImg = document.querySelector(`.product img[alt="${name}"]`);
