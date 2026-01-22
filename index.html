@@ -90,11 +90,6 @@
     </div>
   </div>
 
-  <div class="payments">
-    <div id="cod" class="pay">💵 الدفع عند الاستلام</div>
-    <div id="wallet" class="pay">💳 الدفع الإلكتروني</div>
-  </div>
-
   <div class="footer">
     <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
     <div class="contact"><a href="tel:+962789119926" class="contact">📞 اتصل الآن</a>
@@ -116,33 +111,7 @@
     .openPopup();
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const cod = document.getElementById("cod");
-  const wallet = document.getElementById("wallet");
 
-  cod.addEventListener("click", function () {
-    const phone = "962789119926";
-    const msg = `🛒 طلب جديد
-💵 طريقة الدفع: الدفع عند الاستلام
-⏰ الوقت: ${new Date().toLocaleString('ar-EG')}`;
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-  });
-
-  wallet.addEventListener("click", function () {
-    const phone = "962789119926";
-    const msg = `💳 طلب دفع إلكتروني
-المحافظ المتوفرة:
-1️⃣ فواتيركم
-2️⃣ دينارك
-3️⃣ Orange Money
-4️⃣ Umniah Wallet
-
-🧾 الرجاء إرسال رقم الطلب والمبلغ`;
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-  });
-});
-</script>
 
 <!-- Firebase (اختياري حسب استخدامك) -->
 <script type="module">
