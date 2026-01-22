@@ -274,23 +274,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let count = 0;
   let total = 0;
 
-  // أزرار "أضف للسلة"
-  const buttons = document.querySelectorAll(".product button");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", function() {
-      const product = btn.closest(".product");
-      const price = parseFloat(product.getAttribute("data-price"));
-      const name = product.getAttribute("data-name");
 
-      count += 1;
-      total += price;
-
-      cartCountElement.textContent = count;
-      cartTotalElement.textContent = total.toFixed(2);
-
-      alert(`✅ تمت إضافة "${name}" إلى السلة!`);
-    });
-  });
 
   // عند النقر على المجموع النهائي
   cartTotalElement.style.cursor = "pointer";
