@@ -260,6 +260,7 @@
     <div class="payments">
       <div onclick="payCOD()" class="pay">💵 الدفع عند الاستلام</div>
       <div onclick="payOnline()" class="pay">💳 الدفع الإلكتروني</div>
+      <div onclick="requestDelivery()" class="pay">🚚 طلب توصيل</div>
     </div>
 
     <button class="close" onclick="closeCart()">إغلاق</button>
@@ -496,6 +497,20 @@ function sendOrder(method){
 
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
+  function requestDelivery() {
+  if(cart.length===0) return alert("⚠️ السلة فارغة");
+
+  let address = prompt("🏠 الرجاء إدخال عنوان التوصيل:");
+  if(!address) return alert("❌ لم يتم إدخال العنوان");
+
+  let msg = `🛒 طلب توصيل\n🚚 عنوان التوصيل: ${address}\n\n`;
+  cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
+  msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD`;
+
+  const phone = "962789119926";
+  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
 </script>
 
 
