@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم المتجر</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif }
+    body { background:#f4f7f6; color:#333; }
+    header { background:#0b5fa5; color:#fff; padding:20px; text-align:center; font-size:24px; font-weight:bold; }
+    .container { max-width:1200px; margin:auto; padding:20px; }
+    h2 { margin:20px 0 10px; color:#0b5fa5; }
+    .dashboard { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; }
+    .card { background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    table { width:100%; border-collapse: collapse; margin-top:10px; }
+    th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+    th { background:#0b5fa5; color:#fff; }
+    button { padding:5px 10px; border:none; border-radius:8px; cursor:pointer; }
+    .btn-edit { background:#4caf50; color:#fff; }
+    .btn-delete { background:#f44336; color:#fff; }
+    .btn-add { background:#0b5fa5; color:#fff; margin-top:10px; display:inline-block; }
+    .report { margin-top:30px; }
+  </style>
+</head>
+<body>
+
+<header>لوحة تحكم كاملة</header>
+
+<div class="container">
+
+  <!-- إدارة الطلبات -->
+  <h2>📦 إدارة الطلبات</h2>
+  <div class="card">
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>رقم الطلب</th>
+          <th>العميل</th>
+          <th>المنتجات</th>
+          <th>المجموع (JOD)</th>
+          <th>طريقة الدفع</th>
+          <th>الحالة</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- الطلبات ستضاف هنا ديناميكياً -->
+      </tbody>
+    </table>
+    <button class="btn-add" onclick="addOrder()">➕ إضافة طلب تجريبي</button>
+  </div>
+
+  <!-- إدارة المنتجات -->
+  <h2>🛒 إدارة المنتجات</h2>
+  <div class="card">
+    <table id="productsTable">
+      <thead>
+        <tr>
+          <th>الصورة</th>
+          <th>اسم المنتج</th>
+          <th>السعر (JOD)</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="images/بندوره.jpg" width="50"></td>
+          <td>بندورة</td>
+          <td>0.80</td>
+          <td>
+            <button class="btn-edit">✏ تعديل</button>
+            <button class="btn-delete">🗑 حذف</button>
+          </td>
+        </tr>
+        <tr>
+          <td><img src="images/تفاح.jpg" width="50"></td>
+          <td>تفاح</td>
+          <td>1.20</td>
+          <td>
+            <button class="btn-edit">✏ تعديل</button>
+            <button class="btn-delete">🗑 حذف</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-add" onclick="alert('إضافة منتج جديد')">➕ إضافة منتج</button>
+  </div>
+
+  <!-- التقارير اليومية -->
+  <h2>📊 التقارير اليومية</h2>
+  <div class="card report">
+    <p>إجمالي المبيعات اليوم: <span id="totalSales">0.00</span> JOD</p>
+    <p>عدد الطلبات اليوم: <span id="totalOrders">0</span></p>
+    <p>المنتجات الأكثر مبيعاً: <span id="topProducts">-</span></p>
+  </div>
+
+</div>
+
+<script>
+let orders = [];
+let orderCounter = 1;
+
+function addOrder() {
+  const sampleProducts = ["بندورة","تفاح"];
+  const sampleTotal = 2.0;
+  const paymentMethods = ["الدفع عند الاستلام","الدفع الإلكتروني"];
+  const payment = paymentMethods[Math.floor(Math.random()*paymentMethods.length)];
+  const status = "جديد";
+
+  const order = {
+    id: orderCounter++,
+    customer: "عميل تجريبي",
+    products: sampleProducts.join(", "),
+    total: sampleTotal.toFixed(2),
+    payment: payment,
+    status: status
+  };
+
+  orders.push(order);
+  updateOrdersTable();
+}
+
+function updateOrdersTable() {
+  const tbody = document.querySelector("#ordersTable tbody");
+  tbody.innerHTML = "";
+  orders.forEach(o => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${o.id}</td>
+        <td>${o.customer}</td>
+        <td>${o.products}</td>
+        <td>${o.total}</td>
+        <td>${o.payment}</td>
+        <td>${o.status}</td>
+        <td>
+          <button class="btn-edit" onclick="editOrder(${o.id})">✏ تعديل</button>
+          <button class="btn-delete" onclick="deleteOrder(${o.id})">🗑 حذف</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  // تحديث التقارير
+  document.getElementById("totalOrders").textContent = orders.length;
+  const totalSales = orders.reduce((sum,o)=>sum+parseFloat(o.total),0);
+  document.getElementById("totalSales").textContent = totalSales.toFixed(2);
+  const allProducts = orders.flatMap(o => o.products.split(", "));
+  const topProducts = allProducts.reduce((acc,p)=>{
+    acc[p] = (acc[p]||0)+1;
+    return acc;
+  }, {});
+  const top = Object.keys(topProducts).sort((a,b)=>topProducts[b]-topProducts[a]).join(", ");
+  document.getElementById("topProducts").textContent = top || "-";
+}
+
+function editOrder(id) {
+  alert("تعديل الطلب #" + id);
+}
+
+function deleteOrder(id) {
+  orders = orders.filter(o=>o.id!==id);
+  updateOrdersTable();
+}
+</script>
+
+</body>
+</html>
