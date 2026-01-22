@@ -2,6 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>أسواق دير العسل للخضار والفواكه</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -33,6 +35,42 @@
     .footer .btn { background: #ff8c1a; color: #fff; padding: 18px 60px; border-radius: 40px; font-size: 22px; display: inline-block; }
     .contact { margin-top: 15px; background: #083d66; padding: 14px 40px; border-radius: 30px; display: inline-block; }
     @media(max-width:768px) { .grid { grid-template-columns: 1fr; } }
+    img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* قاعدة */
+}
+
+h1 {
+  font-size: 4vw; /* يتغير حسب عرض الشاشة */
+}
+
+p {
+  font-size: 1rem; /* 1rem = حجم النص الأساسي */
+}
+.container {
+  display: flex;
+  flex-wrap: wrap; /* يسمح بالانتقال للسطر التالي إذا ضاق المكان */
+  gap: 20px; /* فراغ بين العناصر */
+}
+
+.item {
+  flex: 1 1 300px; /* عرض مرن مع حد أدنى 300px */
+}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 6vw;
+  }
+
+  .container {
+    flex-direction: column; /* العناصر تصطف عموديًا على الشاشات الصغيرة */
+  }
+}
+
   </style>
 </head>
 <body>
