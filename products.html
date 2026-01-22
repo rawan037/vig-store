@@ -248,10 +248,6 @@
 
 
 </div>
-<div class="payments">
-  <div id="cod" class="pay">💵 الدفع عند الاستلام</div>
-  <div id="wallet" class="pay">💳 الدفع الإلكتروني</div>
-</div>
 <div id="cartModal" class="modal">
   <div class="modal-content">
     <h3>🧺 محتويات السلة</h3>
@@ -260,11 +256,15 @@
 
     <p class="total">💰 المجموع: <span id="modalTotal">0.00</span> JOD</p>
 
-   
+    <div class="payments">
+      <div onclick="payCOD()" class="pay">💵 الدفع عند الاستلام</div>
+      <div onclick="payOnline()" class="pay">💳 الدفع الإلكتروني</div>
+    </div>
 
     <button class="close" onclick="closeCart()">إغلاق</button>
   </div>
 </div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -456,6 +456,7 @@ function sendOrder(method){
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 </script>
+
 
 </body>
 </html>
