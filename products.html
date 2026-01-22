@@ -95,6 +95,16 @@
   margin-top:15px;
   width:100%;
 }
+.flying-img {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  pointer-events: none;
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  z-index: 1000;
+  opacity: 1;
+}
 
   </style>
 </head>
@@ -434,11 +444,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <script>
 let cart = [];
-
-function addToCart(name, price, img){
-  cart.push({name, price, img});
+function addToCart(name, price, imgSrc){
+  // إضافة المنتج للسلة
+  cart.push({name, price, img: imgSrc});
   updateCart();
+
+  // تحريك الصورة إلى السلة
+  const productImg = document.querySelector(`.product img[alt="${name}"]`);
+  if(productImg){
+    const flyingImg = productImg.cloneNode(true);
+    flyingImg.classList.add('flying-img');
+    document.body.appendChild(flyingImg);
+
+    // مكان الصورة الحالية
+    const rect = productImg.getBoundingClientRect();
+    flyingImg.style.top = rect.top + 'px';
+    flyingImg.style.left = rect.left + 'px';
+
+    // مكان السلة
+    const cartDiv = document.querySelector('.cart');
+    const cartRect = cartDiv.getBoundingClientRect();
+
+    setTimeout(() => {
+      flyingImg.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
+      flyingImg.style.opacity = 0;
+    }, 10);
+
+    setTimeout(() => {
+      flyingImg.remove();
+    }, 900);
+  }
 }
+
 
 function updateCart(){
   document.getElementById("cartCount").textContent = cart.length;
