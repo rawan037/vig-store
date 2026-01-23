@@ -135,6 +135,60 @@
     flex:0 0 auto;                       /* العنصر يأخذ حجمه الطبيعي فقط */
   }
 }
+@media (max-width:768px) {
+  /* جعل الـ grid يعرض عنصرين بجانب بعض على الهاتف */
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* عمودين بدل عمود واحد */
+    gap: 15px !important; /* مسافة مناسبة بين البطاقات */
+  }
+
+  /* تصغير padding داخل البطاقات لتناسب الهاتف */
+  .card {
+    padding: 15px !important;
+  }
+
+  /* نصوص داخل البطاقات أصغر قليلاً */
+  .card h3 {
+    font-size:14px !important;
+  }
+
+  .card p {
+    font-size:12px !important;
+  }
+
+  /* تصغير زر عرض المنتجات */
+  .card .cta {
+    padding:10px 20px !important;
+    font-size:14px !important;
+  }
+}
+@media (max-width:768px) {
+  /* جعل بطاقتي تتبع الطلبات وطلب #152 جنب بعض على الهاتف */
+  .section .grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* عمودين بدل عمود واحد */
+    gap: 15px !important; /* مسافة مناسبة بين البطاقات */
+  }
+
+  /* تصغير padding داخل البطاقات لتناسب الهاتف */
+  .section .card {
+    padding: 15px !important;
+  }
+
+  /* نصوص داخل البطاقات أصغر قليلاً */
+  .section .card h3 {
+    font-size:14px !important;
+  }
+
+  .section .card p,
+  .section .card span {
+    font-size:12px !important;
+  }
+
+  /* تصغير ارتفاع الخريطة إذا احتاج */
+  #map {
+    height:250px !important;
+  }
+}
 
   </style>
 </head>
