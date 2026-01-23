@@ -12,16 +12,7 @@
     * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
     body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden; }
 
-   <style>
-/* وضع الهيرو والنصوص فوق الخضار */
-.hero {
-  position: relative;
-  text-align: center;
-  background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%);
-  padding: 100px 20px 60px;
-  overflow: visible; /* للسماح بصورة الخضار بالظهور */
-  z-index:1;
-}
+    .hero { position:relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
     .subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
     .title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
     .cta { background:#6bcf63; color:#fff; padding:18px 50px; border-radius:40px; font-size:22px; display:inline-block; margin:30px auto; text-decoration:none; cursor:pointer; }
@@ -42,28 +33,11 @@
     .features { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; margin:30px 0; font-size:18px; }
 
     /* === صور المدير والخضار === */
-   /* صورة الخضار أسفل النصوص */
-.corner-img.veggies {
-  position: absolute;
-  bottom:-20px; /* أسفل الهيرو مباشرة */
-  left:0;
-  width:260px;
-  z-index:0; /* خلف النصوص */
-}
-    /* صورة المدير واسم أقرب */
-.profile-wrapper {
-  position: absolute;
-  top:20px;
-  right:20px;
-  width:180px;
-  text-align:center;
-  z-index:2;
-}
-   .profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
+    .corner-img.veggies { position:absolute; top:0; left:0; width:260px; z-index:2; }
+    .profile-wrapper { position:absolute; top:20px; right:20px; width:180px; text-align:center; z-index:4; }
+    .profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
     .glow-bg { position:absolute; inset:-15px; border-radius:50%; background:radial-gradient(circle,rgba(111,210,111,.5)0%,rgba(111,210,111,.25)45%,rgba(111,210,111,0)75%); filter:blur(12px); z-index:1; }
-   .manager-name { font-size:12px; margin-top:2px; }
-    /* نصوص الهيرو فوق الخضار */
-.hero-text-wrapper { position: relative; z-index:4; }
+    .manager-name { margin-top:8px; font-size:14px; color:#eaffea; }
 
     /* === شريط الإعلان المتحرك === */
     .promo-bar { width:100%; background:linear-gradient(90deg,#2fbf71,#6fd26f); overflow:hidden; white-space:nowrap; padding:12px 0; position:relative; z-index:20; }
@@ -95,42 +69,44 @@
       /* شريط الإعلان */
       .promo-text { animation: scrollText 30s linear infinite; }
     }
-@media(max-width:768px){
-  .profile-wrapper { width:80px; top:10px; right:10px; }
-  .profile-img { width:60px; height:60px; }
-  .manager-name { font-size:8px; margin-top:1px; }
+@media (max-width:768px) {
 
-  .corner-img.veggies { width:120px; bottom:-10px; left:10px; }
+  /* صور المدير أصغر */
+  .profile-wrapper { width:80px !important; top:15px !important; right:15px !important; z-index:4 !important; }
+  .profile-img { width:40px !important; height:40px !important; }
 
-  .subtitle { font-size:10px; margin-bottom:2px; }
-  .title { font-size:14px; margin-bottom:2px; }
+  /* اسم المدير أصغر */
+  .manager-name { font-size:6px !important; margin-top:1.5px; }
 
-  /* اجعل العنوان الرئيسي بجانب صورة الخضار */
-  .hero-text-wrapper { display:flex; flex-direction:row-reverse; align-items:center; justify-content:flex-start; text-align:right; gap:10px; position:relative; z-index:4; }
+  /* الخضار أصغر قليلًا لتجنب التداخل */
+  .corner-img.veggies { width:120px !important; top:10px !important; left:10px !important; z-index:2 !important; }
+
+  /* النصوص في الهيرو أصغر */
+  .subtitle { font-size:12px !important; margin-bottom:6px; }
+  .title { font-size:16px !important; margin-bottom:10px; }
+
+  /* شريط الإعلان: حجم أصغر وسلس */
+  .promo-text { animation: scrollText 30s linear infinite; font-size:14px; }
+
+  /* padding للهيرو لتناسب الحجم الجديد */
+  .hero { padding:65px 10px 25px; }
 }
+
 
   </style>
 </head>
 <body>
 
 <section class="hero">
-  <!-- صورة الخضار: نضعها أسفل الهيرو قليلاً لتكون فوق شريط الإعلان -->
   <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
-
-  <!-- صورة المدير مع اسم أقرب إليها -->
   <div class="profile-wrapper">
     <div class="glow-bg"></div>
     <img src="images/المدير.png" class="profile-img" alt="المدير">
     <p class="manager-name">بإدارة: السيد ضياء الدين بني عامر</p>
   </div>
-
-  <!-- نصوص الهيرو -->
-  <div class="hero-text-wrapper">
-    <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
-    <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
-  </div>
+  <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
+  <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
 </section>
-
 
 <div class="promo-bar">
   <div class="promo-text">
