@@ -71,39 +71,54 @@
     }
 @media (max-width:768px) {
 
-  /* صورة المدير ملاصقة للشريط */
+  /* صور المدير وأسمه ملاصقة لأسفل الهيرو */
   .profile-wrapper { 
     width:80px !important; 
-    bottom:0 !important;      /* ملاصقة للشريط الأخضر */
-    right:10px !important;    /* على اليمين */
-    top:auto !important;       /* إزالة top */
-    z-index:2 !important;
-    display:flex;              /* ترتيب عمودي */
-    flex-direction:column-reverse; /* الاسم فوق الصورة */
-    align-items:center;
+    bottom:0 !important;   /* ملاصقة للشريط الأخضر */
+    left:auto !important;
+    right:10px !important;  /* على اليمين */
+    top:auto !important;     /* إزالة top */
+    z-index:2 !important;   /* تحت النصوص فوق الخلفية */
   }
 
   .profile-img { 
     width:40px !important; 
     height:40px !important; 
-    margin:0 !important;       /* إزالة أي margin */
   }
 
   .manager-name { 
     font-size:6px !important; 
-    margin:0 0 2px 0 !important; /* مسافة صغيرة بين الاسم والشريط */
+    margin-top:2px !important; 
     display:block; 
-    text-align:center;
   }
 
   /* الخضار أصغر لتجنب التداخل */
   .corner-img.veggies {
     width:100px !important;
-    bottom:0 !important;       /* ملاصقة للشريط الأخضر */
+    bottom:0 !important;  /* ملاصقة للشريط الأخضر */
     left:0 !important;
     top:auto !important;
     z-index:1 !important;
   }
+
+  /* النصوص في الهيرو أصغر ومرفوعة قليلاً */
+  .subtitle { 
+    font-size:12px !important; 
+    margin-bottom:4px !important;  
+    margin-top:-5px !important;    
+  }
+
+  .title { 
+    font-size:10px !important; 
+    margin-bottom:6px !important;  
+    margin-top:-4px !important;    
+  }
+
+  /* شريط الإعلان: حجم أصغر وسلس */
+  .promo-text { animation: scrollText 30s linear infinite; font-size:14px; }
+
+  /* padding للهيرو لتناسب الحجم الجديد */
+  .hero { padding:40px 10px 50px; }
 }
 
   </style>
