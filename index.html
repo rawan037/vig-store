@@ -224,6 +224,40 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   .social-icons a svg { width:25px; height:25px; }
   .footer-bottom { font-size:10px; }
 }
+@media (max-width:768px) {
+  .footer {
+    display: flex;
+    justify-content: center;  /* وسط الصفحة */
+    flex-wrap: wrap;
+    gap: 10px;  /* مسافة صغيرة بين الزرين */
+    padding: 15px 10px;
+  }
+
+  .footer .btn,
+  .footer .contact {
+    flex: 1 1 auto;       /* يسمح لهم بالتوسع قليلًا إذا احتاج */
+    text-align: center;
+    font-size: 16px;       /* حجم مناسب على الهاتف */
+    padding: 12px 20px;
+  }
+
+  .footer .btn { 
+    background: #ff8c1a; 
+    border-radius: 30px; 
+  }
+
+  .footer .contact { 
+    background: #083d66; 
+    border-radius: 30px; 
+    color: #fff; 
+  }
+  .footer .contact a {
+  color: #fff !important;       /* اللون أبيض */
+  text-decoration: none !important; /* إزالة الخط تحت النص */
+  display: inline-block;
+}
+
+}
 
 </style>
 </head>
