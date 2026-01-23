@@ -174,26 +174,26 @@ body {
 }
 
   @media (max-width: 600px) {
-  .profile-glow {
+  .profile-glow.right {
     width: 130px;
     height: 130px;
-    top: 20px;
+    top: 15px;
     right: 15px;
   }
 
-  .profile-img {
-    width: 95px;
-    height: 95px;
-  }
+.profile-img {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
 }
 
 
-  .profile-wrapper {
-    width: 130px;
-    height: 130px;
-    top: 20px;
-    right: 15px;
-  }
+  
 }
 .profile-glow {
   position: absolute;
@@ -206,6 +206,14 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 6;
+}
+.profile-glow.right {
+  position: absolute;
+  top: 20px;      /* نفس مكانك */
+  right: 20px;    /* نفس مكانك */
+  width: 180px;
+  height: 180px;
+  z-index: 10;
 }
 
   /* التوهج */
@@ -224,7 +232,6 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-
   background: radial-gradient(
     circle,
     rgba(111, 210, 111, 0.5) 0%,
@@ -232,9 +239,7 @@ body {
     rgba(111, 210, 111, 0.15) 65%,
     rgba(111, 210, 111, 0.0) 80%
   );
-
   filter: blur(18px);
-  z-index: 1;
 }
 
   </style>
@@ -246,12 +251,14 @@ body {
 
     <!-- صور الزوايا -->
  <!-- صورة الخضار -->
-<img src="images/الخلفيه.png" class="corner-img left veggies" alt="">
+  <img src="images/خلفيه.png" class="corner-img veggies" alt="">
 
 <!-- صورة الشخص -->
-<div class="profile-glow">
+<div class="profile-glow right">
+  <div class="glow-bg"></div>
   <img src="images/المدير.png" class="profile-img" alt="">
 </div>
+
 
 
     <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
