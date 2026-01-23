@@ -235,78 +235,38 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   justify-content: center;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap; /* ليكون مرن على الهاتف */
-  margin-top: 20px;
+  flex-wrap: nowrap; /* مهم: يبقوا جنب بعض */
 }
 
-/* زر البيع */
-.footer-buttons .btn {
-  background: #ff8c1a;  /* لون الزر البرتقالي */
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 40px;
-  font-size: 13px;
+/* زر المندوب */
+.mandob-btn {
   display: flex;
   align-items: center;
-  cursor: pointer;
+  gap: 8px;
 }
 
-/* الدائرة الخاصة بصورة المندوب داخل الزر */
-.footer-buttons .btn .icon-wrapper {
-  background-color: #ff8c1a;  /* نفس لون الزر */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-   border-radius: 30px;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+/* صورة المندوب */
+.mandob-img {
+  width: 26px;
+  height: auto;
 }
 
-/* حجم صورة المندوب داخل الدائرة */
-.footer-buttons .btn .icon-wrapper img {
-  width: 50px;
-  height: 50px;
-}
-
-/* زر الاتصال */
-.footer-buttons .contact {
-  background: #083d66;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 30px;
-  text-decoration: none; /* إزالة الخط */
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-}
-
-/* --- ريسبونسف للهاتف --- */
-@media (max-width:768px) {
+/* الهاتف */
+@media (max-width: 768px) {
   .footer-buttons {
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: row; /* جنب بعض */
   }
 
-  .footer-buttons .btn,
-  .footer-buttons .contact {
+  .mandob-img {
+    width: 34px; /* تكبير صورة المندوب على الهاتف */
+  }
+
+  .mandob-btn,
+  .contact {
     font-size: 14px;
-    padding: 10px 16px;
-  }
-
-  .footer-buttons .btn .icon-wrapper {
-    width: 20px;
-    height: 20px;
-  }
-
-  .footer-buttons .btn .icon-wrapper img {
-    width: 20px;
-    height: 20px;
+    padding: 10px 14px;
   }
 }
-
-
 
 </style>
 </head>
