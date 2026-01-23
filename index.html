@@ -53,11 +53,19 @@
       .profile-wrapper { top:20px !important; right:20px !important; width:180px !important; height:auto !important; z-index:4 !important; }
       .profile-img { width:140px !important; height:140px !important; }
       .glow-bg { inset:-15px; }
-
+ /* تصغير المسافة العليا للعناوين داخل الهيرو */
+  .hero { padding-top:40px !important; padding-bottom:20px !important; }
       /* نصوص */
-      .subtitle { font-size:clamp(18px,3vw,26px); }
-      .title { font-size:clamp(26px,4vw,42px); }
+      .subtitle { font-size:clamp(18px,3vw,26px);
+                  margin-bottom:2px !important;
+                }
+      .title { font-size:clamp(26px,4vw,42px);
+             margin-top:2px !important; }
 
+
+
+
+  
       /* شريط الإعلان */
       .promo-text { animation: scrollText 30s linear infinite; }
     }
@@ -65,7 +73,7 @@
 
   /* صور المدير أصغر */
   .profile-wrapper { width:80px !important; top:15px !important; right:15px !important; z-index:4 !important; }
-  .profile-img { width:60px !important; height:60px !important; }
+  .profile-img { width:40px !important; height:40px !important; }
 
   /* اسم المدير أصغر */
   .manager-name { font-size:6px !important; margin-top:1.5px; }
@@ -94,7 +102,7 @@
   <div class="profile-wrapper">
     <div class="glow-bg"></div>
     <img src="images/المدير.png" class="profile-img" alt="المدير">
-    <p class="manager-name">بإدارة: السيد ضياء الدين إبراهيم بني عامر</p>
+    <p class="manager-name">بإدارة: السيد ضياء الدين بني عامر</p>
   </div>
   <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
   <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
