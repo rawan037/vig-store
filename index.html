@@ -304,45 +304,6 @@ animation: scrollText 15s linear infinite;
     color: #eaffea;
   }
 }
-/* ===== FIX MOBILE LAYOUT ONCE AND FOR ALL ===== */
-@media (max-width: 768px) {
-
-  /* ===== FORCE SAME IMAGE LAYOUT ON MOBILE AS DESKTOP ===== */
-@media (max-width: 768px) {
-
-  /* صورة الخضار – تبقى يسار */
-  .corner-img.veggies {
-    position: absolute !important;
-    top: 20px !important;
-    left: 20px !important;
-    bottom: auto !important;
-    width: 260px !important;   /* نفس حجم اللابتوب */
-    z-index: 5;
-  }
-
-  /* صورة الشخص – تبقى يمين */
-  .profile-glow,
-  .profile-wrapper {
-    position: absolute !important;
-    top: 20px !important;
-    right: 20px !important;
-    left: auto !important;
-    width: 200px !important;   /* نفس حجم اللابتوب */
-    height: 200px !important;
-    z-index: 6;
-  }
-
-  .profile-img {
-    width: 150px !important;
-    height: 150px !important;
-  }
-
-
-  /* شريط الإعلان */
-  .promo-bar {
-    margin-top: 10px;
-  }
-}
 @media (max-width: 768px) {
 
   body {
@@ -380,6 +341,18 @@ animation: scrollText 15s linear infinite;
   /* نصوص العنوان */
   .subtitle {
     font-size: clamp(18px, 3vw, 26px);
+  }
+
+  .title {
+    font-size: clamp(26px, 4vw, 42px);
+  }
+
+  /* الشريط المتحرك بسرعة مناسبة */
+  .promo-text {
+    animation: scrollText 15s linear infinite;
+  }
+}
+
 
   </style>
 </head>
