@@ -1,196 +1,101 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>أسواق دير العسل للخضار والفواكه</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<meta charset="UTF-8" />
+<title>أسواق دير العسل للخضار والفواكه</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+/* === أساسي === */
+* { box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
+body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden; }
 
-  <style>
-    /* === أساسي === */
-    * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
-    body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden; }
+.hero { position:relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
+.subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
+.title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
+.cta { background:#6bcf63; color:#fff; padding:18px 50px; border-radius:40px; font-size:22px; display:inline-block; margin:30px auto; text-decoration:none; cursor:pointer; }
 
-    .hero { position:relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
-    .subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
-    .title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
-    .cta { background:#6bcf63; color:#fff; padding:18px 50px; border-radius:40px; font-size:22px; display:inline-block; margin:30px auto; text-decoration:none; cursor:pointer; }
+.section { background:#0fa36b; margin:40px 0; padding:30px; border-radius:20px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+.card { background:#fff; color:#333; border-radius:15px; padding:20px; text-align:center; }
+.card h3 { margin-bottom:20px; color:#0fa36b; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; width:100%; }
+.product { background:#f6fff7; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; }
+.product img { width:100%; height:120px; object-fit:cover; border-radius:10px; margin-bottom:10px; }
+.product strong { margin-bottom:5px; }
 
-    .section { background:#0fa36b; margin:40px 0; padding:30px; border-radius:20px; }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
-    .card { background:#fff; color:#333; border-radius:15px; padding:20px; text-align:center; }
-    .card h3 { margin-bottom:20px; color:#0fa36b; }
-    .products { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; width:100%; }
-    .product { background:#f6fff7; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; }
-    .product img { width:100%; height:120px; object-fit:cover; border-radius:10px; margin-bottom:10px; }
-    .product strong { margin-bottom:5px; }
+.footer { text-align:center; margin-top:40px; }
+.footer .btn { background:#ff8c1a; color:#fff; padding:18px 60px; border-radius:40px; font-size:22px; display:inline-block; }
+.contact { margin-top:15px; background:#083d66; padding:14px 40px; border-radius:30px; display:inline-block; }
 
-    .footer { text-align:center; margin-top:40px; }
-    .footer .btn { background:#ff8c1a; color:#fff; padding:18px 60px; border-radius:40px; font-size:22px; display:inline-block; }
-    .contact { margin-top:15px; background:#083d66; padding:14px 40px; border-radius:30px; display:inline-block; }
+.features { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; margin:30px 0; font-size:18px; }
 
-    .features { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; margin:30px 0; font-size:18px; }
+/* === صور المدير والخضار === */
+.corner-img.veggies { position:absolute; top:0; left:0; width:260px; z-index:2; }
+.profile-wrapper { position:absolute; top:20px; right:20px; width:180px; text-align:center; z-index:4; }
+.profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
+.glow-bg { position:absolute; inset:-15px; border-radius:50%; background:radial-gradient(circle,rgba(111,210,111,.5)0%,rgba(111,210,111,.25)45%,rgba(111,210,111,0)75%); filter:blur(12px); z-index:1; }
+.manager-name { margin-top:8px; font-size:14px; color:#eaffea; }
 
-    /* === صور المدير والخضار === */
-    .corner-img.veggies { position:absolute; top:0; bottom:-20px; left:0; width:230px; z-index:0; }
-    .profile-wrapper { position:absolute; top:20px; right:20px; width:180px; text-align:center; z-index:4; }
-    .profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
-    .glow-bg { position:absolute; inset:-15px; border-radius:50%; background:radial-gradient(circle,rgba(111,210,111,.5)0%,rgba(111,210,111,.25)45%,rgba(111,210,111,0)75%); filter:blur(12px); z-index:1; }
-    .manager-name { margin-top:8px; font-size:14px; color:#eaffea; }
+/* === شريط الإعلان المتحرك === */
+.promo-bar { width:100%; background:linear-gradient(90deg,#2fbf71,#6fd26f); overflow:hidden; white-space:nowrap; padding:12px 0; position:relative; z-index:20; }
+.promo-text { display:inline-block; padding-left:100%; font-size:20px; font-weight:700; color:#083d2b; animation: scrollText 30s linear infinite; }
+@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* === شريط الإعلان المتحرك === */
-    .promo-bar { width:100%; background:linear-gradient(90deg,#2fbf71,#6fd26f); overflow:hidden; white-space:nowrap; padding:12px 0; position:relative; z-index:20; }
-    .promo-text { display:inline-block; padding-left:100%; font-size:20px; font-weight:700; color:#083d2b; animation: scrollText 30s linear infinite; }
-    @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    /* === ريسبونسف نهائي === */
-    @media (max-width:768px) {
-      .grid { grid-template-columns:1fr; }
-
-      /* الصور تبقى ثابتة كما في اللابتوب */
-      .corner-img.veggies { top:0 !important; left:0 !important; width:260px !important; z-index:2 !important; }
-      .profile-wrapper { top:20px !important; right:20px !important; width:180px !important; height:auto !important; z-index:4 !important; }
-      .profile-img { width:140px !important; height:140px !important; }
-      .glow-bg { inset:-15px; }
- /* تصغير المسافة العليا للعناوين داخل الهيرو */
-  .hero { padding-top:40px !important; padding-bottom:20px !important; }
-      /* نصوص */
-      .subtitle { font-size:clamp(18px,3vw,26px);
-                  margin-bottom:2px !important;
-                }
-      .title { font-size:clamp(26px,4vw,42px);
-             margin-top:2px !important; }
-
-
-
-
-  
-      /* شريط الإعلان */
-      .promo-text { animation: scrollText 30s linear infinite; }
-    }
+/* === ريسبونسف نهائي للهاتف === */
 @media (max-width:768px) {
+  body { overflow-x:hidden; }
+
+  .hero { padding:40px 10px 50px; }
 
   /* صور المدير وأسمه ملاصقة لأسفل الهيرو */
   .profile-wrapper { 
     width:80px !important; 
-    bottom:0.2!important;   /* ملاصقة للشريط الأخضر */
-    left:auto !important;
-    right:4px !important;  /* على اليمين */
-    top:auto !important;     /* إزالة top */
-    z-index:2 !important;   /* تحت النصوص فوق الخلفية */
+    bottom:0 !important;
+    right:10px !important;
+    top:auto !important; 
+    z-index:2 !important; 
   }
+  .profile-img { width:40px !important; height:40px !important; }
+  .manager-name { font-size:6px !important; margin-top:2px !important; display:block; }
 
-  .profile-img { 
-    width:40px !important; 
-    height:40px !important; 
-    margin:0 !important;       /* إزالة أي margin إضافي */
-  }
+  /* الخضار ملاصقة للشريط */
+  .corner-img.veggies { width:100px !important; bottom:0 !important; left:0 !important; top:auto !important; z-index:1 !important; }
 
-  .manager-name { 
-    font-size:6px !important; 
-    margin-top:0.3px !important;  /* تقليل المسافة بين الصورة والاسم */
-    display:block; 
-  }
-
-  /* الخضار أصغر لتجنب التداخل */
-  .corner-img.veggies {
-    width:100px !important;
-    bottom:0 !important;  /* ملاصقة للشريط الأخضر */
-    left:0 !important;
-    top:auto !important;
-    z-index:1 !important;
-  }
-
-  /* النصوص في الهيرو أصغر ومرفوعة قليلاً */
-  .subtitle { 
-    font-size:12px !important; 
-    margin-bottom:4px !important;  
-    margin-top:-5px !important;    
-  }
-
-  .title { 
-    font-size:10px !important; 
-    margin-bottom:6px !important;  
-    margin-top:-4px !important;    
-  }
+  /* النصوص أصغر وأقرب للأعلى */
+  .subtitle { font-size:12px !important; margin-bottom:4px !important; margin-top:-5px !important; }
+  .title { font-size:10px !important; margin-bottom:6px !important; margin-top:-4px !important; }
 
   /* شريط الإعلان: حجم أصغر وسلس */
   .promo-text { animation: scrollText 30s linear infinite; font-size:14px; }
 
-  /* padding للهيرو لتناسب الحجم الجديد */
-  .hero { padding:40px 10px 50px; }
+  /* أيقونات الموقع الاحترافي واللوحة والتوصيل والدفع جنب بعض */
+  .features { flex-wrap:nowrap !important; justify-content:space-between !important; gap:5px !important; font-size:12px !important; padding:0 5px; }
+  .features span { flex:1 1 auto; font-size:12px; text-align:center; }
+
+  /* عرض المنتجات + لوحة التحكم جنب بعض */
+  #products, .grid > .card:nth-child(2) {
+    display:inline-block !important;
+    width:48% !important;
+    vertical-align:top;
+    min-height:200px !important;
+    padding:8px !important;
+  }
+
+  /* نصوص وأزرار أصغر داخل البطاقة */
+  .grid > .card h3 { font-size:12px !important; margin-bottom:4px !important; }
+  .grid > .card p { font-size:10px !important; margin-bottom:4px !important; }
+  .grid > .card .cta { font-size:12px !important; padding:6px 12px !important; border-radius:12px; }
+
+  /* تتبع الطلبات + طلب #152 جنب بعض */
+  .section .grid:last-child { grid-template-columns:repeat(2,1fr) !important; gap:5px !important; }
+  .section .grid:last-child .card { min-height:200px !important; padding:8px !important; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center; }
+  .section .grid:last-child .card h3 { font-size:12px !important; margin-bottom:4px !important; }
+  .section .grid:last-child .card p, .section .grid:last-child .card span { font-size:10px !important; margin-bottom:4px !important; }
+  .section .grid:last-child #map { height:150px !important; }
 }
-@media (max-width:768px) {
-  .features {
-    flex-wrap: nowrap !important;        /* تمنع التفاف العناصر */
-    font-size:12px !important;          /* تصغير حجم النصوص */
-    gap:15px !important;                 /* مسافة صغيرة بين الأيقونات */
-    overflow-x:auto;                     /* يسمح بالتمرير الأفقي إذا الحاجة */
-    padding:0 10px;                      /* مسافة من الجانبين */
-  }
-
-  .features span {
-    white-space:nowrap;                  /* يمنع التفاف النص داخل العنصر */
-    flex:0 0 auto;                       /* العنصر يأخذ حجمه الطبيعي فقط */
-  }
-}
-@media (max-width:768px) {
-  /* جعل الـ grid يعرض عنصرين بجانب بعض على الهاتف */
-  .grid {
-    grid-template-columns: repeat(2, 1fr) !important; /* عمودين بدل عمود واحد */
-    gap: 15px !important; /* مسافة مناسبة بين البطاقات */
-  }
-
-  /* تصغير padding داخل البطاقات لتناسب الهاتف */
-  .card {
-    padding: 15px !important;
-  }
-
-  /* نصوص داخل البطاقات أصغر قليلاً */
-  .card h3 {
-    font-size:14px !important;
-  }
-
-  .card p {
-    font-size:12px !important;
-  }
-
-  /* تصغير زر عرض المنتجات */
-  .card .cta {
-    padding:10px 20px !important;
-    font-size:14px !important;
-  }
-}
-@media (max-width:768px) {
-  /* جعل بطاقتي تتبع الطلبات وطلب #152 جنب بعض على الهاتف */
-  .section .grid {
-    grid-template-columns: repeat(2, 1fr) !important; /* عمودين بدل عمود واحد */
-    gap: 15px !important; /* مسافة مناسبة بين البطاقات */
-  }
-
-  /* تصغير padding داخل البطاقات لتناسب الهاتف */
-  .section .card {
-    padding: 15px !important;
-  }
-
-  /* نصوص داخل البطاقات أصغر قليلاً */
-  .section .card h3 {
-    font-size:14px !important;
-  }
-
-  .section .card p,
-  .section .card span {
-    font-size:12px !important;
-  }
-
-  /* تصغير ارتفاع الخريطة إذا احتاج */
-  #map {
-    height:250px !important;
-  }
-}
-
-  </style>
+</style>
 </head>
 <body>
 
@@ -275,6 +180,5 @@
     .bindPopup("🚚 المندوب في الطريق")
     .openPopup();
 </script>
-
 </body>
 </html>
