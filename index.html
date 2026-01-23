@@ -129,12 +129,14 @@ body {
   }
 }
 .corner-img.veggies {
-  width: 400px;  /* تكبير الصورة أكثر */
-  top: 120px;
-  left: 30px;    /* على اليسار */
-  border-radius: 0; /* بدون إطار دائري */
-  z-index: 5;
+  width: 400px;      /* الحجم الكبير */
+  top: 20px;         /* فوق أكثر لتكون قريبة من أعلى الصفحة */
+  left: 30px;        /* على اليسار */
+  border-radius: 0;  /* بدون إطار دائري */
+  position: absolute; 
+  z-index: 100;      /* أعلى من أي عنصر آخر */
 }
+
 
 
 .profile-wrapper {
