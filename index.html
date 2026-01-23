@@ -2,504 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-
-
   <title>أسواق دير العسل للخضار والفواكه</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-    body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color: #fff; }
-    .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
-    .logo { text-align: center; margin-bottom: 20px; }
-    .logo h1 { color: #8bdc65; font-size: 42px; }
-    .hero { text-align: center; }
-    .hero h2 { font-size: 36px; margin: 20px 0; }
-    .features { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin: 30px 0; }
-    .feature { display: flex; align-items: center; gap: 10px; font-size: 18px; }
-    .cta { background: #6bcf63; color: #fff; display: inline-block; padding: 18px 50px; border-radius: 40px; font-size: 22px; margin: 30px auto; text-decoration: none; }
-    .section { background: #0fa36b; margin: 40px 0; padding: 30px; border-radius: 20px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-    .card { background: #fff; color: #333; border-radius: 15px; padding: 20px; text-align: center; }
-    .card h3 { margin-bottom: 20px; color: #0fa36b; }
-    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; width: 100%; }
-    .product { background: #f6fff7; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; }
-    .product img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
-    .product strong { margin-bottom: 5px; }
-    .product button { background: #4caf50; color: #fff; border: none; padding: 8px; border-radius: 20px; margin-top: 10px; cursor: pointer; }
-    .payments { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
-    .pay { background: #fff; color: #333; padding: 20px 40px; border-radius: 15px; cursor: pointer; }
-    .footer { text-align: center; margin-top: 40px; }
-    .footer .btn { background: #ff8c1a; color: #fff; padding: 18px 60px; border-radius: 40px; font-size: 22px; display: inline-block; }
-    .contact { margin-top: 15px; background: #083d66; padding: 14px 40px; border-radius: 30px; display: inline-block; }
-    @media(max-width:768px) { .grid { grid-template-columns: 1fr; } }
-   * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Arial", sans-serif;
-}
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
+    body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden; }
+    .hero { position: relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
+    .subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
+    .title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
+    .cta { background:#6bcf63; color:#fff; padding:18px 50px; border-radius:40px; font-size:22px; display:inline-block; margin:30px auto; text-decoration:none; cursor:pointer; }
+    .section { background:#0fa36b; margin:40px 0; padding:30px; border-radius:20px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+    .card { background:#fff; color:#333; border-radius:15px; padding:20px; text-align:center; }
+    .card h3 { margin-bottom:20px; color:#0fa36b; }
+    .products { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; width:100%; }
+    .product { background:#f6fff7; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; }
+    .product img { width:100%; height:120px; object-fit:cover; border-radius:10px; margin-bottom:10px; }
+    .product strong { margin-bottom:5px; }
+    .footer { text-align:center; margin-top:40px; }
+    .footer .btn { background:#ff8c1a; color:#fff; padding:18px 60px; border-radius:40px; font-size:22px; display:inline-block; }
+    .contact { margin-top:15px; background:#083d66; padding:14px 40px; border-radius:30px; display:inline-block; }
 
+    /* الصور */
+    .corner-img.veggies { position:absolute; top:0; left:0; width:260px; z-index:2; }
+    .profile-wrapper { position:absolute; top:20px; right:20px; width:180px; text-align:center; z-index:4; }
+    .profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
+    .glow-bg { position:absolute; inset:-15px; border-radius:50%; background:radial-gradient(circle,rgba(111,210,111,.5)0%,rgba(111,210,111,.25)45%,rgba(111,210,111,0)75%); filter:blur(12px); z-index:1; }
+    .manager-name { margin-top:8px; font-size:14px; color:#eaffea; }
 
+    /* شريط الإعلان */
+    .promo-bar { width:100%; background:linear-gradient(90deg,#2fbf71,#6fd26f); overflow:hidden; white-space:nowrap; padding:12px 0; position:relative; z-index:20; }
+    .promo-text { display:inline-block; padding-left:100%; font-size:20px; font-weight:700; color:#083d2b; animation: scrollText 30s linear infinite; }
+    @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-  /* التدرج */
-  background: linear-gradient(
-    to bottom,
-    #0b5f87 0%,
-    #0b5f87 50%,
-    #2fbf71 100%
-  );
-}
-
-/* العناوين */
-.subtitle {
-  color: #7CFF6B;
-  font-size: clamp(18px, 3vw, 26px);
-  margin-bottom: 15px;
-}
-
-.title {
-  font-size: clamp(26px, 4vw, 42px);
-  margin-bottom: 25px;
-}
-
-
-
-/* محتوى الصفحة */
-.content {
-  padding: 80px 20px;
-  text-align: center;
-}
-
-/* زر */
-.cta {
-  background: #6fd26f;
-  border: none;
-  padding: 18px 45px;
-  font-size: 20px;
-  border-radius: 40px;
-  cursor: pointer;
-}
-
-/* صور الزوايا */
-.corner-img {
-  position: absolute;
-  top: 20px;
-  width: 120px;
-  max-width: 25vw;
-}
-
-.corner-img.left {
-  left: 20px;
-}
-
-.corner-img.right {
-  right: 20px;
-}
-.hero {
-  position: relative;
-  background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%);
-  padding: 100px 20px 60px;
-  overflow: hidden;
-  text-align: center;
-}
-
-/* صورة الخضار */
-.corner-img.veggies {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 260px;
-  z-index: 2;
-}
-
-/* صورة الشخص */
-.profile-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 180px;
-  text-align: center;
-  z-index: 4;
-}
-
-.profile-img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #fff;
-  position: relative;
-  z-index: 3;
-}
-
-.glow-bg {
-  position: absolute;
-  inset: -15px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(111,210,111,.5) 0%,
-    rgba(111,210,111,.25) 45%,
-    rgba(111,210,111,0) 75%
-  );
-  filter: blur(12px);
-  z-index: 1;
-}
-
-/* اسم المدير */
-.manager-name {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #eaffea;
-}
-
-
-
-/* شريط الإعلان المتحرك */
-.promo-bar {
-  width: 100%;
-  background: linear-gradient(90deg, #2fbf71, #6fd26f);
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 12px 0;
-  position: relative;
-  z-index: 20;
-}
-
-.promo-text {
-  display: inline-block;
-  padding-left: 100%;
-  font-size: 20px;
-  font-weight: 700;
-  color: #083d2b;
-animation: scrollText 15s linear infinite;
-
-
-}
-
-/* الحركة */
-@keyframes scrollText {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-/* تحسين للموبايل */
-@media (max-width: 768px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  .hero {
-    padding: 85px 15px 45px;
-  }
-
-  /* الخضار: أقصى يسار فوق الفاصل الأخضر */
-  .corner-img.veggies {
-    width: 150px;
-    top: auto;
-    bottom: -10px;
-    left: -20px;
-    z-index: 3;
-  }
-
-  /* صورة الشخص: أقصى يمين */
-  .profile-wrapper {
-    top: 15px;
-    right: 10px;
-    width: 120px;
-  }
-
-  .profile-img {
-    width: 95px;
-    height: 95px;
-  }
-
-  .manager-name {
-    font-size: 12px;
-    line-height: 1.3;
-  }
-
-  .subtitle {
-    font-size: 15px;
-  }
-
-  .title {
-    font-size: 22px;
-    line-height: 1.35;
-    margin: 10px auto;
-    max-width: 75%;
-  }
-}
-    @media (max-width: 768px) {
-
-  .manager-mobile {
-    position: absolute;
-    top: 14px;
-    right: 12px;
-    width: 120px;
-    text-align: center;
-    z-index: 6;
-  }
-
-  /* حاوية التوهج */
-  .avatar-glow {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border-radius: 50%;
-    background: linear-gradient(
-      to bottom,
-      #0b5f87,
-      #2fbf71
-    ); /* ⬅️ نفس خلفية الموقع */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  /* التوهج الدائري */
-  .avatar-glow::before {
-    content: "";
-    position: absolute;
-    inset: -15px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(111,210,111,.55) 0%,
-      rgba(111,210,111,.35) 40%,
-      rgba(111,210,111,.15) 65%,
-      rgba(111,210,111,0) 80%
-    );
-    filter: blur(10px);
-    z-index: 0;
-  }
-
-  /* الصورة نفسها */
-  .avatar-glow img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-
-    /* السحر هنا 👇 */
-    mix-blend-mode: multiply; /* ⬅️ يدمج الأبيض بالخلفية */
-    background: transparent;
-
-    position: relative;
-    z-index: 1;
-  }
-
-  /* الاسم */
-  .manager-mobile span {
-    display: block;
-    margin-top: 6px;
-    font-size: 12px;
-    line-height: 1.3;
-    color: #eaffea;
-  }
-}
-@media (max-width: 768px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  /* صورة الخضار تبقى في نفس مكانها وحجمها */
-  .corner-img.veggies {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 260px !important; /* نفس حجم اللابتوب */
-    z-index: 2 !important;
-  }
-
-  /* صورة المدير تبقى في نفس مكانها وحجمها */
-  .profile-wrapper {
-    position: absolute !important;
-    top: 20px !important;
-    right: 20px !important;
-    width: 180px !important; /* نفس حجم اللابتوب */
-    height: auto !important;
-    z-index: 4 !important;
-  }
-
-  .profile-img {
-    width: 140px !important;
-    height: 140px !important;
-  }
-
-  .glow-bg {
-    inset: -15px;
-  }
-
-  /* نصوص العنوان */
-  .subtitle {
-    font-size: clamp(18px, 3vw, 26px);
-  }
-
-  .title {
-    font-size: clamp(26px, 4vw, 42px);
-  }
-
-  /* الشريط المتحرك بسرعة مناسبة */
-  .promo-text {
-    animation: scrollText 15s linear infinite;
-  }
-}
-
-
+    /* ريسبونسف */
+    @media (max-width:768px) {
+      .grid { grid-template-columns:1fr; }
+      /* تبقى الصور في نفس المكان والحجم */
+      .corner-img.veggies { position:absolute !important; top:0 !important; left:0 !important; width:260px !important; z-index:2 !important; }
+      .profile-wrapper { position:absolute !important; top:20px !important; right:20px !important; width:180px !important; height:auto !important; z-index:4 !important; }
+      .profile-img { width:140px !important; height:140px !important; }
+      .glow-bg { inset:-15px; }
+      .subtitle { font-size:clamp(18px,3vw,26px); }
+      .title { font-size:clamp(26px,4vw,42px); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- القسم العلوي -->
 <section class="hero">
-
-  <!-- صورة الخضار -->
   <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
-
-  <!-- صورة الشخص -->
   <div class="profile-wrapper">
     <div class="glow-bg"></div>
     <img src="images/المدير.png" class="profile-img" alt="المدير">
     <p class="manager-name">بإدارة: السيد ضياء الدين إبراهيم بني عامر</p>
   </div>
-
   <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
   <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
-
 </section>
 
-
-  
-    <!-- شريط إعلان متحرك -->
 <div class="promo-bar">
   <div class="promo-text">
-    🎉 بمناسبة إطلاق الموقع — التوصيل مجاني لمدة 3 أيام 🎉 &nbsp; 🎉 بمناسبة إطلاق الموقع — التوصيل مجاني لمدة 3 أيام 🎉 &nbsp; 🎉 عروض وخصومات لاتنتهي🎉 &nbsp; 🎉 بفقط لدى اسواق دير العسل  🎉
+    🎉 بمناسبة إطلاق الموقع — التوصيل مجاني لمدة 3 أيام 🎉 &nbsp; 🎉 عروض وخصومات لاتنتهي 🎉 &nbsp; 🎉 فقط لدى أسواق دير العسل 🎉
   </div>
 </div>
+
 <div class="features">
-      <span>💻 موقع احترافي</span>
-      <span>⚙️ لوحة تحكم</span>
-      <span>🚚 توصيل</span>
-      <span>💵 دفع عند الاستلام</span>
-    </div>
+  <span>💻 موقع احترافي</span>
+  <span>⚙️ لوحة تحكم</span>
+  <span>🚚 توصيل</span>
+  <span>💵 دفع عند الاستلام</span>
+</div>
 
+<section class="content">
+  <button class="cta">🛍️ اطلب بكل سهولة</button>
+</section>
 
-
-  <!-- باقي الصفحة -->
-  <section class="content">
-    <button class="cta">🛍️ اطلب بكل سهولة</button>
-  </section>
-
-  <div class="section">
-    <div class="grid">
-      <div class="card" id="products">
-        <a href="products.html" class="cta">🛍️ عرض المنتجات</a>
-        <div class="products">
-          <div class="product">
-             <img src="images/تفاح.jpg" alt="تفاح">
-             <strong>بندورة</strong>
-          </div>
-          <div class="product">
-             <img src="images/موز.jpg" alt="موز">
-             <strong>موز</strong>
-          </div>
+<div class="section">
+  <div class="grid">
+    <div class="card" id="products">
+      <a href="products.html" class="cta">🛍️ عرض المنتجات</a>
+      <div class="products">
+        <div class="product">
+          <img src="images/تفاح.jpg" alt="تفاح">
+          <strong>بندورة</strong>
+        </div>
+        <div class="product">
+          <img src="images/موز.jpg" alt="موز">
+          <strong>موز</strong>
         </div>
       </div>
-      <div class="card">
-        <h3>لوحة تحكم كاملة</h3>
-        <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
-        <!-- ضع هذا داخل body -->
-<iframe src="dashboard.html" width="100%" height="600px" style="border:none;"></iframe>
-
-      </div>
+    </div>
+    <div class="card">
+      <h3>لوحة تحكم كاملة</h3>
+      <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
+      <iframe src="dashboard.html" width="100%" height="600px" style="border:none;"></iframe>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <div class="grid">
-      <div class="card">
-        <h3>تتبع وتوصيل الطلبات</h3>
-        <p>تتبع مباشر لحالة الطلب والمندوب</p>
-        <h2>حالة الطلب: <span id="orderStatus">–</span></h2>
-        <div id="map" style="width:100%; height:400px;"></div>
-      </div>
-      <div class="card">
-        <h3>طلب #152</h3>
-        <p>المندوب: بهاء الدين بني عامر<br><span style="color:green">في الطريق</span></p>
-      </div>
+<div class="section">
+  <div class="grid">
+    <div class="card">
+      <h3>تتبع وتوصيل الطلبات</h3>
+      <p>تتبع مباشر لحالة الطلب والمندوب</p>
+      <h2>حالة الطلب: <span id="orderStatus">–</span></h2>
+      <div id="map" style="width:100%; height:400px;"></div>
+    </div>
+    <div class="card">
+      <h3>طلب #152</h3>
+      <p>المندوب: بهاء الدين بني عامر<br><span style="color:green">في الطريق</span></p>
     </div>
   </div>
-
-  <div class="footer">
-    <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
-    <div class="contact"><a href="tel:+962789119926" class="contact">📞 اتصل الآن</a>
-</div>
-  </div>
-
 </div>
 
-<!-- Leaflet JS -->
+<div class="footer">
+  <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
+  <div class="contact"><a href="tel:+962789119926" class="contact">📞 اتصل الآن</a></div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  // إنشاء الخريطة
   const map = L.map('map').setView([31.9454, 35.9284], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
-  let driverMarker = L.marker([31.9454, 35.9284]).addTo(map)
+  L.marker([31.9454, 35.9284]).addTo(map)
     .bindPopup("🚚 المندوب في الطريق")
     .openPopup();
-</script>
-
-
-
-<!-- Firebase (اختياري حسب استخدامك) -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-window.db = db; // متاحة عالميًا
-</script>
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  const cartCount = document.getElementById("cartCount");
-  const cartTotal = document.getElementById("cartTotal");
-
-  let count = 0;
-  let total = 0;
-
-  const buttons = document.querySelectorAll(".add-to-cart");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", function() {
-      const product = btn.closest(".product");
-      const price = parseFloat(product.getAttribute("data-price"));
-      count += 1;
-      total += price;
-
-      cartCount.textContent = count;
-      cartTotal.textContent = total.toFixed(2);
-      alert(`✅ تمت إضافة "${product.getAttribute("data-name")}" إلى السلة!`);
-    });
-  });
-
-});
 </script>
 
 </body>
