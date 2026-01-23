@@ -279,6 +279,39 @@ body {
   }
 
 }
+/* شريط الإعلان المتحرك */
+.promo-bar {
+  width: 100%;
+  background: linear-gradient(90deg, #2fbf71, #6fd26f);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+  position: relative;
+  z-index: 20;
+}
+
+.promo-text {
+  display: inline-block;
+  padding-left: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  color: #083d2b;
+  animation: scrollText 18s linear infinite;
+}
+
+/* الحركة */
+@keyframes scrollText {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* تحسين للموبايل */
+@media (max-width: 600px) {
+  .promo-text {
+    font-size: 16px;
+    animation-duration: 14s;
+  }
+}
 
   </style>
 </head>
@@ -302,7 +335,13 @@ body {
     <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
     <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
 
-    
+    <!-- شريط إعلان متحرك -->
+<div class="promo-bar">
+  <div class="promo-text">
+    🎉 بمناسبة إطلاق الموقع — التوصيل مجاني لمدة 3 أيام 🎉 &nbsp; 🎉 بمناسبة إطلاق الموقع — التوصيل مجاني لمدة 3 أيام 🎉
+  </div>
+</div>
+
   </section>
 <div class="features">
       <span>💻 موقع احترافي</span>
