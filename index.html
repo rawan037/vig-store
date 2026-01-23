@@ -158,11 +158,12 @@ body {
 
 /* الصورة نفسها */
 .profile-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  background: white;
+  object-fit: cover;
+  background: #fff;
+  z-index: 7;
 }
 
 .hero {
@@ -187,6 +188,29 @@ body {
     right: 15px;
   }
 }
+.profile-glow {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* التوهج */
+  background: radial-gradient(
+    circle,
+    rgba(111, 210, 111, 0.45) 0%,
+    rgba(111, 210, 111, 0.25) 40%,
+    rgba(111, 210, 111, 0.1) 60%,
+    rgba(111, 210, 111, 0.0) 75%
+  );
+
+  filter: blur(2px);
+  z-index: 6;
+}
 
   </style>
 </head>
@@ -200,8 +224,8 @@ body {
 <img src="images/الخلفيه.png" class="corner-img left veggies" alt="">
 
 <!-- صورة الشخص -->
-<div class="profile-wrapper">
-  <img src="images/الديرم.png" class="profile-img" alt="">
+<div class="profile-glow">
+  <img src="images/المدير.png" class="profile-img" alt="">
 </div>
 
 
