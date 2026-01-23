@@ -87,9 +87,18 @@
   z-index: 0 !important;         /* خلف النصوص */
 }
 
-  /* النصوص في الهيرو أصغر */
-  .subtitle { font-size:12px !important; margin-bottom:6px; }
-  .title { font-size:16px !important; margin-bottom:10px; }
+ /* النصوص في الهيرو أصغر ومرفوعة للأعلى */
+.subtitle { 
+  font-size:12px !important; 
+  margin-bottom:4px !important;  /* أقل من السابق لتحريك العنوان الرئيسي للأعلى */
+  margin-top:-4px !important;    /* رفع النص قليلاً نحو الأعلى */
+}
+
+.title { 
+  font-size:16px !important; 
+  margin-bottom:6px !important;  /* أقل من السابق لتقليل المسافة تحت العنوان */
+  margin-top:-4px !important;    /* رفع النص قليلاً نحو الأعلى */
+}
 
   /* شريط الإعلان: حجم أصغر وسلس */
   .promo-text { animation: scrollText 30s linear infinite; font-size:14px; }
