@@ -293,35 +293,64 @@ body {
   filter: blur(18px);
 }
 /* منع التداخل في الموبايل */
+/* ====== Mobile Final Fix ====== */
 @media (max-width: 768px) {
 
-  /* تصغير صورة الخضار وتحريكها */
-  .corner-img.veggies {
-    width: 180px;        /* تصغيرها */
-    top: 10px;
-    left: -20px;        /* خروج جزئي خارج الشاشة */
-    opacity: 0.9;
+  /* تقليل ارتفاع الهيدر */
+  .hero {
+    padding-top: 70px !important;
+    padding-bottom: 40px !important;
+    min-height: 260px;
+    position: relative;
+    overflow: hidden;
   }
 
-  /* تحريك صورة المدير لأسفل قليلاً */
+  /* صورة الخضار – أقصى اليسار على حد الفاصل */
+  .corner-img.veggies {
+    position: absolute;
+    width: 160px;
+    left: -20px;
+    bottom: -15px;   /* على خط الفاصل الأخضر */
+    top: auto;
+    z-index: 5;
+  }
+
+  /* صورة المدير – أعلى يمين الشاشة */
   .profile-glow.right {
-    top: 110px;         /* نزول للأسفل */
+    position: absolute;
+    top: 15px;
     right: 10px;
-    width: 140px;
-    height: 140px;
+    width: 110px;
+    height: 110px;
+    z-index: 10;
   }
 
   .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 95px;
+    height: 95px;
   }
 
-  /* إعطاء العناوين مسافة من الأعلى */
-  .hero {
-    padding-top: 260px;  /* مساحة لمنع التداخل مع الصور */
+  /* النصوص بالمنتصف بدون تداخل */
+  .subtitle,
+  .title {
+    position: relative;
+    z-index: 8;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 1.3;
   }
 
+  .title {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
 }
+
 /* شريط الإعلان المتحرك */
 .promo-bar {
   width: 100%;
@@ -339,7 +368,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #083d2b;
-animation: scrollText 5s linear infinite;
+animation: scrollText 10s linear infinite;
 
 
 }
