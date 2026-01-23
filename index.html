@@ -193,67 +193,44 @@ animation: scrollText 10s linear infinite;
   }
 
   .hero {
-    padding: 0;
+    padding: 85px 15px 45px;
   }
 
-  .hero-mobile {
-    position: relative;
-    padding: 20px 15px 50px;
-    background: linear-gradient(
-      to bottom,
-      #0b5f87 0%,
-      #0b5f87 58%,
-      #2fbf71 100%
-    );
-    text-align: center;
-  }
-
-  /* صورة الخضار */
-  .veggies-mobile {
-    position: absolute;
-    left: -15px;
-    bottom: 0;          /* ⬅️ فوق الفاصل الأخضر مباشرة */
-    width: 160px;
-    z-index: 2;
-  }
-
-  /* صورة المدير */
-  .manager-mobile {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    width: 120px;
-    text-align: center;
+  /* الخضار: أقصى يسار فوق الفاصل الأخضر */
+  .corner-img.veggies {
+    width: 150px;
+    top: auto;
+    bottom: -10px;
+    left: -20px;
     z-index: 3;
   }
 
-  .manager-mobile img {
+  /* صورة الشخص: أقصى يمين */
+  .profile-wrapper {
+    top: 15px;
+    right: 10px;
+    width: 120px;
+  }
+
+  .profile-img {
     width: 95px;
     height: 95px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #fff;
   }
 
-  .manager-mobile span {
-    display: block;
+  .manager-name {
     font-size: 12px;
-    margin-top: 6px;
     line-height: 1.3;
-    color: #eaffea;
   }
 
-  /* العناوين */
-  .hero-mobile h3 {
+  .subtitle {
     font-size: 15px;
-    margin-top: 65px;
   }
 
-  .hero-mobile h1 {
+  .title {
     font-size: 22px;
     line-height: 1.35;
-    max-width: 80%;
-    margin: 10px auto 0;
+    margin: 10px auto;
+    max-width: 75%;
   }
 }
 
@@ -264,22 +241,20 @@ animation: scrollText 10s linear infinite;
   <!-- القسم العلوي -->
 <section class="hero">
 
-  <div class="hero-mobile">
+  <!-- صورة الخضار -->
+  <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
 
-    <img src="images/خلفيه.png" class="veggies-mobile" alt="خضار">
-
-    <div class="manager-mobile">
-      <img src="images/المدير.png" alt="المدير">
-      <span>بإدارة: السيد ضياء الدين إبراهيم بني عامر</span>
-    </div>
-
-    <h3>🛒 متجر للخضار والفواكه</h3>
-    <h1>أسواق دير العسل للخضار والفواكه</h1>
-
+  <!-- صورة الشخص -->
+  <div class="profile-wrapper">
+    <div class="glow-bg"></div>
+    <img src="images/المدير.png" class="profile-img" alt="المدير">
+    <p class="manager-name">بإدارة: السيد ضياء الدين إبراهيم بني عامر</p>
   </div>
 
-</section>
+  <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
+  <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
 
+</section>
 
   
     <!-- شريط إعلان متحرك -->
