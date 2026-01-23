@@ -98,251 +98,64 @@
 .corner-img.right {
   right: 20px;
 }
-
-/* تحسين للموبايل */
-/* إصلاح جذري لتداخل الهيدر على الهاتف */
-@media (max-width: 768px) {
-
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 25px !important;
-    min-height: auto;
-  }
-
-  /* الخضار */
-  .corner-img.veggies {
-    position: relative;
-    width: 200px;
-    left: 0;
-    top: 0;
-    margin-bottom: 15px;
-  }
-
-  /* صورة المدير */
-  .profile-glow.right {
-    position: relative;
-    top: 0;
-    right: 0;
-    margin-bottom: 15px;
-    width: 140px;
-    height: 140px;
-  }
-
-  .profile-img {
-    width: 120px;
-    height: 120px;
-  }
-
-  /* النصوص */
-  .subtitle, .title {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-  }
-
-  /* منع أي عناصر عائمة */
-  .corner-img,
-  .profile-glow {
-    float: none;
-  }
+.hero {
+  position: relative;
+  background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%);
+  padding: 100px 20px 60px;
+  overflow: hidden;
+  text-align: center;
 }
 
-  .features {
-    font-size: 16px;
-    gap: 15px;
-  }
-}
+/* صورة الخضار */
 .corner-img.veggies {
-  width: 400px;          /* الحجم الكبير */
-  top: 20px;             /* قريبة من أعلى الصفحة */
-  left: 0;               /* إلى أقصى يسار الصفحة */
-  border-radius: 0;      /* بدون زوايا دائرية */
   position: absolute;
-  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 260px;
+  z-index: 2;
 }
-body {
-  margin: 0;
-  padding: 0;
-}
 
-
-
+/* صورة الشخص */
 .profile-wrapper {
   position: absolute;
-  top: 40px;
-  right: 30px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at top left,
-    #6fd26f,
-    #2fbf71
-  );
-  padding: 8px;
-  z-index: 6;
+  top: 20px;
+  right: 20px;
+  width: 180px;
+  text-align: center;
+  z-index: 4;
 }
 
-/* الصورة نفسها */
 .profile-img {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   background: #fff;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
-
-.hero {
-  background: linear-gradient(
-    to bottom,
-    #0b5f87 0%,
-    #0b5f87 45%,
-    #1e9c6c 70%,
-    #2fbf71 100%
-  );
-}
-
-  @media (max-width: 600px) {
-  .profile-glow.right {
-    width: 130px;
-    height: 130px;
-    top: 15px;
-    right: 15px;
-  }
-
-.profile-img {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  z-index: 2;
-}
-
-
-  
-}
-.profile-glow {
-  position: absolute;
-  top: 40px;
-  right: 30px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 6;
-}
-.profile-glow.right {
-  position: absolute;
-  top: 20px;      /* نفس مكانك */
-  right: 20px;    /* نفس مكانك */
-  width: 180px;
-  height: 180px;
-  z-index: 10;
-}
-
-  /* التوهج */
-  background: radial-gradient(
-    circle,
-    rgba(111, 210, 111, 0.45) 0%,
-    rgba(111, 210, 111, 0.25) 40%,
-    rgba(111, 210, 111, 0.1) 60%,
-    rgba(111, 210, 111, 0.0) 75%
-  );
-
-  filter: blur(2px);
-  z-index: 6;
-}
 .glow-bg {
   position: absolute;
-  inset: 0;
+  inset: -15px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(111, 210, 111, 0.5) 0%,
-    rgba(111, 210, 111, 0.35) 40%,
-    rgba(111, 210, 111, 0.15) 65%,
-    rgba(111, 210, 111, 0.0) 80%
+    rgba(111,210,111,.5) 0%,
+    rgba(111,210,111,.25) 45%,
+    rgba(111,210,111,0) 75%
   );
-  filter: blur(18px);
+  filter: blur(12px);
+  z-index: 1;
 }
-    .manager-name {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 15px;
+
+/* اسم المدير */
+.manager-name {
+  margin-top: 8px;
+  font-size: 14px;
   color: #eaffea;
 }
 
-/* منع التداخل في الموبايل */
-/* ====== Mobile Final Fix ====== */
-/* ===== Mobile Fix 100% ===== */
-@media (max-width: 768px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  .hero {
-    padding: 90px 15px 40px;
-    text-align: center;
-    position: relative;
-  }
-
-  /* صورة الخضار */
-  .corner-img.veggies {
-    width: 140px;
-    position: absolute;
-    bottom: -20px;
-    left: -20px;
-    z-index: 3;
-  }
-
-  /* صورة المدير */
-  .profile-glow.right {
-    width: 100px;
-    height: 100px;
-    top: 15px;
-    right: 10px;
-    position: absolute;
-    z-index: 5;
-  }
-
-  .profile-img {
-    width: 85px;
-    height: 85px;
-  }
-
-  /* العناوين */
-  .subtitle {
-    font-size: 15px;
-    margin-bottom: 8px;
-  }
-
-  .title {
-    font-size: 22px;
-    line-height: 1.3;
-  }
-
-  .manager-name {
-    font-size: 13px;
-    margin-top: 6px;
-  }
-
-  .features {
-    font-size: 14px;
-    gap: 10px;
-    padding: 15px;
-  }
-}
 
 /* شريط الإعلان المتحرك */
 .promo-bar {
@@ -373,41 +186,77 @@ animation: scrollText 10s linear infinite;
 }
 
 /* تحسين للموبايل */
-@media (max-width: 600px) {
-  .promo-text {
-    font-size: 16px;
-    animation-duration: 14s;
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .hero {
+    padding: 85px 15px 45px;
+  }
+
+  /* الخضار: أقصى يسار فوق الفاصل الأخضر */
+  .corner-img.veggies {
+    width: 150px;
+    top: auto;
+    bottom: -10px;
+    left: -20px;
+    z-index: 3;
+  }
+
+  /* صورة الشخص: أقصى يمين */
+  .profile-wrapper {
+    top: 15px;
+    right: 10px;
+    width: 120px;
+  }
+
+  .profile-img {
+    width: 95px;
+    height: 95px;
+  }
+
+  .manager-name {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .title {
+    font-size: 22px;
+    line-height: 1.35;
+    margin: 10px auto;
+    max-width: 75%;
   }
 }
+
 
   </style>
 </head>
 <body>
 
   <!-- القسم العلوي -->
-  <section class="hero">
+ <section class="hero">
 
-    <!-- صور الزوايا -->
- <!-- صورة الخضار -->
-  <img src="images/خلفيه.png" class="corner-img veggies" alt="">
+  <!-- صورة الخضار -->
+  <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
 
-<!-- صورة الشخص -->
-<div class="profile-glow right">
-  <div class="glow-bg"></div>
-  <img src="images/المدير.png" class="profile-img" alt="">
-</div>
+  <!-- صورة الشخص -->
+  <div class="profile-wrapper">
+    <div class="glow-bg"></div>
+    <img src="images/المدير.png" class="profile-img" alt="المدير">
+    <p class="manager-name">بإدارة: السيد ضياء الدين إبراهيم بني عامر</p>
+  </div>
 
-<p class="manager-name">
-  بإدارة: السيد ضياء الدين إبراهيم بني عامر
-</p>
+  <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
+  <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
 
+</section>
 
-
-    <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
-    <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
-
-
-  </section>
   
     <!-- شريط إعلان متحرك -->
 <div class="promo-bar">
