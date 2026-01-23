@@ -79,7 +79,13 @@
   .manager-name { font-size:6px !important; margin-top:1.5px; }
 
   /* الخضار أصغر قليلًا لتجنب التداخل */
-  .corner-img.veggies { width:120px !important; top:10px !important;bottom:-20px !important; left:0px !important; z-index:0 !important; }
+ .corner-img.veggies {
+  width: 120px !important;       /* حجم الصورة صغير لتجنب التداخل */
+  bottom: 0 !important;          /* ملاصقة تمامًا لأسفل الهيرو */
+  left: 0 !important;            /* تبقى على اليسار */
+  top: auto !important;          /* إزالة أي تأثير لـ top */
+  z-index: 0 !important;         /* خلف النصوص */
+}
 
   /* النصوص في الهيرو أصغر */
   .subtitle { font-size:12px !important; margin-bottom:6px; }
