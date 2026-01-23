@@ -224,6 +224,87 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   .social-icons a svg { width:25px; height:25px; }
   .footer-bottom { font-size:10px; }
 }
+.footer .contact a {
+  color: #fff;          /* نص أبيض */
+  text-decoration: none; /* إزالة الخط تحت النص */
+}
+/* === أزرار الفوتر مع المندوب والاتصال === */
+.footer-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* ليكون مرن على الهاتف */
+  margin-top: 20px;
+}
+
+/* زر البيع */
+.footer-buttons .btn {
+  background: #ff8c1a;  /* لون الزر البرتقالي */
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* الدائرة الخاصة بصورة المندوب داخل الزر */
+.footer-buttons .btn .icon-wrapper {
+  background-color: #ff8c1a;  /* نفس لون الزر */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* حجم صورة المندوب داخل الدائرة */
+.footer-buttons .btn .icon-wrapper img {
+  width: 16px;
+  height: 16px;
+}
+
+/* زر الاتصال */
+.footer-buttons .contact {
+  background: #083d66;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
+  text-decoration: none; /* إزالة الخط */
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+/* --- ريسبونسف للهاتف --- */
+@media (max-width:768px) {
+  .footer-buttons {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-buttons .btn,
+  .footer-buttons .contact {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .footer-buttons .btn .icon-wrapper {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer-buttons .btn .icon-wrapper img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
 
 </style>
 </head>
@@ -297,8 +378,22 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
 </div>
 
 <div class="footer">
-  <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
-  <div class="contact"><a href="tel:+962789119926" class="contact">📞 اتصل الآن</a></div>
+ <div class="footer-buttons">
+  <!-- زر البيع -->
+  <button class="btn">
+    <span class="icon-wrapper">
+      <img src="images/مندوب.png" alt="مندوب">
+    </span>
+    🧾 جاهز لبدء البيع اليوم
+  </button>
+
+  <!-- زر الاتصال -->
+  <a href="tel:+962789119926" class="contact">
+    📞 اتصل الآن
+  </a>
+</div>
+
+
 </div>
 <div class="footer-extended">
   <div class="footer-top">
