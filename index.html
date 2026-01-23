@@ -121,6 +121,20 @@
   /* padding للهيرو لتناسب الحجم الجديد */
   .hero { padding:40px 10px 50px; }
 }
+@media (max-width:768px) {
+  .features {
+    flex-wrap: nowrap !important;        /* تمنع التفاف العناصر */
+    font-size:12px !important;          /* تصغير حجم النصوص */
+    gap:15px !important;                 /* مسافة صغيرة بين الأيقونات */
+    overflow-x:auto;                     /* يسمح بالتمرير الأفقي إذا الحاجة */
+    padding:0 10px;                      /* مسافة من الجانبين */
+  }
+
+  .features span {
+    white-space:nowrap;                  /* يمنع التفاف النص داخل العنصر */
+    flex:0 0 auto;                       /* العنصر يأخذ حجمه الطبيعي فقط */
+  }
+}
 
   </style>
 </head>
