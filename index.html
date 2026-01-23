@@ -35,7 +35,105 @@
     .footer .btn { background: #ff8c1a; color: #fff; padding: 18px 60px; border-radius: 40px; font-size: 22px; display: inline-block; }
     .contact { margin-top: 15px; background: #083d66; padding: 14px 40px; border-radius: 30px; display: inline-block; }
     @media(max-width:768px) { .grid { grid-template-columns: 1fr; } }
-   
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body {
+  background: #0b5f87;
+  color: white;
+}
+
+/* القسم العلوي */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 80px 20px 60px;
+
+  /* التدرج */
+  background: linear-gradient(
+    to bottom,
+    #0b5f87 0%,
+    #0b5f87 50%,
+    #2fbf71 100%
+  );
+}
+
+/* العناوين */
+.subtitle {
+  color: #7CFF6B;
+  font-size: clamp(18px, 3vw, 26px);
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: clamp(26px, 4vw, 42px);
+  margin-bottom: 25px;
+}
+
+/* المزايا */
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  font-size: 18px;
+}
+
+/* الفاصل الأخضر */
+.divider {
+  height: 12px;
+  background: #1f7a1f;
+}
+
+/* محتوى الصفحة */
+.content {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+/* زر */
+.cta {
+  background: #6fd26f;
+  border: none;
+  padding: 18px 45px;
+  font-size: 20px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+/* صور الزوايا */
+.corner-img {
+  position: absolute;
+  top: 20px;
+  width: 120px;
+  max-width: 25vw;
+}
+
+.corner-img.left {
+  left: 20px;
+}
+
+.corner-img.right {
+  right: 20px;
+}
+
+/* تحسين للموبايل */
+@media (max-width: 600px) {
+  .corner-img {
+    width: 80px;
+    opacity: 0.9;
+  }
+
+  .features {
+    font-size: 16px;
+    gap: 15px;
+  }
+}
+
   </style>
 </head>
 <body>
