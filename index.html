@@ -233,6 +233,77 @@ animation: scrollText 1015s linear infinite;
     max-width: 75%;
   }
 }
+    @media (max-width: 768px) {
+
+  .manager-mobile {
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    width: 120px;
+    text-align: center;
+    z-index: 6;
+  }
+
+  /* حاوية التوهج */
+  .avatar-glow {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border-radius: 50%;
+    background: linear-gradient(
+      to bottom,
+      #0b5f87,
+      #2fbf71
+    ); /* ⬅️ نفس خلفية الموقع */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* التوهج الدائري */
+  .avatar-glow::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(111,210,111,.55) 0%,
+      rgba(111,210,111,.35) 40%,
+      rgba(111,210,111,.15) 65%,
+      rgba(111,210,111,0) 80%
+    );
+    filter: blur(10px);
+    z-index: 0;
+  }
+
+  /* الصورة نفسها */
+  .avatar-glow img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    /* السحر هنا 👇 */
+    mix-blend-mode: multiply; /* ⬅️ يدمج الأبيض بالخلفية */
+    background: transparent;
+
+    position: relative;
+    z-index: 1;
+  }
+
+  /* الاسم */
+  .manager-mobile span {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: #eaffea;
+  }
+}
+
 
   </style>
 </head>
@@ -245,11 +316,14 @@ animation: scrollText 1015s linear infinite;
   <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
 
   <!-- صورة الشخص -->
-  <div class="profile-wrapper">
-    <div class="glow-bg"></div>
-    <img src="images/المدير.png" class="profile-img" alt="المدير">
-    <p class="manager-name">بإدارة: السيد ضياء الدين إبراهيم بني عامر</p>
+  
+  <div class="manager-mobile">
+  <div class="avatar-glow">
+    <img src="images/المدير.png" alt="المدير">
   </div>
+  <span>بإدارة: السيد ضياء الدين إبراهيم بني عامر</span>
+</div>
+
 
   <h3 class="subtitle">🛒 متجر للخضار والفواكه</h3>
   <h1 class="title">أسواق دير العسل للخضار والفواكه</h1>
