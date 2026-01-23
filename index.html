@@ -73,10 +73,15 @@
 
   /* صور المدير أصغر */
   .profile-wrapper { width:80px !important; top:15px !important; right:15px !important; z-index:4 !important; }
-  .profile-img { width:40px !important; height:40px !important; }
-
+  .profile-img { width:40px !important; height:40px !important; 
+               
+  bottom: 0 !important;          /* ملاصقة تمامًا لأسفل الهيرو */
+  left: 0 !important;            /* تبقى على اليسار */
+  top: auto !important;          /* إزالة أي تأثير لـ top */
+  z-index: 0 !important;         /* خلف النصوص */}
+}
   /* اسم المدير أصغر */
-  .manager-name { font-size:6px !important; margin-top:1.5px; }
+  .manager-name { font-size:6px !important; margin-top:1px; }
 
   /* الخضار أصغر قليلًا لتجنب التداخل */
  .corner-img.veggies {
