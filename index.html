@@ -8,12 +8,15 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
   <style>
+    /* === أساسي === */
     * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
     body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden; }
-    .hero { position: relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
+
+    .hero { position:relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
     .subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
     .title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
     .cta { background:#6bcf63; color:#fff; padding:18px 50px; border-radius:40px; font-size:22px; display:inline-block; margin:30px auto; text-decoration:none; cursor:pointer; }
+
     .section { background:#0fa36b; margin:40px 0; padding:30px; border-radius:20px; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
     .card { background:#fff; color:#333; border-radius:15px; padding:20px; text-align:center; }
@@ -22,32 +25,41 @@
     .product { background:#f6fff7; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; }
     .product img { width:100%; height:120px; object-fit:cover; border-radius:10px; margin-bottom:10px; }
     .product strong { margin-bottom:5px; }
+
     .footer { text-align:center; margin-top:40px; }
     .footer .btn { background:#ff8c1a; color:#fff; padding:18px 60px; border-radius:40px; font-size:22px; display:inline-block; }
     .contact { margin-top:15px; background:#083d66; padding:14px 40px; border-radius:30px; display:inline-block; }
 
-    /* الصور */
+    .features { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; margin:30px 0; font-size:18px; }
+
+    /* === صور المدير والخضار === */
     .corner-img.veggies { position:absolute; top:0; left:0; width:260px; z-index:2; }
     .profile-wrapper { position:absolute; top:20px; right:20px; width:180px; text-align:center; z-index:4; }
     .profile-img { width:140px; height:140px; border-radius:50%; object-fit:cover; background:#fff; position:relative; z-index:3; }
     .glow-bg { position:absolute; inset:-15px; border-radius:50%; background:radial-gradient(circle,rgba(111,210,111,.5)0%,rgba(111,210,111,.25)45%,rgba(111,210,111,0)75%); filter:blur(12px); z-index:1; }
     .manager-name { margin-top:8px; font-size:14px; color:#eaffea; }
 
-    /* شريط الإعلان */
+    /* === شريط الإعلان المتحرك === */
     .promo-bar { width:100%; background:linear-gradient(90deg,#2fbf71,#6fd26f); overflow:hidden; white-space:nowrap; padding:12px 0; position:relative; z-index:20; }
     .promo-text { display:inline-block; padding-left:100%; font-size:20px; font-weight:700; color:#083d2b; animation: scrollText 30s linear infinite; }
     @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* ريسبونسف */
+    /* === ريسبونسف نهائي === */
     @media (max-width:768px) {
       .grid { grid-template-columns:1fr; }
-      /* تبقى الصور في نفس المكان والحجم */
-      .corner-img.veggies { position:absolute !important; top:0 !important; left:0 !important; width:260px !important; z-index:2 !important; }
-      .profile-wrapper { position:absolute !important; top:20px !important; right:20px !important; width:180px !important; height:auto !important; z-index:4 !important; }
+
+      /* الصور تبقى ثابتة كما في اللابتوب */
+      .corner-img.veggies { top:0 !important; left:0 !important; width:260px !important; z-index:2 !important; }
+      .profile-wrapper { top:20px !important; right:20px !important; width:180px !important; height:auto !important; z-index:4 !important; }
       .profile-img { width:140px !important; height:140px !important; }
       .glow-bg { inset:-15px; }
+
+      /* نصوص */
       .subtitle { font-size:clamp(18px,3vw,26px); }
       .title { font-size:clamp(26px,4vw,42px); }
+
+      /* شريط الإعلان */
+      .promo-text { animation: scrollText 30s linear infinite; }
     }
   </style>
 </head>
