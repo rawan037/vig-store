@@ -249,6 +249,36 @@ body {
   );
   filter: blur(18px);
 }
+/* منع التداخل في الموبايل */
+@media (max-width: 768px) {
+
+  /* تصغير صورة الخضار وتحريكها */
+  .corner-img.veggies {
+    width: 180px;        /* تصغيرها */
+    top: 10px;
+    left: -20px;        /* خروج جزئي خارج الشاشة */
+    opacity: 0.9;
+  }
+
+  /* تحريك صورة المدير لأسفل قليلاً */
+  .profile-glow.right {
+    top: 110px;         /* نزول للأسفل */
+    right: 10px;
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* إعطاء العناوين مسافة من الأعلى */
+  .hero {
+    padding-top: 260px;  /* مساحة لمنع التداخل مع الصور */
+  }
+
+}
 
   </style>
 </head>
