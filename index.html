@@ -301,62 +301,36 @@ animation: scrollText 1015s linear infinite;
 /* ===== FIX MOBILE LAYOUT ONCE AND FOR ALL ===== */
 @media (max-width: 768px) {
 
-  * {
-    position: static !important;
+  /* ===== FORCE SAME IMAGE LAYOUT ON MOBILE AS DESKTOP ===== */
+@media (max-width: 768px) {
+
+  /* صورة الخضار – تبقى يسار */
+  .corner-img.veggies {
+    position: absolute !important;
+    top: 20px !important;
+    left: 20px !important;
+    bottom: auto !important;
+    width: 260px !important;   /* نفس حجم اللابتوب */
+    z-index: 5;
   }
 
-  body {
-    overflow-x: hidden;
-  }
-
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 25px 15px 40px;
-    text-align: center;
-  }
-
-  /* صورة المدير */
+  /* صورة الشخص – تبقى يمين */
   .profile-glow,
-  .profile-wrapper,
-  .manager-mobile {
-    order: 1;
-    margin-bottom: 10px;
+  .profile-wrapper {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    width: 200px !important;   /* نفس حجم اللابتوب */
+    height: 200px !important;
+    z-index: 6;
   }
 
   .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 150px !important;
+    height: 150px !important;
   }
 
-  /* اسم المدير */
-  .manager-name {
-    order: 2;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-
-  /* العناوين */
-  .subtitle {
-    order: 3;
-    font-size: 16px;
-    margin-top: 5px;
-  }
-
-  .title {
-    order: 4;
-    font-size: 22px;
-    max-width: 95%;
-    line-height: 1.35;
-  }
-
-  /* صورة الخضار */
-  .corner-img.veggies {
-    order: 5;
-    width: 160px;
-    margin-top: 15px;
-  }
 
   /* شريط الإعلان */
   .promo-bar {
