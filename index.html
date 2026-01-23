@@ -95,6 +95,34 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   .section .grid:last-child .card p, .section .grid:last-child .card span { font-size:10px !important; margin-bottom:4px !important; }
   .section .grid:last-child #map { height:150px !important; }
 }
+  /* شبكة موحدة للعناصر الأربعة */
+.unified-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:10px;
+}
+
+/* تعديل بطاقات الشبكة لتكون متساوية الحجم */
+.unified-grid .card {
+  min-height:180px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  text-align:center;
+}
+
+/* تصغير النصوص داخل البطاقات */
+.unified-grid .card h3 { font-size:12px; margin-bottom:4px; }
+.unified-grid .card p { font-size:10px; margin-bottom:4px; }
+.unified-grid .card strong { font-size:10px; }
+.unified-grid .card .cta { font-size:12px; padding:6px 12px; border-radius:12px; }
+
+/* تصغير الخرائط وصور المنتجات داخل البطاقات */
+.unified-grid #map { height:120px !important; }
+.unified-grid .product img { height:60px !important; }
+
 </style>
 </head>
 <body>
@@ -127,10 +155,12 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   <button class="cta">🛍️ اطلب بكل سهولة</button>
 </section>
 
+<!-- الشبكة الموحدة للأربعة عناصر -->
 <div class="section">
-  <div class="grid">
-    <div class="card" id="products">
-      <a href="products.html" class="cta">🛍️ عرض المنتجات</a>
+  <div class="grid unified-grid">
+    <!-- بطاقة عرض المنتجات -->
+    <div class="card">
+      <h3>🛍️ عرض المنتجات</h3>
       <div class="products">
         <div class="product">
           <img src="images/تفاح.jpg" alt="تفاح">
@@ -141,30 +171,30 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
           <strong>موز</strong>
         </div>
       </div>
+      <a href="products.html" class="cta">عرض المنتجات</a>
     </div>
+
+    <!-- بطاقة لوحة التحكم -->
     <div class="card">
-      <h3>لوحة تحكم كاملة</h3>
-      <p>إدارة الطلبات، المنتجات، والتقارير اليومية بسهولة</p>
-      <iframe src="dashboard.html" width="100%" height="600px" style="border:none;"></iframe>
+      <h3>⚙️ لوحة تحكم</h3>
+      <p>إدارة الطلبات، المنتجات، والتقارير بسهولة</p>
+      <iframe src="dashboard.html" width="100%" height="150px" style="border:none;"></iframe>
+    </div>
+
+    <!-- بطاقة تتبع الطلب -->
+    <div class="card">
+      <h3>🚚 تتبع الطلب</h3>
+      <p>المندوب: بهاء الدين بني عامر</p>
+      <div id="map" style="width:100%; height:150px;"></div>
+    </div>
+
+    <!-- بطاقة طلب #152 -->
+    <div class="card">
+      <h3>🧾 طلب #152</h3>
+      <p>حالة الطلب: <span style="color:green">في الطريق</span></p>
     </div>
   </div>
 </div>
-
-<div class="section">
-  <div class="grid">
-    <div class="card">
-      <h3>تتبع وتوصيل الطلبات</h3>
-      <p>تتبع مباشر لحالة الطلب والمندوب</p>
-      <h2>حالة الطلب: <span id="orderStatus">–</span></h2>
-      <div id="map" style="width:100%; height:400px;"></div>
-    </div>
-    <div class="card">
-      <h3>طلب #152</h3>
-      <p>المندوب: بهاء الدين بني عامر<br><span style="color:green">في الطريق</span></p>
-    </div>
-  </div>
-</div>
-
 <div class="footer">
   <div class="btn">🧾 جاهز لبدء البيع اليوم</div>
   <div class="contact"><a href="tel:+962789119926" class="contact">📞 اتصل الآن</a></div>
