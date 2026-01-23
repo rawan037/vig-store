@@ -61,6 +61,25 @@
       /* شريط الإعلان */
       .promo-text { animation: scrollText 30s linear infinite; }
     }
+    @media (max-width:768px) {
+
+  /* الصور العليا أصغر لتجنب التداخل */
+  .corner-img.veggies { width:150px !important; top:10px !important; left:10px !important; z-index:2 !important; }
+  .profile-wrapper { width:120px !important; top:15px !important; right:15px !important; z-index:4 !important; }
+  .profile-img { width:95px !important; height:95px !important; }
+
+  /* النصوص أصغر للهاتف */
+  .subtitle { font-size:16px !important; margin-bottom:8px; }
+  .title { font-size:20px !important; margin-bottom:12px; }
+  .manager-name { font-size:12px !important; margin-top:4px; }
+
+  /* شريط الإعلان: سرعة سلسة */
+  .promo-text { animation: scrollText 30s linear infinite; font-size:16px; }
+
+  /* تعديل padding في hero لتناسب حجم الصور */
+  .hero { padding:80px 15px 40px; }
+}
+
   </style>
 </head>
 <body>
