@@ -61,23 +61,27 @@
       /* شريط الإعلان */
       .promo-text { animation: scrollText 30s linear infinite; }
     }
- @media (max-width:768px) {
+@media (max-width:768px) {
 
-  /* الصور العليا أصغر أكثر */
+  /* صور المدير أصغر */
+  .profile-wrapper { width:80px !important; top:15px !important; right:15px !important; z-index:4 !important; }
+  .profile-img { width:60px !important; height:60px !important; }
+
+  /* اسم المدير أصغر */
+  .manager-name { font-size:10px !important; margin-top:2px; }
+
+  /* الخضار أصغر قليلًا لتجنب التداخل */
   .corner-img.veggies { width:120px !important; top:10px !important; left:10px !important; z-index:2 !important; }
-  .profile-wrapper { width:100px !important; top:15px !important; right:15px !important; z-index:4 !important; }
-  .profile-img { width:80px !important; height:80px !important; }
 
-  /* النصوص أصغر */
+  /* النصوص في الهيرو أصغر */
   .subtitle { font-size:14px !important; margin-bottom:6px; }
   .title { font-size:18px !important; margin-bottom:10px; }
-  .manager-name { font-size:11px !important; margin-top:3px; }
 
-  /* شريط الإعلان: حجم أصغر وسرعة سلسة */
+  /* شريط الإعلان: حجم أصغر وسلس */
   .promo-text { animation: scrollText 30s linear infinite; font-size:14px; }
 
   /* padding للهيرو لتناسب الحجم الجديد */
-  .hero { padding:70px 10px 30px; }
+  .hero { padding:65px 10px 25px; }
 }
 
   </style>
