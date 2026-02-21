@@ -1,59 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>طلباتي - أسواق دير العسل</title>
-
-<!-- الخطوط -->
+<title>طلباتي</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- CSS أساسي -->
 <style>
-body {
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(180deg,#0b5fa5,#0f8f6e);
-    color: #fff;
-    margin: 0;
-    padding: 0 20px;
-}
-h1 {
-    text-align: center;
-    margin: 30px 0;
-}
-.order {
-    background: #083d66;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-}
-.order h3 {
-    margin: 0 0 10px 0;
-    color: #6bcf63;
-}
-.order p {
-    margin: 5px 0;
-}
+body { font-family:'Cairo',sans-serif; background:#0b5fa5; color:#fff; padding:20px; }
+h1 { text-align:center; margin-bottom:30px; }
+.order { background:#083d66; padding:15px; margin-bottom:15px; border-radius:10px; }
+.order h3 { color:#6bcf63; margin-bottom:10px; }
+.order ul { padding-left:20px; }
 </style>
 
-<!-- مكتبات Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<!-- إعداد Firebase -->
-<script>
-const firebaseConfig = {
-  apiKey: "ضعهنا",
-  authDomain: "ضعهنا",
-  projectId: "ضعهنا"
-};
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-</script>
-
 </head>
 <body>
 
@@ -61,40 +22,42 @@ const db = firebase.firestore();
 <div id="ordersContainer"></div>
 
 <script>
-// التحقق من تسجيل الدخول
-auth.onAuthStateChanged(user => {
+const firebaseConfig = {
+ apiKey: "ضعهنا",
+ authDomain: "ضعهنا",
+ projectId: "ضعهنا"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
+auth.onAuthStateChanged(user=>{
   if(!user){
-    alert("يجب تسجيل الدخول أولاً");
-    window.location = "login.html"; // إعادة التوجيه لصفحة تسجيل الدخول
+    window.location="index.html";
     return;
   }
 
-  // جلب طلبات المستخدم من Firestore
   db.collection("orders")
-    .where("userId", "==", user.uid)
-    .orderBy("createdAt", "desc")
+    .where("userId","==",user.uid)
+    .orderBy("createdAt","desc")
     .get()
-    .then(snapshot => {
+    .then(snapshot=>{
       const container = document.getElementById("ordersContainer");
       if(snapshot.empty){
-        container.innerHTML = "<p>لا توجد طلبات بعد.</p>";
+        container.innerHTML="<p>لا توجد طلبات بعد.</p>";
       }
-      snapshot.forEach(doc => {
+      snapshot.forEach(doc=>{
         const order = doc.data();
-        let html = `<div class="order">
-                        <h3>طلب بتاريخ: ${order.createdAt.toDate().toLocaleString()}</h3>
-                        <p>المنتجات:</p>
-                        <ul>`;
-        order.items.forEach(item => {
-          html += `<li>${item.name} - ${item.price} JOD</li>`;
+        let html=`<div class="order">
+                    <h3>طلب بتاريخ: ${order.createdAt.toDate().toLocaleString()}</h3>
+                    <p>المنتجات:</p><ul>`;
+        order.items.forEach(item=>{
+          html+=`<li>${item.name} - ${item.price} JOD</li>`;
         });
-        html += `</ul></div>`;
-        container.innerHTML += html;
+        html+="</ul></div>";
+        container.innerHTML+=html;
       });
-    })
-    .catch(err => console.error(err));
-
+    });
 });
 </script>
 
