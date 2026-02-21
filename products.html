@@ -245,9 +245,18 @@ pointer-events:none;
     padding: 12px 5px;
   }
 }
-  
+  body { font-family:'Cairo',sans-serif; background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; padding:20px; }
+h1 { text-align:center; margin-bottom:20px; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:15px; }
+.product { background:#fff; color:#333; border-radius:10px; padding:10px; text-align:center; }
+.product img { width:100%; height:100px; object-fit:cover; border-radius:8px; }
+.product button { margin-top:5px; padding:5px 10px; border:none; background:#6bcf63; color:#fff; border-radius:5px; cursor:pointer; }
+.cart { position:fixed; top:20px; left:20px; background:#ff8c1a; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; cursor:pointer; }
+#cartCount { position:absolute; top:-5px; right:-5px; background:red; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; }
 </style>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   
@@ -295,6 +304,21 @@ pointer-events:none;
 <!-- المنتجات كاملة كما كانت -->
 
 <script>
+const firebaseConfig = {
+ apiKey: "ضعهنا",
+ authDomain: "ضعهنا",
+ projectId: "ضعهنا"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// حماية الصفحة: إعادة التوجيه إذا لم يسجل الدخول
+auth.onAuthStateChanged(user=>{
+  if(!user) window.location="index.html";
+});
+
+<script>
 const products = [
 ["بندورة","بندوره.jpg",0.80],
 ["خيار","خيار.jpg",0.75],
@@ -315,6 +339,40 @@ const products = [
 ["باذنجان","بيتنجان.jpg",0.80]
 ];
 
+const container = document.getElementById("productsContainer");
+products.forEach(p=>{
+  const div = document.createElement("div");
+  div.classList.add("product");
+  div.innerHTML = `<img src="${p[1]}" alt="${p[0]}"><strong>${p[0]}</strong><p>${p[2]} JOD</p>
+                   <button onclick="addToCart('${p[0]}',${p[2]})">أضف للسلة</button>`;
+  container.appendChild(div);
+});
+
+let cart = [];
+function addToCart(name, price){
+  cart.push({name, price});
+  document.getElementById("cartCount").textContent = cart.length;
+}
+
+// حفظ الطلب في Firebase لكل مستخدم
+function saveOrder(cart){
+  const user = auth.currentUser;
+  if(!user){ alert("يجب تسجيل الدخول أولاً"); return; }
+  db.collection("orders").add({
+    userId: user.uid,
+    items: cart,
+    createdAt: new Date()
+  });
+  cart=[]; document.getElementById("cartCount").textContent=0;
+  alert("تم إرسال الطلب وحفظه بنجاح!");
+}
+
+// مثال على إرسال الطلب (هنا مجرد حفظ بدون واتساب)
+function openCart(){
+  if(cart.length===0) return alert("السلة فارغة");
+  saveOrder(cart);
+}
+</script>
 document.write(products.map(p=>`
 <div class="product">
 <img src="images/${p[1]}">
@@ -447,40 +505,7 @@ setTimeout(()=>cartIcon.style.transform="scale(1)",200);
 }
 
 </script>
-<script>
-const firebaseConfig = {
- apiKey: "ضعهنا",
- authDomain: "ضعهنا",
- projectId: "ضعهنا"
-};
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-</script>
-  <script>
-auth.onAuthStateChanged(user=>{
-if(!user){
-window.location="login.html";
-}
-});
-</script>
-  <script>
-function saveOrder(cart){
-
-const user = auth.currentUser;
-
-if(!user){
-alert("يجب تسجيل الدخول");
-return;
-}
-
-db.collection("orders").add({
-userId: user.uid,
-items: cart,
-createdAt: new Date()
-});
-}
 </script>
 </body>
 </html>
