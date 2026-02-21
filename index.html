@@ -354,12 +354,83 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+// تهيئة Firebase
+const firebaseConfig = {
+  apiKey: "ضعهنا",
+  authDomain: "ضعهنا",
+  projectId: "ضعهنا"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
+// إعداد reCAPTCHA
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+  'size': 'normal',
+  'callback': (response) => {
+    console.log("reCAPTCHA تم التحقق");
+  }
+});
+
+// إرسال رمز التحقق
+function sendOTP() {
+  const phoneNumber = document.getElementById("phoneNumber").value;
+  const appVerifier = window.recaptchaVerifier;
+
+  auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then((confirmationResult) => {
+      window.confirmationResult = confirmationResult;
+      document.getElementById("otpSection").style.display = "block";
+      alert("تم إرسال رمز التحقق إلى رقم الهاتف");
+    })
+    .catch((error) => {
+      alert("حدث خطأ أثناء إرسال رمز التحقق: " + error.message);
+    });
+}
+
+// التحقق من رمز OTP
+function verifyOTP() {
+  const code = document.getElementById("otpCode").value;
+  window.confirmationResult.confirm(code)
+    .then((result) => {
+      const user = result.user;
+      alert("تم تسجيل الدخول بنجاح!");
+      document.getElementById("loginScreen").style.display = "none";
+    })
+    .catch((error) => {
+      alert("رمز التحقق غير صحيح");
+    });
+}
+
+// حماية الصفحة: إعادة التوجيه إذا لم يسجل الدخول
+auth.onAuthStateChanged(user=>{
+  if(!user) {
+    document.getElementById("loginScreen").style.display="flex";
+  }
+});
+</script>
 </head>
 <body>
   <h1>تسجيل الدخول / إنشاء حساب</h1>
 
-<input type="email" id="email" placeholder="البريد الإلكتروني"><br>
+<!-- شاشة تسجيل الدخول -->
+<div id="loginScreen" style="position:fixed; inset:0; background:#0b5fa5; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; color:#fff;">
+  <h2>تسجيل الدخول برقم الهاتف</h2>
+
+  <input type="text" id="phoneNumber" placeholder="+9627xxxxxxx" style="padding:10px; margin:10px; border-radius:5px; width:200px; text-align:center;">
+  <button onclick="sendOTP()" style="padding:10px 20px; border:none; background:#ff8c1a; color:#fff; border-radius:5px; cursor:pointer;">إرسال رمز التحقق</button>
+
+  <div id="otpSection" style="display:none; margin-top:20px;">
+    <input type="text" id="otpCode" placeholder="أدخل الرمز" style="padding:10px; margin:10px; border-radius:5px; width:200px; text-align:center;">
+    <button onclick="verifyOTP()" style="padding:10px 20px; border:none; background:#6bcf63; color:#fff; border-radius:5px; cursor:pointer;">تحقق</button>
+  </div>
+
+  <div id="recaptcha-container" style="margin-top:20px;"></div>
+</div>
 <input type="password" id="password" placeholder="كلمة المرور"><br>
 
 <button id="loginBtn">دخول</button>
