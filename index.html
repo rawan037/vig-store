@@ -334,9 +334,68 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
     padding: 12px 5px;
   }
 }
+  body { font-family:'Cairo',sans-serif; background:#0b5fa5; color:#fff; text-align:center; padding:50px; }
+input { padding:10px; margin:10px 0; width:200px; border-radius:5px; border:none; }
+button { padding:10px 20px; margin:5px; border:none; border-radius:5px; background:#6bcf63; color:#fff; cursor:pointer; }
 </style>
+  
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+ apiKey: "ضعهنا",
+ authDomain: "ضعهنا",
+ projectId: "ضعهنا"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+</script>
+
 </head>
 <body>
+  <h1>تسجيل الدخول / إنشاء حساب</h1>
+
+<input type="email" id="email" placeholder="البريد الإلكتروني"><br>
+<input type="password" id="password" placeholder="كلمة المرور"><br>
+
+<button id="loginBtn">دخول</button>
+<button id="registerBtn">إنشاء حساب</button>
+
+<script>
+const emailInput = document.getElementById("email");
+const passInput = document.getElementById("password");
+
+// إنشاء حساب جديد
+document.getElementById("registerBtn").addEventListener("click", ()=>{
+  const email = emailInput.value.trim();
+  const pass = passInput.value.trim();
+  if(!email || !pass) return alert("الرجاء إدخال البريد وكلمة المرور");
+
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(userCredential=>{
+      alert("تم إنشاء الحساب بنجاح!");
+      window.location = "products.html"; // تحويل مباشرة للمنتجات
+    })
+    .catch(e=> alert(e.message));
+});
+
+// تسجيل الدخول
+document.getElementById("loginBtn").addEventListener("click", ()=>{
+  const email = emailInput.value.trim();
+  const pass = passInput.value.trim();
+  if(!email || !pass) return alert("الرجاء إدخال البريد وكلمة المرور");
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(userCredential=>{
+      window.location = "products.html"; // تحويل مباشرة للمنتجات
+    })
+    .catch(e=> alert(e.message));
+});
+</script>
 
 <section class="hero">
   <img src="images/خلفيه.png" class="corner-img veggies" alt="خضار">
