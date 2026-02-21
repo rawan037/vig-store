@@ -223,14 +223,20 @@ pointer-events:none;
   max-height:55vh;
   scroll-behavior:smooth;
 }
-} /* === شريط جميع الحقوق محفوظة === */
+/* الفوتر يبقى دائمًا في أسفل الصفحة */
 .copyright-bar {
-  background: #062c4d; /* كحلي مناسب مع ألوان الموقع */
+  background: #062c4d; /* كحلي مناسب */
   color: #ffffff;
   text-align: center;
   padding: 15px 10px;
   font-size: 14px;
   letter-spacing: 0.5px;
+
+  position: fixed;  /* يثبت الفوتر */
+  bottom: 0;        /* أسفل الصفحة */
+  left: 0;
+  width: 100%;      /* يغطي العرض كامل */
+  z-index: 1000;    /* فوق كل العناصر */
 }
 
 @media (max-width:768px) {
@@ -238,7 +244,7 @@ pointer-events:none;
     font-size: 11px;
     padding: 12px 5px;
   }
-} 
+}
   
 </style>
 </head>
