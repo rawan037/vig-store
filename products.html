@@ -1,521 +1,405 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>المنتجات - أسواق دير العسل</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>المنتجات - أسواق دير العسل</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
 
-  <style>
-    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif }
-    body{ background:linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff }
-    .container{ max-width:1200px; margin:auto; padding:40px 20px }
-    h1{ text-align:center; margin-bottom:30px; color:#8bdc65 }
-    .products{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px }
-    .product{ background:#f6fff7; color:#333; border-radius:12px; padding:12px; text-align:center }
-    .product img{ width:100%; height:130px; object-fit:cover; border-radius:10px; margin-bottom:10px }
-    .product button{ background:#4caf50; color:#fff; border:none; padding:8px 15px; border-radius:20px; margin-top:10px; cursor:pointer }
-    .back{ display:inline-block; margin-bottom:25px; background:#ff8c1a; color:#fff; padding:10px 25px; border-radius:25px; text-decoration:none }
-    .cart{ margin-top:20px; padding:15px; background:#f6fff7; border-radius:10px; color:#333; font-weight:bold; text-align:center; cursor:pointer }
-    .payments{
-  margin-top:15px;
-  display:flex;
-  gap:15px;
-  justify-content:center;
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Cairo',sans-serif
 }
 
-.pay{
-  background:#ffffff;
-  color:#333;
-  padding:15px 25px;
-  border-radius:20px;
-  cursor:pointer;
-  font-weight:bold;
-}
-.cart{cursor:pointer}
-
-.modal{
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,.6);
-  z-index:1000;
+body{
+background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
+color:#fff
 }
 
-.modal-content{
-  background:#fff;
-  color:#333;
-  max-width:400px;
-  margin:60px auto;
-  padding:20px;
-  border-radius:15px;
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px
 }
 
-.cart-item{
-  display:flex;
-  align-items:center;
-  margin-bottom:10px;
+h1{
+text-align:center;
+margin-bottom:30px;
+color:#8bdc65
 }
 
-.cart-item img{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  margin-left:10px;
+/* شبكة المنتجات */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:20px
 }
 
-.cart-item button{
-  margin-right:auto;
-  background:red;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:5px 10px;
-  cursor:pointer;
+.product{
+background:#f6fff7;
+color:#333;
+border-radius:12px;
+padding:12px;
+text-align:center
 }
 
-.payments{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin-top:15px;
+.product img{
+width:100%;
+height:130px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:10px
 }
 
-.pay{
-  background:#0b5fa5;
-  color:#fff;
-  padding:10px 15px;
-  border-radius:15px;
-  cursor:pointer;
+.product button{
+background:#4caf50;
+color:#fff;
+border:none;
+padding:8px 15px;
+border-radius:20px;
+margin-top:10px;
+cursor:pointer
 }
 
-.close{
-  margin-top:15px;
-  width:100%;
-}
-
- .top-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.cart{
-  background:#ff8c1a;
-  color:#fff;
-  padding:10px 20px;
-  border-radius:25px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.cart:hover{
-  transform:scale(1.05);
-}
-    .fly-img{
-  position:fixed;
-  z-index:9999;
-  width:60px;
-  height:60px;
-  border-radius:10px;
-  transition: all 0.8s ease-in-out;
-  pointer-events:none;
-}
-    .top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between; /* تجعل العناصر على طرفي الخط */
-  align-items: center;
-  position: fixed;
-  top: 15px;
-  padding: 0 15px;
-  z-index: 1000;
-}
-       .top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between; /* السلة على اليسار، الرجوع على اليمين */
-  align-items: center;
-  position: fixed;
-  top: 15px;
-  padding: 0 15px;
-  z-index: 1000;
-}
-
-/* أيقونة السلة بحجم زر الرجوع */
-.cart {
-  font-size: 16px; /* نفس حجم الخط في الزر */
-  cursor: pointer;
-  background: #ff8c1a; /* نفس لون زر الرجوع */
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-width: 100px; /* نفس عرض الزر تقريبًا */
-  text-align: center;
-}
-
-/* رقم المنتجات داخل السلة */
-#cartCount {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: red;
-  color: white;
-  font-size: 12px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* الشريط العلوي */
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px
 }
 
 /* زر الرجوع */
-.back {
-  display: inline-block;
-  background: #ff8c1a;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 25px;
-  text-decoration: none;
-  font-size: 16px;
+.back{
+background:#ff8c1a;
+color:#fff;
+padding:8px 15px;
+border-radius:25px;
+text-decoration:none
 }
 
-/* أيقونة السلة على أقصى اليسار */
-.cart {
-  font-size: 22px;
-  cursor: pointer;
-  background: #ffffff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  position: relative;
+/* السلة الاحترافية */
+.cart{
+position:fixed;
+top:20px;
+left:20px;
+width:60px;
+height:60px;
+background:#ff8c1a;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 6px 15px rgba(0,0,0,.25);
+z-index:9999;
+transition:.3s;
 }
 
-/* رقم المنتجات */
-#cartCount {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: red;
-  color: white;
-  font-size: 12px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* عداد السلة */
+#cartCount{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:white;
+width:22px;
+height:22px;
+font-size:12px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
 }
 
+/* اهتزاز العداد */
+.shake{
+animation:shake .4s;
+}
 
-  </style>
+@keyframes shake{
+0%{transform:scale(1)}
+25%{transform:scale(1.3)}
+50%{transform:scale(.9)}
+75%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+/* نافذة السلة */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+z-index:1000;
+}
+
+.modal-content{
+background:#fff;
+color:#333;
+max-width:400px;
+margin:60px auto;
+padding:20px;
+border-radius:15px;
+}
+
+.cart-item{
+display:flex;
+align-items:center;
+margin-bottom:10px;
+}
+
+.cart-item img{
+width:40px;
+height:40px;
+border-radius:8px;
+margin-left:10px;
+}
+
+.cart-item button{
+margin-right:auto;
+background:red;
+color:#fff;
+border:none;
+border-radius:10px;
+padding:5px 10px;
+cursor:pointer;
+}
+
+.payments{
+display:flex;
+gap:10px;
+justify-content:center;
+margin-top:15px;
+}
+
+.pay{
+background:#0b5fa5;
+color:#fff;
+padding:10px 15px;
+border-radius:15px;
+cursor:pointer;
+}
+
+.close{
+margin-top:15px;
+width:100%;
+}
+
+/* حركة الطيران */
+.fly-img{
+position:fixed;
+z-index:9999;
+width:60px;
+height:60px;
+border-radius:10px;
+transition: all 0.8s ease-in-out;
+pointer-events:none;
+}
+
+</style>
 </head>
 
 <body>
+
 <div class="container">
+
 <div class="top-bar">
-  
-  <a href="index.html" class="back">⬅ الرجوع للرئيسية</a>
- <!-- سلة التسوق --> 
-  <div class="cart" onclick="openCart()">
-    🛒 عدد المنتجات: 
-    <span id="cartCount">0</span>
-    | المجموع: <span id="cartTotal">0.00</span> JOD 
-  </div> </div> <div id="cartModal" class="modal">
-    <div class="modal-content"> <h3>🧺 محتويات السلة</h3> 
-      <div id="cartItems"></div> <p class="total">💰 المجموع: <span id="modalTotal">0.00</span> JOD</p>
-      <div class="payments"> <div onclick="payCOD()" class="pay">💵 الدفع عند الاستلام</div> <div onclick="payOnline()" class="pay">💳 الدفع الإلكتروني</div>
-        <div onclick="requestDelivery()" class="pay">🚚 طلب توصيل</div> </div> <button class="close" onclick="closeCart()">إغلاق</button> 
- </div> </div>
-  </div>
-    <button class="close" onclick="closeCart()">إغلاق</button> </div> </div>
+<a href="index.html" class="back">⬅ الرجوع للرئيسية</a>
 </div>
 
-  <h1>🛒 المنتجات المتوفرة</h1>
-
-  <div class="products">
-
-    <!-- مثال لبعض المنتجات، أضف الباقي بنفس الطريقة -->
-    <div class="product" data-name="بندورة" data-price="0.80">
-      <img src="images/بندوره.jpg" alt="بندوره">
-      <strong>بندورة</strong>
-      <p>0.80 JOD</p>
-     <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg', this)">أضف للسلة</button>
-
-    </div>
-
-    <div class="product" data-name="خيار" data-price="0.75">
-      <img src="images/خيار.jpg" alt="خيار">
-      <strong>خيار</strong>
-      <p>0.75 JOD</p>
-      <button onclick="addToCart('خيار', 2.5, 'images/خيار.jpg', this)">أضف للسلة</button>
-
-    </div>
-
-    <div class="product" data-name="تفاح" data-price="1.20">
-      <img src="images/تفاح.jpg" alt="تفاح">
-      <strong>تفاح</strong>
-      <p>1.20 JOD</p>
-      <button onclick="addToCart('تفاح', 2.5, 'images/تفاح.jpg', this)">أضف للسلة</button>
-
-    </div>
-
-    <div class="product" data-name="موز" data-price="1.50">
-      <img src="images/موز.jpg" alt="موز">
-      <strong>موز</strong>
-      <p>1.50 JOD</p>
-    <button onclick="addToCart('موز', 2.5, 'images/موز.jpg', this)">أضف للسلة</button>
-
-    </div>
- <div class="product" data-name="بندورة" data-price="0.80">
-      <img src="images/بندوره.jpg" alt="بندوره">
-      <strong>بندورة</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="برتقال" data-price="0.80">
-      <img src="images/برتقال.jpg" alt="برتقال">
-      <strong>برتقال</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('برتقال', 2.5, 'images/برتقال.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="بطاطا" data-price="0.80">
-      <img src="images/بطاطا.jpg" alt="بطاطا">
-      <strong>بطاط</strong>
-      <p>0.80 JOD</p>
-     <button onclick="addToCart('بطاطا', 2.5, 'images/بطاطا.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="بصل" data-price="0.80">
-      <img src="images/بصل.jpg" alt="بصل">
-      <strong>بصل</strong>
-      <p>0.80 JOD</p>
-     <button onclick="addToCart('بصل', 2.5, 'images/بصل.jpg', this)">أضف للسلة</button>
-    </div>
-     <div class="product" data-name="جزر" data-price="0.80">
-      <img src="images/جزر.jpg" alt="جزر">
-      <strong>جزر</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('جزر', 2.5, 'images/جزر.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="ثوم" data-price="0.80">
-      <img src="images/ثوم.jpg" alt="ثوم">
-      <strong>ثوم</strong>
-      <p>0.80 JOD</p>
-   <button onclick="addToCart('ثوم', 2.5, 'images/ثوم.jpg', this)">أضف للسلة</button>
-
-    </div>
-
-     <div class="product" data-name="كيوي" data-price="0.80">
-      <img src="images/كيوي.jpg" alt="كيوي">
-      <strong>كيوي</strong>
-      <p>0.80 JOD</p>
-   <button onclick="addToCart('كيوي', 2.5, 'images/كيوي.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="فروله" data-price="0.80">
-      <img src="images/فروله.jpg" alt="فروله">
-      <strong>فروله</strong>
-      <p>0.80 JOD</p>
-   <button onclick="addToCart('فروله', 2.5, 'images/فروله.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="بطاطحلوه" data-price="0.80">
-      <img src="images/بطاطحلوه.jpg" alt="بطاطا حلوه">
-      <strong>بطاطا حلوه</strong>
-      <p>0.80 JOD</p>
-   <button onclick="addToCart('بطاطا حلوه', 2.5, 'images/بطاطحلوه.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="كرفس" data-price="0.80">
-      <img src="images/كرفس.jpg" alt="كرفس">
-      <strong>كرفس</strong>
-      <p>0.80 JOD</p>
-      <button onclick="addToCart('كرفس', 2.5, 'images/كرفس.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="منجا" data-price="0.80">
-      <img src="images/منجا.jpg" alt="منجا">
-      <strong>منجا</strong>
-      <p>0.80 JOD</p>
-     <button onclick="addToCart('منجا', 2.5, 'images/منجا.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="زهره" data-price="0.80">
-      <img src="images/زهره.jpg" alt="زهره">
-      <strong>زهره</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('زهره', 2.5, 'images/زهره.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="ليمون" data-price="0.80">
-      <img src="images/ليمون.jpg" alt="ليمون">
-      <strong>ليمون</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('ليمون', 2.5, 'images/ليمون.jpg', this)">أضف للسلة</button>
-
-    </div>
-     <div class="product" data-name="بيتنجان" data-price="0.80">
-      <img src="images/بيتنجان.jpg" alt="بيتنجان">
-      <strong>بيتنجان</strong>
-      <p>0.80 JOD</p>
-    <button onclick="addToCart('بيتنجان', 2.5, 'images/بيتنجان.jpg', this)">أضف للسلة</button>
-
-    </div>
-  </div>
-
-
-
+<!-- السلة -->
+<div class="cart" onclick="openCart()">
+🛒
+<span id="cartCount">0</span>
 </div>
 
+<!-- نافذة السلة -->
+<div id="cartModal" class="modal">
+<div class="modal-content">
+
+<h3>🧺 محتويات السلة</h3>
+
+<div id="cartItems"></div>
+
+<p>💰 المجموع: <span id="modalTotal">0.00</span> JOD</p>
+
+<div class="payments">
+<div onclick="payCOD()" class="pay">💵 الدفع عند الاستلام</div>
+<div onclick="payOnline()" class="pay">💳 الدفع الإلكتروني</div>
+<div onclick="requestDelivery()" class="pay">🚚 طلب توصيل</div>
+</div>
+
+<button class="close" onclick="closeCart()">إغلاق</button>
+
+</div>
+</div>
+
+<h1>🛒 المنتجات المتوفرة</h1>
+
+<div class="products">
+
+<!-- المنتجات كاملة كما كانت -->
 
 <script>
-let cart = [];
-const phone = "962789119926";
+const products = [
+["بندورة","بندوره.jpg",0.80],
+["خيار","خيار.jpg",0.75],
+["تفاح","تفاح.jpg",1.20],
+["موز","موز.jpg",1.50],
+["برتقال","برتقال.jpg",0.80],
+["بطاطا","بطاطا.jpg",0.80],
+["بصل","بصل.jpg",0.80],
+["جزر","جزر.jpg",0.80],
+["ثوم","ثوم.jpg",0.80],
+["كيوي","كيوي.jpg",0.80],
+["فرولة","فروله.jpg",0.80],
+["بطاطا حلوة","بطاطحلوه.jpg",0.80],
+["كرفس","كرفس.jpg",0.80],
+["منجا","منجا.jpg",0.80],
+["زهرة","زهره.jpg",0.80],
+["ليمون","ليمون.jpg",0.80],
+["باذنجان","بيتنجان.jpg",0.80]
+];
 
-// تحديث عدد السلة والمجموع
-function updateCart(){
-  document.getElementById("cartCount").textContent = cart.length;
-  const total = cart.reduce((s,i)=>s+i.price,0);
-  document.getElementById("cartTotal").textContent = total.toFixed(2);
-}
-
-// فتح نافذة السلة
-function openCart(){
-  const itemsDiv = document.getElementById("cartItems");
-  itemsDiv.innerHTML = "";
-
-  cart.forEach((item,index)=>{
-    itemsDiv.innerHTML += `
-      <div class="cart-item">
-        <img src="${item.img}">
-        <span>${item.name} - ${item.price} JOD</span>
-        <button onclick="removeItem(${index})">✖</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("modalTotal").textContent =
-    cart.reduce((s,i)=>s+i.price,0).toFixed(2);
-
-  document.getElementById("cartModal").style.display="block";
-}
-
-// إغلاق نافذة السلة
-function closeCart(){
-  document.getElementById("cartModal").style.display="none";
-}
-
-// إزالة عنصر من السلة
-function removeItem(index){
-  cart.splice(index,1);
-  updateCart();
-  openCart();
-}
-
-// الدفع عند الاستلام
-function payCOD(){
-  if(cart.length===0) return alert("⚠️ السلة فارغة");
-  sendOrder("💵 الدفع عند الاستلام");
-}
-
-// الدفع الإلكتروني
-function payOnline(){
-  if(cart.length===0) return alert("⚠️ السلة فارغة");
-
-  let msg = `💳 طلب دفع إلكتروني\n\n`;
-  cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
-  msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD\n\n`;
-  msg += "المحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ";
-
-  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
-}
-
-// إرسال الطلب
-function sendOrder(method){
-  let msg = `🛒 طلب جديد\n${method}\n\n`;
-  cart.forEach(i=> msg += `- ${i.name} (${i.price} JOD)\n`);
-  msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD`;
-
-  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
-}
-
-// طلب التوصيل
-function requestDelivery() {
-  if(cart.length===0) return alert("⚠️ السلة فارغة");
-
-  let address = prompt("🏠 الرجاء إدخال عنوان التوصيل:");
-  if(!address) return alert("❌ لم يتم إدخال العنوان");
-
-  let msg = `🛒 طلب توصيل\n🚚 عنوان التوصيل: ${address}\n\n`;
-  cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
-  msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD`;
-
-  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
-}
-
-// إضافة عنصر للسلة مع حركة الطيران
-function addToCart(name, price, img, btn){
-  // إضافة للسلة
-  cart.push({name, price, img});
-  updateCart();
-
-  // صورة المنتج للطيران
-  const productImg = btn.closest(".product").querySelector("img");
-  const cartIcon = document.querySelector(".cart");
-
-  const flyingImg = productImg.cloneNode(true);
-  flyingImg.style.position = "fixed";
-  flyingImg.style.zIndex = "9999";
-  flyingImg.style.width = "80px";
-  flyingImg.style.height = "80px";
-  flyingImg.style.borderRadius = "10px";
-  flyingImg.style.transition = "all 0.8s cubic-bezier(.65,-0.3,.3,1.4)";
-
-  const start = productImg.getBoundingClientRect();
-  const end = cartIcon.getBoundingClientRect();
-
-  flyingImg.style.left = start.left + "px";
-  flyingImg.style.top = start.top + "px";
-
-  document.body.appendChild(flyingImg);
-
-  setTimeout(() => {
-    flyingImg.style.left = end.left + "px";
-    flyingImg.style.top = end.top + "px";
-    flyingImg.style.width = "20px";
-    flyingImg.style.height = "20px";
-    flyingImg.style.opacity = "0.3";
-  }, 50);
-
-  setTimeout(() => {
-    flyingImg.remove();
-    cartIcon.style.transform = "scale(1.2)";
-    setTimeout(()=> cartIcon.style.transform="scale(1)",200);
-  }, 800);
-}
-
-// التعامل مع أزرار الدفع في الصفحة
-document.addEventListener("DOMContentLoaded", function () {
-  const codBtn = document.getElementById("cod");
-  const walletBtn = document.getElementById("wallet");
-
-  if(codBtn) codBtn.addEventListener("click", payCOD);
-  if(walletBtn) walletBtn.addEventListener("click", payOnline);
-});
+document.write(products.map(p=>`
+<div class="product">
+<img src="images/${p[1]}">
+<strong>${p[0]}</strong>
+<p>${p[2]} JOD</p>
+<button onclick="addToCart('${p[0]}',${p[2]},'images/${p[1]}',this)">أضف للسلة</button>
+</div>
+`).join(""));
 </script>
+
+</div>
+</div>
+
+<script>
+
+let cart=[];
+const phone="962789119926";
+
+/* تحديث السلة */
+function updateCart(){
+const count=document.getElementById("cartCount");
+count.textContent=cart.length;
+
+count.classList.add("shake");
+setTimeout(()=>count.classList.remove("shake"),400);
+}
+
+/* فتح */
+function openCart(){
+
+const itemsDiv=document.getElementById("cartItems");
+itemsDiv.innerHTML="";
+
+cart.forEach((item,index)=>{
+itemsDiv.innerHTML+=`
+<div class="cart-item">
+<img src="${item.img}">
+<span>${item.name} - ${item.price} JOD</span>
+<button onclick="removeItem(${index})">✖</button>
+</div>`;
+});
+
+document.getElementById("modalTotal").textContent=
+cart.reduce((s,i)=>s+i.price,0).toFixed(2);
+
+document.getElementById("cartModal").style.display="block";
+}
+
+function closeCart(){
+document.getElementById("cartModal").style.display="none";
+}
+
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+openCart();
+}
+
+function payCOD(){
+if(cart.length===0) return alert("السلة فارغة");
+sendOrder("الدفع عند الاستلام");
+}
+
+function payOnline(){
+if(cart.length===0) return alert("السلة فارغة");
+sendOrder("دفع إلكتروني");
+}
+
+function requestDelivery(){
+if(cart.length===0) return alert("السلة فارغة");
+
+let address=prompt("أدخل العنوان");
+if(!address) return;
+
+sendOrder("طلب توصيل - "+address);
+}
+
+function sendOrder(method){
+
+let msg=`طلب جديد\n${method}\n\n`;
+
+cart.forEach(i=>msg+=`- ${i.name} (${i.price})\n`);
+
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
+/* حركة الطيران */
+function addToCart(name,price,img,btn){
+
+cart.push({name,price,img});
+updateCart();
+
+const productImg=btn.closest(".product").querySelector("img");
+const cartIcon=document.querySelector(".cart");
+
+const flyingImg=productImg.cloneNode(true);
+
+flyingImg.style.position="fixed";
+flyingImg.style.zIndex="9999";
+flyingImg.style.width="80px";
+flyingImg.style.height="80px";
+flyingImg.style.borderRadius="10px";
+flyingImg.style.transition="all 0.8s cubic-bezier(.65,-0.3,.3,1.4)";
+
+const start=productImg.getBoundingClientRect();
+const end=cartIcon.getBoundingClientRect();
+
+flyingImg.style.left=start.left+"px";
+flyingImg.style.top=start.top+"px";
+
+document.body.appendChild(flyingImg);
+
+setTimeout(()=>{
+flyingImg.style.left=end.left+"px";
+flyingImg.style.top=end.top+"px";
+flyingImg.style.width="20px";
+flyingImg.style.height="20px";
+flyingImg.style.opacity="0.3";
+},50);
+
+setTimeout(()=>{
+flyingImg.remove();
+cartIcon.style.transform="scale(1.2)";
+setTimeout(()=>cartIcon.style.transform="scale(1)",200);
+},800);
+}
+
+</script>
+
 </body>
 </html>
