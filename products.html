@@ -206,7 +206,24 @@ border-radius:10px;
 transition: all 0.8s ease-in-out;
 pointer-events:none;
 }
+.modal-content{
+  background:#fff;
+  width:90%;
+  max-width:420px;
+  border-radius:18px;
+  padding:20px;
+  max-height:85vh;      /* يمنع النافذة من تجاوز الشاشة */
+  display:flex;
+  flex-direction:column;
+}
 
+/* قائمة المنتجات داخل السلة */
+#cartItems{
+  overflow-y:auto;
+  max-height:55vh;
+  scroll-behavior:smooth;
+}
+}
 </style>
 </head>
 
