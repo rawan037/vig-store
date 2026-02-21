@@ -296,181 +296,18 @@
   </div>
 </div>
 
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+let cart = [];
+const phone = "962789119926";
 
-  const cartCountElement = document.getElementById("cartCount");
-  const cartTotalElement = document.getElementById("cartTotal");
-  let count = 0;
-  let total = 0;
-
-
-
-  // عند النقر على المجموع النهائي
-  cartTotalElement.style.cursor = "pointer";
-  cartTotalElement.addEventListener("click", function() {
-    if (total === 0) {
-      alert("⚠️ لم يتم إضافة أي منتج إلى السلة!");
-      return;
-    }
-
-    const paymentMethod = prompt(
-      `🛒 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nاختر طريقة الدفع:\n1️⃣ الدفع عند الاستلام\n2️⃣ الدفع الإلكتروني`
-    );
-
-    const phone = "962789119926";
-
-    if (paymentMethod === "1") {
-      const msg = `🛒 طلب جديد\n💵 طريقة الدفع: الدفع عند الاستلام\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD`;
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    } 
-    else if (paymentMethod === "2") {
-      const msg = `💳 طلب دفع إلكتروني\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nالمحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ`;
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    } 
-    else {
-      alert("❌ لم يتم اختيار طريقة دفع صحيحة.");
-    }
-  });
-
-});
-  
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  const cartCountElement = document.getElementById("cartCount");
-  const cartTotalElement = document.getElementById("cartTotal");
-
-  let count = 0;
-  let total = 0;
-
-  // رقم الطلب
-  let orderNumber = 152; // ابدأ بالرقم 152 أو 1 حسب رغبتك
-
-  // أزرار "أضف للسلة"
-  const buttons = document.querySelectorAll(".product button");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", function() {
-      const product = btn.closest(".product");
-      const price = parseFloat(product.getAttribute("data-price"));
-      const name = product.getAttribute("data-name");
-
-      count += 1;
-      total += price;
-
-      cartCountElement.textContent = count;
-      cartTotalElement.textContent = total.toFixed(2);
-
-      alert(`✅ تمت إضافة "${name}" إلى السلة!`);
-    });
-  });
-
-  // عند النقر على المجموع النهائي
-  cartTotalElement.style.cursor = "pointer";
-  cartTotalElement.addEventListener("click", function() {
-    if (total === 0) {
-      alert("⚠️ لم يتم إضافة أي منتج إلى السلة!");
-      return;
-    }
-
-    const paymentMethod = prompt(
-      `🛒 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nاختر طريقة الدفع:\n1️⃣ الدفع عند الاستلام\n2️⃣ الدفع الإلكتروني`
-    );
-
-    const phone = "962789119926";
-    const currentOrder = orderNumber; // رقم الطلب الحالي
-
-    if (paymentMethod === "1") {
-      const msg = `🛒 طلب #${currentOrder}\n💵 طريقة الدفع: الدفع عند الاستلام\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD`;
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    } 
-    else if (paymentMethod === "2") {
-      const msg = `💳 طلب #${currentOrder}\n🧾 عدد المنتجات: ${count}\n💰 المجموع: ${total.toFixed(2)} JOD\n\nالمحافظ المتوفرة:\n1️⃣ فواتيركم\n2️⃣ دينارك\n3️⃣ Orange Money\n4️⃣ Umniah Wallet\n🧾 الرجاء إرسال رقم الطلب والمبلغ`;
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    } 
-    else {
-      alert("❌ لم يتم اختيار طريقة دفع صحيحة.");
-      return;
-    }
-
-    // بعد إرسال الطلب، نزيد رقم الطلب تلقائيًا وننظف السلة
-    orderNumber += 1;
-    count = 0;
-    total = 0;
-    cartCountElement.textContent = count;
-    cartTotalElement.textContent = total.toFixed(2);
-  });
-
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const cod = document.getElementById("cod");
-  const wallet = document.getElementById("wallet");
-
-  const phone = "962789119926";
-
-  if (cod) {
-    cod.addEventListener("click", function () {
-      const total = document.getElementById("cartTotal").textContent;
-      const count = document.getElementById("cartCount").textContent;
-
-      if (parseFloat(total) === 0) {
-        alert("⚠️ السلة فارغة");
-        return;
-      }
-
-      const msg =
-`🛒 طلب جديد
-💵 الدفع عند الاستلام
-🧾 عدد المنتجات: ${count}
-💰 المجموع: ${total} JOD`;
-
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    });
-  }
-
-  if (wallet) {
-    wallet.addEventListener("click", function () {
-      const total = document.getElementById("cartTotal").textContent;
-      const count = document.getElementById("cartCount").textContent;
-
-      if (parseFloat(total) === 0) {
-        alert("⚠️ السلة فارغة");
-        return;
-      }
-
-      const msg =
-`💳 طلب دفع إلكتروني
-🧾 عدد المنتجات: ${count}
-💰 المجموع: ${total} JOD
-
-المحافظ:
-1️⃣ فواتيركم
-2️⃣ دينارك
-3️⃣ Orange Money
-4️⃣ Umniah Wallet`;
-
-      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
-    });
-  }
-
-});
-</script>
-
-
-
-<script> let cart = []; 
-
+// تحديث عدد السلة والمجموع
 function updateCart(){
   document.getElementById("cartCount").textContent = cart.length;
   const total = cart.reduce((s,i)=>s+i.price,0);
   document.getElementById("cartTotal").textContent = total.toFixed(2);
 }
 
+// فتح نافذة السلة
 function openCart(){
   const itemsDiv = document.getElementById("cartItems");
   itemsDiv.innerHTML = "";
@@ -491,25 +328,27 @@ function openCart(){
   document.getElementById("cartModal").style.display="block";
 }
 
+// إغلاق نافذة السلة
 function closeCart(){
   document.getElementById("cartModal").style.display="none";
 }
 
+// إزالة عنصر من السلة
 function removeItem(index){
   cart.splice(index,1);
   updateCart();
   openCart();
 }
 
-const phone = "962789119926";
-
+// الدفع عند الاستلام
 function payCOD(){
-  if(cart.length===0) return alert("السلة فارغة");
+  if(cart.length===0) return alert("⚠️ السلة فارغة");
   sendOrder("💵 الدفع عند الاستلام");
 }
 
+// الدفع الإلكتروني
 function payOnline(){
-  if(cart.length===0) return alert("السلة فارغة");
+  if(cart.length===0) return alert("⚠️ السلة فارغة");
 
   let msg = `💳 طلب دفع إلكتروني\n\n`;
   cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
@@ -519,6 +358,7 @@ function payOnline(){
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 
+// إرسال الطلب
 function sendOrder(method){
   let msg = `🛒 طلب جديد\n${method}\n\n`;
   cart.forEach(i=> msg += `- ${i.name} (${i.price} JOD)\n`);
@@ -526,7 +366,9 @@ function sendOrder(method){
 
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
-  function requestDelivery() {
+
+// طلب التوصيل
+function requestDelivery() {
   if(cart.length===0) return alert("⚠️ السلة فارغة");
 
   let address = prompt("🏠 الرجاء إدخال عنوان التوصيل:");
@@ -536,18 +378,16 @@ function sendOrder(method){
   cart.forEach(i => msg += `- ${i.name} (${i.price} JOD)\n`);
   msg += `\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0)} JOD`;
 
-  const phone = "962789119926";
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
-  let cart = [];
 
+// إضافة عنصر للسلة مع حركة الطيران
 function addToCart(name, price, img, btn){
-
   // إضافة للسلة
   cart.push({name, price, img});
   updateCart();
 
-  // صورة المنتج
+  // صورة المنتج للطيران
   const productImg = btn.closest(".product").querySelector("img");
   const cartIcon = document.querySelector(".cart");
 
@@ -582,14 +422,14 @@ function addToCart(name, price, img, btn){
   }, 800);
 }
 
-function updateCart(){
-  document.getElementById("cartCount").textContent = cart.length;
-  const total = cart.reduce((s,i)=>s+i.price,0);
-  document.getElementById("cartTotal").textContent = total.toFixed(2);
-}
+// التعامل مع أزرار الدفع في الصفحة
+document.addEventListener("DOMContentLoaded", function () {
+  const codBtn = document.getElementById("cod");
+  const walletBtn = document.getElementById("wallet");
 
+  if(codBtn) codBtn.addEventListener("click", payCOD);
+  if(walletBtn) walletBtn.addEventListener("click", payOnline);
+});
 </script>
-
-
 </body>
 </html>
