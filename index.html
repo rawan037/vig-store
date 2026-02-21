@@ -306,7 +306,29 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
     height: 14px;
   }
 }
+.footer-separator {
+  margin: 25px auto;
+  width: 80%;
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #6bcf63, transparent);
+}
+  /* === شريط جميع الحقوق محفوظة === */
+.copyright-bar {
+  background: #062c4d; /* كحلي مناسب مع ألوان الموقع */
+  color: #ffffff;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
 
+@media (max-width:768px) {
+  .copyright-bar {
+    font-size: 11px;
+    padding: 12px 5px;
+  }
+}
 </style>
 </head>
 <body>
@@ -393,6 +415,7 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
   </a>
    </div>
 </div>
+  <hr class="footer-separator">
 <div class="footer-top" style="flex-direction:column; align-items:center; text-align:center;">
 
   <div class="contact-info">
@@ -431,7 +454,9 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
 
 </div>
  
-
+<div class="copyright-bar">
+  © 2026 جميع الحقوق محفوظة - أسواق دير العسل للخضار والفواكه
+</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   const map = L.map('map').setView([31.9454, 35.9284], 13);
