@@ -464,38 +464,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <script> let cart = []; 
-function addToCart(name, price, img, button){
-
-  cart.push({name, price, img});
-  updateCart();
-
-  // حركة الطيران
-  const imgElement = button.closest(".product").querySelector("img");
-  const cartElement = document.querySelector(".cart");
-
-  const flyingImg = imgElement.cloneNode();
-  flyingImg.classList.add("fly-img");
-
-  const start = imgElement.getBoundingClientRect();
-  const end = cartElement.getBoundingClientRect();
-
-  flyingImg.style.left = start.left + "px";
-  flyingImg.style.top = start.top + "px";
-
-  document.body.appendChild(flyingImg);
-
-  setTimeout(()=>{
-    flyingImg.style.left = end.left + "px";
-    flyingImg.style.top = end.top + "px";
-    flyingImg.style.width = "20px";
-    flyingImg.style.height = "20px";
-    flyingImg.style.opacity = "0.5";
-  },10);
-
-  setTimeout(()=>{
-    flyingImg.remove();
-  },800);
-}
 
 function updateCart(){
   document.getElementById("cartCount").textContent = cart.length;
