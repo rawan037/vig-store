@@ -223,21 +223,22 @@ pointer-events:none;
   max-height:55vh;
   scroll-behavior:smooth;
 }
-}
-  .site-footer{
-  background:#0b3d3d;     /* نفس لون الموقع تقريبًا */
-  color:#fff;
-  text-align:center;
-  padding:15px;
-  margin-top:40px;
-  font-size:14px;
-  border-top:3px solid #ff8c1a;
+} /* === شريط جميع الحقوق محفوظة === */
+.copyright-bar {
+  background: #062c4d; /* كحلي مناسب مع ألوان الموقع */
+  color: #ffffff;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
 }
 
-
-.site-footer{
-  margin-top:auto;
-}
+@media (max-width:768px) {
+  .copyright-bar {
+    font-size: 11px;
+    padding: 12px 5px;
+  }
+} 
   
 </style>
 </head>
@@ -316,9 +317,9 @@ document.write(products.map(p=>`
 
 </div>
 </div>
-<footer class="site-footer">
-  جميع الحقوق محفوظة © 2026 | متجر الخضار الطازجة
-</footer>
+   <div class="copyright-bar">
+  © 2026 جميع الحقوق محفوظة - أسواق دير العسل للخضار والفواكه
+</div>
 <script>
 
 let cart=[];
