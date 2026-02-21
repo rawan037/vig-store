@@ -126,6 +126,53 @@
   transition: all 0.8s ease-in-out;
   pointer-events:none;
 }
+    .top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* تجعل العناصر على طرفي الخط */
+  align-items: center;
+  position: fixed;
+  top: 15px;
+  padding: 0 15px;
+  z-index: 1000;
+}
+
+/* أيقونة السلة على أقصى اليسار */
+.cart {
+  font-size: 22px;
+  cursor: pointer;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* رقم المنتجات */
+#cartCount {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* زر الرجوع على اليمين */
+.back {
+  display: inline-block;
+  background: #ff8c1a;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 25px;
+  text-decoration: none;
+}
   </style>
 </head>
 
