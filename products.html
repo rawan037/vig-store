@@ -97,7 +97,35 @@
   width:100%;
 }
 
- 
+ .top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.cart{
+  background:#ff8c1a;
+  color:#fff;
+  padding:10px 20px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.cart:hover{
+  transform:scale(1.05);
+}
+    .fly-img{
+  position:fixed;
+  z-index:9999;
+  width:60px;
+  height:60px;
+  border-radius:10px;
+  transition: all 0.8s ease-in-out;
+  pointer-events:none;
+}
   </style>
 </head>
 
@@ -105,6 +133,11 @@
 <div class="container">
 
   <a href="index.html" class="back">⬅ الرجوع للرئيسية</a>
+  <!-- سلة التسوق -->
+  <div class="cart" onclick="openCart()">
+  🛒 عدد المنتجات: <span id="cartCount">0</span> |
+  المجموع: <span id="cartTotal">0.00</span> JOD
+</div>
 
   <h1>🛒 المنتجات المتوفرة</h1>
 
@@ -115,7 +148,7 @@
       <img src="images/بندوره.jpg" alt="بندوره">
       <strong>بندورة</strong>
       <p>0.80 JOD</p>
-     <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg')">أضف للسلة</button>
+     <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg', this)">أضف للسلة</button>
 
     </div>
 
@@ -123,7 +156,7 @@
       <img src="images/خيار.jpg" alt="خيار">
       <strong>خيار</strong>
       <p>0.75 JOD</p>
-      <button onclick="addToCart('خيار', 2.5, 'images/خيار.jpg')">أضف للسلة</button>
+      <button onclick="addToCart('خيار', 2.5, 'images/خيار.jpg', this)">أضف للسلة</button>
 
     </div>
 
@@ -131,7 +164,7 @@
       <img src="images/تفاح.jpg" alt="تفاح">
       <strong>تفاح</strong>
       <p>1.20 JOD</p>
-      <button onclick="addToCart('تفاح', 2.5, 'images/تفاح.jpg')">أضف للسلة</button>
+      <button onclick="addToCart('تفاح', 2.5, 'images/تفاح.jpg', this)">أضف للسلة</button>
 
     </div>
 
@@ -139,48 +172,48 @@
       <img src="images/موز.jpg" alt="موز">
       <strong>موز</strong>
       <p>1.50 JOD</p>
-    <button onclick="addToCart('موز', 2.5, 'images/موز.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('موز', 2.5, 'images/موز.jpg', this)">أضف للسلة</button>
 
     </div>
  <div class="product" data-name="بندورة" data-price="0.80">
       <img src="images/بندوره.jpg" alt="بندوره">
       <strong>بندورة</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('بندوره', 2.5, 'images/بندوره.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="برتقال" data-price="0.80">
       <img src="images/برتقال.jpg" alt="برتقال">
       <strong>برتقال</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('برتقال', 2.5, 'images/برتقال.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('برتقال', 2.5, 'images/برتقال.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="بطاطا" data-price="0.80">
       <img src="images/بطاطا.jpg" alt="بطاطا">
       <strong>بطاط</strong>
       <p>0.80 JOD</p>
-     <button onclick="addToCart('بطاطا', 2.5, 'images/بطاطا.jpg')">أضف للسلة</button>
+     <button onclick="addToCart('بطاطا', 2.5, 'images/بطاطا.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="بصل" data-price="0.80">
       <img src="images/بصل.jpg" alt="بصل">
       <strong>بصل</strong>
       <p>0.80 JOD</p>
-     <button onclick="addToCart('بصل', 2.5, 'images/بصل.jpg')">أضف للسلة</button>
+     <button onclick="addToCart('بصل', 2.5, 'images/بصل.jpg', this)">أضف للسلة</button>
     </div>
      <div class="product" data-name="جزر" data-price="0.80">
       <img src="images/جزر.jpg" alt="جزر">
       <strong>جزر</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('جزر', 2.5, 'images/جزر.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('جزر', 2.5, 'images/جزر.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="ثوم" data-price="0.80">
       <img src="images/ثوم.jpg" alt="ثوم">
       <strong>ثوم</strong>
       <p>0.80 JOD</p>
-   <button onclick="addToCart('ثوم', 2.5, 'images/ثوم.jpg')">أضف للسلة</button>
+   <button onclick="addToCart('ثوم', 2.5, 'images/ثوم.jpg', this)">أضف للسلة</button>
 
     </div>
 
@@ -188,65 +221,60 @@
       <img src="images/كيوي.jpg" alt="كيوي">
       <strong>كيوي</strong>
       <p>0.80 JOD</p>
-   <button onclick="addToCart('كيوي', 2.5, 'images/كيوي.jpg')">أضف للسلة</button>
+   <button onclick="addToCart('كيوي', 2.5, 'images/كيوي.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="فروله" data-price="0.80">
       <img src="images/فروله.jpg" alt="فروله">
       <strong>فروله</strong>
       <p>0.80 JOD</p>
-   <button onclick="addToCart('فروله', 2.5, 'images/فروله.jpg')">أضف للسلة</button>
+   <button onclick="addToCart('فروله', 2.5, 'images/فروله.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="بطاطحلوه" data-price="0.80">
       <img src="images/بطاطحلوه.jpg" alt="بطاطا حلوه">
       <strong>بطاطا حلوه</strong>
       <p>0.80 JOD</p>
-   <button onclick="addToCart('بطاطا حلوه', 2.5, 'images/بطاطحلوه.jpg')">أضف للسلة</button>
+   <button onclick="addToCart('بطاطا حلوه', 2.5, 'images/بطاطحلوه.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="كرفس" data-price="0.80">
       <img src="images/كرفس.jpg" alt="كرفس">
       <strong>كرفس</strong>
       <p>0.80 JOD</p>
-      <button onclick="addToCart('كرفس', 2.5, 'images/كرفس.jpg')">أضف للسلة</button>
+      <button onclick="addToCart('كرفس', 2.5, 'images/كرفس.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="منجا" data-price="0.80">
       <img src="images/منجا.jpg" alt="منجا">
       <strong>منجا</strong>
       <p>0.80 JOD</p>
-     <button onclick="addToCart('منجا', 2.5, 'images/منجا.jpg')">أضف للسلة</button>
+     <button onclick="addToCart('منجا', 2.5, 'images/منجا.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="زهره" data-price="0.80">
       <img src="images/زهره.jpg" alt="زهره">
       <strong>زهره</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('زهره', 2.5, 'images/زهره.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('زهره', 2.5, 'images/زهره.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="ليمون" data-price="0.80">
       <img src="images/ليمون.jpg" alt="ليمون">
       <strong>ليمون</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('ليمون', 2.5, 'images/ليمون.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('ليمون', 2.5, 'images/ليمون.jpg', this)">أضف للسلة</button>
 
     </div>
      <div class="product" data-name="بيتنجان" data-price="0.80">
       <img src="images/بيتنجان.jpg" alt="بيتنجان">
       <strong>بيتنجان</strong>
       <p>0.80 JOD</p>
-    <button onclick="addToCart('بيتنجان', 2.5, 'images/بيتنجان.jpg')">أضف للسلة</button>
+    <button onclick="addToCart('بيتنجان', 2.5, 'images/بيتنجان.jpg', this)">أضف للسلة</button>
 
     </div>
   </div>
 
-  <!-- سلة التسوق -->
-  <div class="cart" onclick="openCart()">
-  🛒 عدد المنتجات: <span id="cartCount">0</span> |
-  المجموع: <span id="cartTotal">0.00</span> JOD
-</div>
 
 
 </div>
@@ -435,7 +463,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-<script> let cart = []; function addToCart(name, price, img){ cart.push({name, price, img}); updateCart(); }
+<script> let cart = []; 
+function addToCart(name, price, img, button){
+
+  cart.push({name, price, img});
+  updateCart();
+
+  // حركة الطيران
+  const imgElement = button.closest(".product").querySelector("img");
+  const cartElement = document.querySelector(".cart");
+
+  const flyingImg = imgElement.cloneNode();
+  flyingImg.classList.add("fly-img");
+
+  const start = imgElement.getBoundingClientRect();
+  const end = cartElement.getBoundingClientRect();
+
+  flyingImg.style.left = start.left + "px";
+  flyingImg.style.top = start.top + "px";
+
+  document.body.appendChild(flyingImg);
+
+  setTimeout(()=>{
+    flyingImg.style.left = end.left + "px";
+    flyingImg.style.top = end.top + "px";
+    flyingImg.style.width = "20px";
+    flyingImg.style.height = "20px";
+    flyingImg.style.opacity = "0.5";
+  },10);
+
+  setTimeout(()=>{
+    flyingImg.remove();
+  },800);
+}
 
 function updateCart(){
   document.getElementById("cartCount").textContent = cart.length;
