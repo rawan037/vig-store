@@ -571,6 +571,54 @@ function sendOrder(method){
   const phone = "962789119926";
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
+  let cart = [];
+
+function addToCart(name, price, img, btn){
+
+  // إضافة للسلة
+  cart.push({name, price, img});
+  updateCart();
+
+  // صورة المنتج
+  const productImg = btn.closest(".product").querySelector("img");
+  const cartIcon = document.querySelector(".cart");
+
+  const flyingImg = productImg.cloneNode(true);
+  flyingImg.style.position = "fixed";
+  flyingImg.style.zIndex = "9999";
+  flyingImg.style.width = "80px";
+  flyingImg.style.height = "80px";
+  flyingImg.style.borderRadius = "10px";
+  flyingImg.style.transition = "all 0.8s cubic-bezier(.65,-0.3,.3,1.4)";
+
+  const start = productImg.getBoundingClientRect();
+  const end = cartIcon.getBoundingClientRect();
+
+  flyingImg.style.left = start.left + "px";
+  flyingImg.style.top = start.top + "px";
+
+  document.body.appendChild(flyingImg);
+
+  setTimeout(() => {
+    flyingImg.style.left = end.left + "px";
+    flyingImg.style.top = end.top + "px";
+    flyingImg.style.width = "20px";
+    flyingImg.style.height = "20px";
+    flyingImg.style.opacity = "0.3";
+  }, 50);
+
+  setTimeout(() => {
+    flyingImg.remove();
+    cartIcon.style.transform = "scale(1.2)";
+    setTimeout(()=> cartIcon.style.transform="scale(1)",200);
+  }, 800);
+}
+
+function updateCart(){
+  document.getElementById("cartCount").textContent = cart.length;
+  const total = cart.reduce((s,i)=>s+i.price,0);
+  document.getElementById("cartTotal").textContent = total.toFixed(2);
+}
 
 </script>
 
