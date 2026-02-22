@@ -1,5 +1,6 @@
 <?php
 $conn = new mysqli("localhost","DB_USER","DB_PASS","invoices_db");
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 $stmt = $conn->prepare("INSERT INTO invoices 
@@ -17,6 +18,5 @@ $items
 );
 
 $stmt->execute();
-echo "Saved";
 $conn->close();
 ?>
