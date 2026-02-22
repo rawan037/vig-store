@@ -34,10 +34,21 @@ input{padding:8px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;wid
 
 <h2>📊 فاتورة جديدة</h2>
 <div class="card" id="invoiceCard">
+<div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
 
-<div>
-<input type="text" id="customerName" placeholder="اسم العميل">
-<input type="text" id="customerPhone" placeholder="رقم الهاتف بدون 0">
+  <input type="text" id="customerName" 
+  placeholder="اسم العميل"
+  style="padding:8px;border-radius:8px;border:1px solid #ccc;flex:1">
+
+  <input type="text" id="customerPhone" 
+  placeholder="رقم الهاتف بدون 0"
+  style="padding:8px;border-radius:8px;border:1px solid #ccc;flex:1">
+
+  <button onclick="saveCustomerOnly()" 
+  style="background:#0fa36b;color:#fff;border:none;border-radius:8px;padding:8px 12px">
+  ➕ إضافة للأرشيف
+  </button>
+
 </div>
 
 <div id="invoiceHeader" style="text-align:center;margin:15px 0">
@@ -93,13 +104,12 @@ input{padding:8px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;wid
 
 <script>
 
-// بيانات تجريبية مؤقتة
-let cart = [
-{name:"تفاح",quantity:2,price:1.5},
-{name:"موز",quantity:1,price:1.2}
-];
-
+function getCart(){
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
 function renderInvoice(){
+
+const cart = getCart();
 const tbody=document.querySelector("#invoiceTable tbody");
 tbody.innerHTML="";
 let total=0;
@@ -124,7 +134,7 @@ const inv="INV-"+Date.now();
 document.getElementById("invoiceNumber").innerText=inv;
 document.getElementById("invoiceDate").innerText=new Date().toLocaleString('ar-JO');
 }
-
+  window.addEventListener("storage", renderInvoice);
 function saveInvoice(){
 const invoiceNumber=document.getElementById("invoiceNumber").innerText;
 const total=document.getElementById("totalAmount").innerText;
@@ -194,7 +204,23 @@ XLSX.writeFile(wb,"Invoices.xlsx");
 
 renderInvoice();
 loadArchive();
+function saveCustomerOnly(){
 
+fetch("save_invoice.php",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+invoice_number: "CUST-"+Date.now(),
+customer_name: document.getElementById("customerName").value,
+customer_phone: document.getElementById("customerPhone").value,
+total: 0,
+items: []
+})
+}).then(()=>{
+  loadArchive();
+});
+}
 </script>
+  
 </body>
 </html>
