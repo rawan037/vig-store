@@ -359,7 +359,21 @@ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
   // ✅ استرجاع السلة عند تحميل الصفحة
 window.onload = () => {
+
+  // قراءة السلة
   cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // إصلاح البيانات القديمة
+  cart = cart.map(item => ({
+    name: item.name,
+    img: item.img,
+    price: parseFloat(item.price) || 0,
+    quantity: parseFloat(item.quantity) || 1
+  }));
+
+  // إعادة حفظ بعد الإصلاح
+  localStorage.setItem("cart", JSON.stringify(cart));
+
   updateCart();
 };
 </script>
