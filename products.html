@@ -275,21 +275,35 @@ openCart();
 }
 
 function addToCart(name, price, img, btn){
-  // إضافة المنتج للسلة مع quantity
-  cart.push({name, price, img, quantity: 1});
 
-  // تحديث السلة والعداد
+  // البحث إذا المنتج موجود مسبقًا
+  let existing = cart.find(i => i.name === name);
+
+  if(existing){
+    existing.quantity += 1;
+  }else{
+    cart.push({
+      name: name,
+      price: Number(price),
+      img: img,
+      quantity: 1
+    });
+  }
+
+  // تحديث السلة
   updateCart();
-
-  // حفظ في التخزين المحلي
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // حركة الطيران
+  // -----------------------------
+  // حركة الطيران (كما كانت)
+  // -----------------------------
   const productImg = btn.closest(".product").querySelector("img");
   const cartIcon = document.querySelector(".cart");
+
   if(!productImg || !cartIcon) return;
 
   const flyingImg = productImg.cloneNode(true);
+
   flyingImg.style.position = "fixed";
   flyingImg.style.zIndex = "9999";
   flyingImg.style.width = "80px";
