@@ -238,9 +238,15 @@ let cart=[];
 const phone="962789119926";
 
 function updateCart(){
-document.getElementById("cartCount").textContent=cart.length;
-const total=cart.reduce((s,i)=>s+i.price,0);
-document.getElementById("cartTotal").textContent=total.toFixed(2);
+
+// حساب عدد القطع حسب الكمية
+const count = cart.reduce((sum,item)=>sum + (item.quantity || 1),0);
+document.getElementById("cartCount").textContent = count;
+
+// حساب المجموع الحقيقي
+const total = cart.reduce((sum,item)=>sum + (item.price * (item.quantity || 1)),0);
+document.getElementById("cartTotal").textContent = total.toFixed(2);
+
 }
 
 function openCart(){
@@ -253,13 +259,13 @@ cart.forEach((item,index)=>{
 itemsDiv.innerHTML+=`
 <div class="cart-item">
 <img src="${item.img}">
-<span>${item.name} - ${item.price} JOD</span>
+<span>${item.name} × ${item.quantity} - ${(item.price * item.quantity).toFixed(2)} JOD</span>
 <button onclick="removeItem(${index})">✖</button>
 </div>`;
 });
 
 document.getElementById("modalTotal").textContent=
-cart.reduce((s,i)=>s+i.price,0).toFixed(2);
+cart.reduce((s,i)=>s + (i.price * (i.quantity || 1)),0)
 
 document.getElementById("cartModal").style.display="block";
 }
