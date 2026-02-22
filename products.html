@@ -88,19 +88,7 @@ h1{text-align:center; margin-bottom:30px; color:#8bdc65}
 </div>
 
 <script>
-const firebaseConfig = {
-  apiKey: "ضعهنا",
-  authDomain: "ضعهنا",
-  projectId: "ضعهنا"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
 
-// حماية الصفحة: إعادة التوجيه إذا لم يسجل الدخول
-auth.onAuthStateChanged(user=>{
-  if(!user) window.location="index.html";
-});
 
 // المنتجات
 const products = [
