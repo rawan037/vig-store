@@ -234,68 +234,38 @@ h1{
 </footer>
 
 <script>
+<script>
+
 let cart=[];
 const phone="962789119926";
 
+/* =========================
+   قراءة السلة
+========================= */
+
+function getCart(){
+return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+/* =========================
+   تحديث السلة
+========================= */
+
 function updateCart(){
 
-// حساب عدد القطع حسب الكمية
-const count = cart.reduce((sum,item)=>sum + (item.quantity || 1),0);
-document.getElementById("cartCount").textContent = count;
+let cart=getCart();
 
-// حساب المجموع الحقيقي
-const total = cart.reduce((sum,item)=>sum + (item.price * (item.quantity || 1)),0);
-document.getElementById("cartTotal").textContent = total.toFixed(2);
+const count = cart.reduce((sum,item)=>sum+(item.quantity||1),0);
+document.getElementById("cartCount").textContent=count;
+
+const total = cart.reduce((sum,item)=>sum+(item.price*(item.quantity||1)),0);
+document.getElementById("cartTotal").textContent=total.toFixed(2);
 
 }
 
-function openCart(){
-const itemsDiv=document.getElementById("cartItems");
-if(!itemsDiv) return;
-
-itemsDiv.innerHTML="";
-
-cart.forEach((item,index)=>{
-itemsDiv.innerHTML+=`
-<div class="cart-item">
-<img src="${item.img}">
-<span>${item.name} × ${item.quantity} - ${(item.price * item.quantity).toFixed(2)} JOD</span>
-<button onclick="removeItem(${index})">✖</button>
-</div>`;
-});
-
-document.getElementById("modalTotal").textContent=
-cart.reduce((s,i)=>s + (i.price * (i.quantity || 1)),0)
-
-document.getElementById("cartModal").style.display="block";
-}
-
-function closeCart(){
-document.getElementById("cartModal").style.display="none";
-}
-
-function removeItem(index){
-cart.splice(index,1);
-
-localStorage.setItem("cart", JSON.stringify(cart));
-window.dispatchEvent(new Event("storage"));
-
-updateCart();
-openCart();
-}
-
-function addToCart(name, price, img, btn){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-cart.push({
-name:name,
-price:price,
-img:img,
-quantity:1
-});
-
-localStorage.setItem("cart",JSON.stringify(cart));
+/* =========================
+   حركة الطيران
+========================= */
 
 function flyToCart(btn){
 
@@ -330,35 +300,128 @@ flyingImg.style.opacity="0.3";
 },50);
 
 setTimeout(()=>flyingImg.remove(),800);
+
 }
+
+/* =========================
+   إضافة للسلة
+========================= */
+
+function addToCart(name, price, img, btn){
+
+let cart=getCart();
+
+cart.push({
+name:name,
+price:price,
+img:img,
+quantity:1
+});
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+updateCart();
+flyToCart(btn);
+
+}
+
+/* =========================
+   السلة المنبثقة
+========================= */
+
+function openCart(){
+
+let cart=getCart();
+
+const itemsDiv=document.getElementById("cartItems");
+if(!itemsDiv) return;
+
+itemsDiv.innerHTML="";
+
+cart.forEach((item,index)=>{
+itemsDiv.innerHTML+=`
+<div class="cart-item">
+<img src="${item.img}">
+<span>${item.name} × ${item.quantity} - ${(item.price*item.quantity).toFixed(2)} JOD</span>
+<button onclick="removeItem(${index})">✖</button>
+</div>
+`;
+});
+
+document.getElementById("modalTotal").textContent=
+cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2);
+
+document.getElementById("cartModal").style.display="block";
+
+}
+
+/* =========================
+   إغلاق السلة
+========================= */
+
+function closeCart(){
+document.getElementById("cartModal").style.display="none";
+}
+
+/* =========================
+   حذف عنصر
+========================= */
+
+function removeItem(index){
+
+let cart=getCart();
+
+cart.splice(index,1);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+updateCart();
+openCart();
+
+}
+
+/* =========================
+   الدفع والتوصيل
+========================= */
+
 function payCOD(){
+let cart=getCart();
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 sendOrder("💵 الدفع عند الاستلام");
 }
 
 function payOnline(){
+
+let cart=getCart();
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 
-let msg=`💳 طلب دفع إلكتروني\n\n`;
+let msg="💳 طلب دفع إلكتروني\n\n";
+
 cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
 
-msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
 window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+
 }
 
 function sendOrder(method){
+
+let cart=getCart();
 
 let msg=`🛒 طلب جديد\n${method}\n\n`;
 
 cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
 
-msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
 window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+
 }
 
 function requestDelivery(){
+
+let cart=getCart();
 
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 
@@ -369,29 +432,18 @@ let msg=`🛒 طلب توصيل\n🚚 العنوان: ${address}\n\n`;
 
 cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
 
-msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
 window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+
 }
-  // ✅ استرجاع السلة عند تحميل الصفحة
-window.onload = () => {
 
-  // قراءة السلة
-  cart = JSON.parse(localStorage.getItem("cart")) || [];
+/* =========================
+   تحميل الصفحة
+========================= */
 
-  // إصلاح البيانات القديمة
-  cart = cart.map(item => ({
-    name: item.name,
-    img: item.img,
-    price: parseFloat(item.price) || 0,
-    quantity: parseFloat(item.quantity) || 1
-  }));
+window.onload=updateCart;
 
-  // إعادة حفظ بعد الإصلاح
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  updateCart();
-};
 </script>
 </body>
 </html>
