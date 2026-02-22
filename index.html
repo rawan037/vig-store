@@ -58,7 +58,15 @@ body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow
     z-index:2 !important; 
     background:transparent;
   }
-  .profile-img { width:40px !important; height:40px !important;background:transparent; opacity: 0.5; /* غيري الرقم بين 0 و 1 */ }
+  .profile-img {
+  width:140px;
+  height:140px;
+  border-radius:0;       /* إزالة الشكل الدائري */
+  object-fit:contain;    /* يحافظ على أبعاد الصورة */
+  background:transparent;/* إزالة الخلفية البيضاء */
+  position:relative;
+  z-index:3;
+}
   .manager-name { font-size:6px !important; margin-top:2px !important; display:block; }
 
  
