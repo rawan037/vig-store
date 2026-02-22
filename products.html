@@ -275,16 +275,16 @@ openCart();
 }
 
 function addToCart(name, price, img, btn){
-  // 1️⃣ إضافة المنتج للسلة بالذاكرة
-  cart.push({name, price, img});
+  // إضافة المنتج للسلة مع quantity
+  cart.push({name, price, img, quantity: 1});
 
-  // 2️⃣ تحديث أيقونة السلة والمجموع
+  // تحديث السلة والعداد
   updateCart();
 
-  // 3️⃣ حفظ السلة في localStorage
+  // حفظ في التخزين المحلي
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // 4️⃣ حركة الطيران
+  // حركة الطيران
   const productImg = btn.closest(".product").querySelector("img");
   const cartIcon = document.querySelector(".cart");
   if(!productImg || !cartIcon) return;
@@ -300,7 +300,6 @@ function addToCart(name, price, img, btn){
   const start = productImg.getBoundingClientRect();
   const end = cartIcon.getBoundingClientRect();
 
-  // إضافة scroll لضبط الإحداثيات
   flyingImg.style.left = (start.left + window.scrollX) + "px";
   flyingImg.style.top = (start.top + window.scrollY) + "px";
 
@@ -316,7 +315,6 @@ function addToCart(name, price, img, btn){
 
   setTimeout(() => flyingImg.remove(), 800);
 }
-
 function payCOD(){
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 sendOrder("💵 الدفع عند الاستلام");
