@@ -276,6 +276,10 @@ document.getElementById("cartModal").style.display="none";
 
 function removeItem(index){
 cart.splice(index,1);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+window.dispatchEvent(new Event("storage"));
+
 updateCart();
 openCart();
 }
@@ -297,8 +301,9 @@ function addToCart(name, price, img, btn){
   }
 
   // تحديث السلة
-  updateCart();
-  localStorage.setItem("cart", JSON.stringify(cart));
+ updateCart();
+localStorage.setItem("cart", JSON.stringify(cart));
+window.dispatchEvent(new Event("storage"));
 
   // -----------------------------
   // حركة الطيران (كما كانت)
