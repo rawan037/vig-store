@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة التحكم</title>
+<title>لوحة تحكم الفواتير</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
@@ -15,35 +19,33 @@ header{background:#0b5fa5;color:#fff;padding:20px;text-align:center;font-size:24
 table{width:100%;border-collapse:collapse;margin-top:10px}
 th,td{border:1px solid #ddd;padding:8px;text-align:center}
 th{background:#0b5fa5;color:#fff}
-button{padding:6px 12px;border:none;border-radius:8px;cursor:pointer}
-.btn-delete{background:#f44336;color:#fff}
+button{padding:8px 15px;border:none;border-radius:8px;cursor:pointer;margin:5px}
 .invoice th{background:#0fa36b}
 .invoice tfoot td{background:#6bcf63;color:#fff}
+input{padding:8px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;width:48%}
+.actions button{margin-bottom:10px}
 </style>
 </head>
 <body>
 
-<header>لوحة تحكم السلة والفاتورة</header>
+<header>لوحة تحكم الفواتير</header>
 
 <div class="container">
 
-<h2>🛒 المنتجات في السلة</h2>
-<div class="card">
-<table id="productsTable">
-<thead>
-<tr>
-<th>المنتج</th>
-<th>السعر/كغ</th>
-<th>الكمية (كغ)</th>
-<th>إجراء</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+<h2>📊 فاتورة جديدة</h2>
+<div class="card" id="invoiceCard">
+
+<div>
+<input type="text" id="customerName" placeholder="اسم العميل">
+<input type="text" id="customerPhone" placeholder="رقم الهاتف بدون 0">
 </div>
 
-<h2>📊 فاتورة العميل</h2>
-<div class="card">
+<div id="invoiceHeader" style="text-align:center;margin:15px 0">
+<h3>فاتورة شراء</h3>
+<p>رقم الفاتورة: <span id="invoiceNumber"></span></p>
+<p>التاريخ: <span id="invoiceDate"></span></p>
+</div>
+
 <table class="invoice" id="invoiceTable">
 <thead>
 <tr>
@@ -61,81 +63,138 @@ button{padding:6px 12px;border:none;border-radius:8px;cursor:pointer}
 </tr>
 </tfoot>
 </table>
+
+<div class="actions">
+<button onclick="saveInvoice()">💾 حفظ الفاتورة</button>
+<button onclick="downloadImage()">📷 تنزيل صورة</button>
+<button onclick="sendWhatsApp()">📲 واتساب</button>
+<button onclick="exportExcel()">📊 تصدير Excel</button>
+</div>
+
+</div>
+
+<h2>📁 أرشيف الفواتير</h2>
+<div class="card">
+<table id="archiveTable">
+<thead>
+<tr>
+<th>رقم</th>
+<th>العميل</th>
+<th>الهاتف</th>
+<th>الإجمالي</th>
+<th>التاريخ</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
 </div>
 
 </div>
 
 <script>
 
-// قراءة السلة من التخزين
-function getCart(){
-  return JSON.parse(localStorage.getItem("cart")) || [];
+// بيانات تجريبية مؤقتة
+let cart = [
+{name:"تفاح",quantity:2,price:1.5},
+{name:"موز",quantity:1,price:1.2}
+];
+
+function renderInvoice(){
+const tbody=document.querySelector("#invoiceTable tbody");
+tbody.innerHTML="";
+let total=0;
+
+cart.forEach(item=>{
+let itemTotal=item.quantity*item.price;
+total+=itemTotal;
+
+tbody.innerHTML+=`
+<tr>
+<td>${item.name}</td>
+<td>${item.quantity}</td>
+<td>${item.price}</td>
+<td>${itemTotal.toFixed(2)}</td>
+</tr>
+`;
+});
+
+document.getElementById("totalAmount").innerText=total.toFixed(2)+" د.أ";
+
+const inv="INV-"+Date.now();
+document.getElementById("invoiceNumber").innerText=inv;
+document.getElementById("invoiceDate").innerText=new Date().toLocaleString('ar-JO');
 }
 
-// حفظ السلة
-function saveCart(cart){
-  localStorage.setItem("cart", JSON.stringify(cart));
+function saveInvoice(){
+const invoiceNumber=document.getElementById("invoiceNumber").innerText;
+const total=document.getElementById("totalAmount").innerText;
+
+fetch("save_invoice.php",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+invoice_number:invoiceNumber,
+customer_name:document.getElementById("customerName").value,
+customer_phone:document.getElementById("customerPhone").value,
+total:total,
+items:cart
+})
+}).then(()=>loadArchive());
 }
 
-// تحديث الجدول والفاتورة
-function render(){
-  const cart = getCart();
-  const tbody = document.querySelector("#productsTable tbody");
-  const invoiceBody = document.querySelector("#invoiceTable tbody");
-
-  tbody.innerHTML="";
-  invoiceBody.innerHTML="";
-  let total = 0;
-
-  cart.forEach((item,index)=>{
-
-    // جدول المنتجات
-    tbody.innerHTML += `
-      <tr>
-        <td>${item.name}</td>
-        <td>${item.price}</td>
-        <td>${item.quantity}</td>
-        <td>
-          <button class="btn-delete" onclick="deleteItem(${index})">🗑 حذف</button>
-        </td>
-      </tr>
-    `;
-
-    // الفاتورة
-   const price = parseFloat(item.price) || 0;
-const qty = parseFloat(item.quantity) || 1;
-
-const itemTotal = (price * qty).toFixed(2);
-   total += parseFloat(itemTotal);
-
-    invoiceBody.innerHTML += `
-      <tr>
-        <td>${item.name}</td>
-        <td>${item.quantity}</td>
-        <td>${item.price}</td>
-        <td>${itemTotal}</td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("totalAmount").innerHTML = total.toFixed(2) + " د.أ";
+function loadArchive(){
+fetch("get_invoices.php")
+.then(res=>res.json())
+.then(data=>{
+const tbody=document.querySelector("#archiveTable tbody");
+tbody.innerHTML="";
+data.forEach(inv=>{
+tbody.innerHTML+=`
+<tr>
+<td>${inv.invoice_number}</td>
+<td>${inv.customer_name}</td>
+<td>${inv.customer_phone}</td>
+<td>${inv.total}</td>
+<td>${inv.created_at}</td>
+</tr>
+`;
+});
+});
 }
 
-// حذف منتج
-function deleteItem(index){
-  let cart = getCart();
-  cart.splice(index,1);
-  saveCart(cart);
-  render();
+function downloadImage(){
+html2canvas(document.querySelector("#invoiceCard"))
+.then(canvas=>{
+const link=document.createElement("a");
+link.download="invoice.png";
+link.href=canvas.toDataURL();
+link.click();
+});
 }
 
-// تحديث تلقائي عند فتح الصفحة
-render();
+function sendWhatsApp(){
+const phone=document.getElementById("customerPhone").value;
+const total=document.getElementById("totalAmount").innerText;
+const name=document.getElementById("customerName").value;
 
-// تحديث تلقائي إذا تغيرت السلة من صفحة ثانية
-window.addEventListener("storage", render);
+let msg=`فاتورة شراء\nالعميل: ${name}\nالإجمالي: ${total}`;
+window.open(`https://wa.me/962${phone}?text=`+encodeURIComponent(msg));
+}
+
+function exportExcel(){
+fetch("get_invoices.php")
+.then(res=>res.json())
+.then(data=>{
+const ws=XLSX.utils.json_to_sheet(data);
+const wb=XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,ws,"Invoices");
+XLSX.writeFile(wb,"Invoices.xlsx");
+});
+}
+
+renderInvoice();
+loadArchive();
 
 </script>
-
 </body>
 </html>
