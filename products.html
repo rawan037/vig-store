@@ -274,49 +274,49 @@ updateCart();
 openCart();
 }
 
-function addToCart(name,price,img,btn){
+function addToCart(name, price, img, btn){
+  // 1️⃣ إضافة المنتج للسلة بالذاكرة
+  cart.push({name, price, img});
 
-cart.push({name,price,img});
-updateCart();
+  // 2️⃣ تحديث أيقونة السلة والمجموع
+  updateCart();
 
-/* 🔥 حركة الطيران */
-const productImg=btn.closest(".product").querySelector("img");
-const cartIcon=document.querySelector(".cart");
-
-if(!productImg || !cartIcon) return;
-
-const flyingImg=productImg.cloneNode(true);
-flyingImg.style.position="fixed";
-flyingImg.style.zIndex="9999";
-flyingImg.style.width="80px";
-flyingImg.style.height="80px";
-flyingImg.style.borderRadius="10px";
-flyingImg.style.transition="all 0.8s ease-in-out";
-
-const start=productImg.getBoundingClientRect();
-const end=cartIcon.getBoundingClientRect();
-
-flyingImg.style.left=start.left+"px";
-flyingImg.style.top=start.top+"px";
-
-document.body.appendChild(flyingImg);
-
-setTimeout(()=>{
-flyingImg.style.left=end.left+"px";
-flyingImg.style.top=end.top+"px";
-flyingImg.style.width="20px";
-flyingImg.style.height="20px";
-flyingImg.style.opacity="0.3";
-},50);
-
-setTimeout(()=>flyingImg.remove(),800);
-
-}
-function addToCart(product){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(product);
+  // 3️⃣ حفظ السلة في localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
+
+  // 4️⃣ حركة الطيران
+  const productImg = btn.closest(".product").querySelector("img");
+  const cartIcon = document.querySelector(".cart");
+  if(!productImg || !cartIcon) return;
+
+  const flyingImg = productImg.cloneNode(true);
+  flyingImg.style.position = "fixed";
+  flyingImg.style.zIndex = "9999";
+  flyingImg.style.width = "80px";
+  flyingImg.style.height = "80px";
+  flyingImg.style.borderRadius = "10px";
+  flyingImg.style.transition = "all 0.8s ease-in-out";
+
+  const start = productImg.getBoundingClientRect();
+  const end = cartIcon.getBoundingClientRect();
+
+  // إضافة scroll لضبط الإحداثيات
+  flyingImg.style.left = (start.left + window.scrollX) + "px";
+  flyingImg.style.top = (start.top + window.scrollY) + "px";
+
+  document.body.appendChild(flyingImg);
+
+  setTimeout(() => {
+    flyingImg.style.left = (end.left + window.scrollX) + "px";
+    flyingImg.style.top = (end.top + window.scrollY) + "px";
+    flyingImg.style.width = "20px";
+    flyingImg.style.height = "20px";
+    flyingImg.style.opacity = "0.3";
+  }, 50);
+
+  setTimeout(() => flyingImg.remove(), 800);
 }
+
 function payCOD(){
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 sendOrder("💵 الدفع عند الاستلام");
@@ -359,6 +359,11 @@ msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
 
 window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
+  // ✅ استرجاع السلة عند تحميل الصفحة
+window.onload = () => {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+  updateCart();
+};
 </script>
 </body>
 </html>
