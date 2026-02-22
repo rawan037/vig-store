@@ -102,8 +102,11 @@ function render(){
     `;
 
     // الفاتورة
-    const itemTotal = (item.price * item.quantity).toFixed(2);
-    total += parseFloat(itemTotal);
+   const price = parseFloat(item.price) || 0;
+const qty = parseFloat(item.quantity) || 1;
+
+const itemTotal = (price * qty).toFixed(2);
+   total += parseFloat(itemTotal);
 
     invoiceBody.innerHTML += `
       <tr>
