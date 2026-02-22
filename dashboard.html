@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة تحكم المتجر</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
     body { background:#f4f7f6; color:#333; }
@@ -18,41 +20,21 @@
     button { padding:5px 10px; border:none; border-radius:8px; cursor:pointer; }
     .btn-edit { background:#4caf50; color:#fff; }
     .btn-delete { background:#f44336; color:#fff; }
-    .btn-add { background:#0b5fa5; color:#fff; margin-top:10px; display:inline-block; }
-    .invoice { width:100%; border-collapse: collapse; margin-top:15px; font-size:14px; text-align:center; }
+    .btn-download { background:#0b5fa5; color:#fff; margin-top:10px; display:inline-block; }
+    .btn-download-img { background:#083d66; color:#fff; margin-top:10px; display:inline-block; margin-left:10px; }
+    .invoice { width:100%; border-collapse: collapse; margin-top:15px; font-size:14px; text-align:center; background:#fff; }
     .invoice th, .invoice td { border:1px solid #0fa36b; padding:8px; }
     .invoice th { background-color:#0fa36b; color:#fff; }
     .invoice tfoot td { background-color:#6bcf63; color:#fff; }
-    td.clickable { cursor:pointer; color:#0b5fa5; text-decoration:underline; }
   </style>
 </head>
 <body>
 
-<header>لوحة تحكم كاملة</header>
+<header>لوحة تحكم المنتجات والسلة</header>
 <div class="container">
 
-  <!-- إدارة الطلبات -->
-  <h2>📦 إدارة الطلبات</h2>
-  <div class="card">
-    <table id="ordersTable">
-      <thead>
-        <tr>
-          <th>رقم الطلب</th>
-          <th>العميل</th>
-          <th>المنتجات</th>
-          <th>المجموع (د.أ)</th>
-          <th>طريقة الدفع</th>
-          <th>الحالة</th>
-          <th>إجراءات</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button class="btn-add" onclick="addOrder()">➕ إضافة طلب تجريبي</button>
-  </div>
-
   <!-- إدارة المنتجات -->
-  <h2>🛒 إدارة المنتجات</h2>
+  <h2>🛒 إدارة المنتجات في السلة</h2>
   <div class="card">
     <table id="productsTable">
       <thead>
@@ -60,37 +42,17 @@
           <th>الصورة</th>
           <th>اسم المنتج</th>
           <th>السعر/كغ (د.أ)</th>
+          <th>الكمية (كغ)</th>
           <th>إجراءات</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td><img src="images/بندوره.jpg" width="50"></td>
-          <td>بندورة</td>
-          <td>0.80</td>
-          <td>
-            <button class="btn-edit">✏ تعديل</button>
-            <button class="btn-delete">🗑 حذف</button>
-          </td>
-        </tr>
-        <tr>
-          <td><img src="images/تفاح.jpg" width="50"></td>
-          <td>تفاح</td>
-          <td>1.20</td>
-          <td>
-            <button class="btn-edit">✏ تعديل</button>
-            <button class="btn-delete">🗑 حذف</button>
-          </td>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
-    <button class="btn-add" onclick="alert('إضافة منتج جديد')">➕ إضافة منتج</button>
   </div>
 
   <!-- فاتورة العميل -->
   <h2>📊 فاتورة العميل</h2>
-  <div class="card">
-    <h3>فاتورة العميل</h3>
+  <div class="card" id="invoiceCard">
     <table class="invoice" id="invoiceTable">
       <thead>
         <tr>
@@ -108,101 +70,109 @@
         </tr>
       </tfoot>
     </table>
+    <button class="btn-download" onclick="downloadInvoicePDF()">⬇️ تنزيل الفاتورة PDF</button>
+    <button class="btn-download-img" onclick="downloadInvoiceImage()">🖼️ تنزيل الفاتورة كصورة</button>
   </div>
 
 </div>
 
 <script>
-let orders = [];
-let orderCounter = 1;
+  // السلة المبدئية
+  let cart = [
+    { name:"بندورة", price:0.80, quantity:2, img:"images/بندوره.jpg" },
+    { name:"تفاح", price:1.20, quantity:1.5, img:"images/تفاح.jpg" },
+    { name:"خيار", price:1.00, quantity:1, img:"images/خيار.jpg" },
+    { name:"فلفل", price:2.00, quantity:0.5, img:"images/فلفل.jpg" }
+  ];
 
-// بيانات المنتجات التجريبية مع السعر لكل كيلو
-const productsData = [
-  { name:"بندورة", price:0.80 },
-  { name:"تفاح", price:1.20 },
-  { name:"خيار", price:1.00 },
-  { name:"فلفل", price:2.00 }
-];
-
-// إضافة طلب تجريبي
-function addOrder() {
-  const selectedProducts = [];
-  const count = Math.floor(Math.random()*3)+1;
-  for(let i=0;i<count;i++){
-    const p = productsData[Math.floor(Math.random()*productsData.length)];
-    selectedProducts.push({...p, quantity:(Math.random()*2+1).toFixed(2)});
+  // تحديث جدول المنتجات
+  function updateProductsTable() {
+    const tbody = document.querySelector("#productsTable tbody");
+    tbody.innerHTML = "";
+    cart.forEach((item,index)=>{
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><img src="${item.img}" width="50"></td>
+        <td>${item.name}</td>
+        <td>${item.price.toFixed(2)}</td>
+        <td>${item.quantity}</td>
+        <td>
+          <button class="btn-edit" onclick="editProduct(${index})">✏ تعديل</button>
+          <button class="btn-delete" onclick="deleteProduct(${index})">🗑 حذف</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+    updateInvoice();
   }
 
-  const total = selectedProducts.reduce((sum,p)=>sum + p.quantity*p.price,0).toFixed(2);
+  // تعديل المنتج: يوديك على صفحة المنتجات
+  function editProduct(index){
+    window.location.href = "products.html";
+  }
 
-  const order = {
-    id: orderCounter++,
-    customer: "عميل تجريبي",
-    products: selectedProducts,
-    total: total,
-    payment: Math.random()>0.5 ? "الدفع عند الاستلام" : "الدفع الإلكتروني",
-    status: "جديد"
-  };
+  // حذف المنتج من السلة والفاتورة والجدول
+  function deleteProduct(index){
+    if(confirm("هل أنت متأكد من حذف المنتج؟")){
+      cart.splice(index,1);
+      updateProductsTable();
+    }
+  }
 
-  orders.push(order);
-  updateOrdersTable();
-}
+  // تحديث الفاتورة
+  function updateInvoice() {
+    const tbody = document.querySelector("#invoiceTable tbody");
+    tbody.innerHTML = "";
+    let total = 0;
+    cart.forEach(item=>{
+      const row = document.createElement("tr");
+      const itemTotal = (item.quantity*item.price).toFixed(2);
+      total += parseFloat(itemTotal);
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.quantity}</td>
+        <td>${item.price.toFixed(2)}</td>
+        <td>${itemTotal}</td>
+      `;
+      tbody.appendChild(row);
+    });
+    document.getElementById("totalAmount").innerHTML = `<strong>${total.toFixed(2)} د.أ</strong>`;
+  }
 
-// تحديث جدول الطلبات
-function updateOrdersTable() {
-  const tbody = document.querySelector("#ordersTable tbody");
-  tbody.innerHTML = "";
-  orders.forEach(o=>{
-    tbody.innerHTML += `
-      <tr>
-        <td class="clickable" onclick="showInvoice(${o.id})">${o.id}</td>
-        <td>${o.customer}</td>
-        <td>${o.products.map(p=>p.name).join(", ")}</td>
-        <td>${o.total}</td>
-        <td>${o.payment}</td>
-        <td>${o.status}</td>
-        <td>
-          <button class="btn-edit" onclick="editOrder(${o.id})">✏ تعديل</button>
-          <button class="btn-delete" onclick="deleteOrder(${o.id})">🗑 حذف</button>
-        </td>
-      </tr>
-    `;
-  });
-}
+  // تنزيل الفاتورة PDF
+  function downloadInvoicePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({orientation:"p",unit:"mm",format:"a4"});
+    doc.setFontSize(18);
+    doc.text("فاتورة العميل",105,15,null,null,"center");
+    doc.setFontSize(12);
+    let y = 25;
+    doc.text(["المنتج","الكمية (كغ)","السعر/كغ","الإجمالي"],15,y);
+    y+=8;
+    let total = 0;
+    cart.forEach(item=>{
+      const itemTotal = (item.price*item.quantity).toFixed(2);
+      total += parseFloat(itemTotal);
+      doc.text([item.name,item.quantity.toString(),item.price.toFixed(2),itemTotal],15,y);
+      y+=8;
+    });
+    doc.text("المجموع النهائي: "+total.toFixed(2)+" د.أ",15,y+10);
+    doc.save("فاتورة_العميل.pdf");
+  }
 
-function editOrder(id){ alert("تعديل الطلب #" + id); }
-function deleteOrder(id){
-  orders = orders.filter(o=>o.id!==id);
-  updateOrdersTable();
-}
+  // تنزيل الفاتورة كصورة PNG
+  function downloadInvoiceImage() {
+    const invoice = document.getElementById("invoiceCard");
+    html2canvas(invoice).then(canvas=>{
+      const link = document.createElement("a");
+      link.download = "فاتورة_العميل.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
 
-// --- عرض فاتورة الطلب عند الضغط على رقم الطلب ---
-function showInvoice(orderId){
-  const order = orders.find(o=>o.id===orderId);
-  if(!order) return;
-
-  const tbody = document.querySelector("#invoiceTable tbody");
-  tbody.innerHTML = "";
-
-  let total = 0;
-  order.products.forEach(item=>{
-    const row = document.createElement("tr");
-    const totalPrice = (item.quantity*item.price).toFixed(2);
-    total += parseFloat(totalPrice);
-    row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.quantity}</td>
-      <td>${item.price.toFixed(2)}</td>
-      <td>${totalPrice}</td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  document.getElementById("totalAmount").innerHTML = `<strong>${total.toFixed(2)} د.أ</strong>`;
-}
-
-// عند تحميل الصفحة: فاتورة فارغة
-showInvoice(0);
+  // تحميل الصفحة: تحديث الجداول والفاتورة
+  updateProductsTable();
 </script>
 
 </body>
