@@ -284,21 +284,18 @@ updateCart();
 openCart();
 }
 
-function addToCart(name, price, img, btn){
+function addToCart(name, price) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // البحث إذا المنتج موجود مسبقًا
-  let existing = cart.find(i => i.name === name);
+  cart.push({
+    name: name,
+    price: price,
+    quantity: 1
+  });
 
-  if(existing){
-    existing.quantity += 1;
-  }else{
-    cart.push({
-      name: name,
-      price: Number(price),
-      img: img,
-      quantity: 1
-    });
-  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("تمت إضافة المنتج للسلة");
+}
 
   // تحديث السلة
  updateCart();
