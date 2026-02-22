@@ -284,58 +284,52 @@ updateCart();
 openCart();
 }
 
-function addToCart(name, price) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function addToCart(name, price, img, btn){
 
-  cart.push({
-    name: name,
-    price: price,
-    quantity: 1
-  });
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("تمت إضافة المنتج للسلة");
-}
+cart.push({
+name:name,
+price:price,
+img:img,
+quantity:1
+});
 
-  // تحديث السلة
- updateCart();
-localStorage.setItem("cart", JSON.stringify(cart));
-window.dispatchEvent(new Event("storage"));
+localStorage.setItem("cart",JSON.stringify(cart));
 
-  // -----------------------------
-  // حركة الطيران (كما كانت)
-  // -----------------------------
-  const productImg = btn.closest(".product").querySelector("img");
-  const cartIcon = document.querySelector(".cart");
+function flyToCart(btn){
 
-  if(!productImg || !cartIcon) return;
+const productImg = btn.closest(".product").querySelector("img");
+const cartIcon = document.querySelector(".cart");
 
-  const flyingImg = productImg.cloneNode(true);
+if(!productImg || !cartIcon) return;
 
-  flyingImg.style.position = "fixed";
-  flyingImg.style.zIndex = "9999";
-  flyingImg.style.width = "80px";
-  flyingImg.style.height = "80px";
-  flyingImg.style.borderRadius = "10px";
-  flyingImg.style.transition = "all 0.8s ease-in-out";
+const flyingImg = productImg.cloneNode(true);
 
-  const start = productImg.getBoundingClientRect();
-  const end = cartIcon.getBoundingClientRect();
+flyingImg.style.position="fixed";
+flyingImg.style.zIndex="9999";
+flyingImg.style.width="80px";
+flyingImg.style.height="80px";
+flyingImg.style.borderRadius="10px";
+flyingImg.style.transition="all 0.8s ease";
 
-  flyingImg.style.left = (start.left + window.scrollX) + "px";
-  flyingImg.style.top = (start.top + window.scrollY) + "px";
+const start = productImg.getBoundingClientRect();
+const end = cartIcon.getBoundingClientRect();
 
-  document.body.appendChild(flyingImg);
+flyingImg.style.left=(start.left+window.scrollX)+"px";
+flyingImg.style.top=(start.top+window.scrollY)+"px";
 
-  setTimeout(() => {
-    flyingImg.style.left = (end.left + window.scrollX) + "px";
-    flyingImg.style.top = (end.top + window.scrollY) + "px";
-    flyingImg.style.width = "20px";
-    flyingImg.style.height = "20px";
-    flyingImg.style.opacity = "0.3";
-  }, 50);
+document.body.appendChild(flyingImg);
 
-  setTimeout(() => flyingImg.remove(), 800);
+setTimeout(()=>{
+flyingImg.style.left=(end.left+window.scrollX)+"px";
+flyingImg.style.top=(end.top+window.scrollY)+"px";
+flyingImg.style.width="25px";
+flyingImg.style.height="25px";
+flyingImg.style.opacity="0.3";
+},50);
+
+setTimeout(()=>flyingImg.remove(),800);
 }
 function payCOD(){
 if(cart.length===0) return alert("⚠️ السلة فارغة");
