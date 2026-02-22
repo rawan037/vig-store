@@ -8,62 +8,215 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{ box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif }
-body{ background:linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; padding:20px; }
-h1{text-align:center; margin-bottom:30px; color:#8bdc65}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
+body{
+  background:linear-gradient(180deg,#0b5fa5,#0f8f6e);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.container{max-width:1200px;margin:auto;padding:100px 20px 40px}
+h1{text-align:center;margin-bottom:30px;color:#8bdc65}
 
-/* شبكة المنتجات */
-.products{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px }
-.product{ background:#f6fff7; color:#333; border-radius:12px; padding:12px; text-align:center }
-.product img{ width:100%; height:130px; object-fit:cover; border-radius:10px; margin-bottom:10px }
-.product button{ background:#4caf50; color:#fff; border:none; padding:8px 15px; border-radius:20px; margin-top:10px; cursor:pointer }
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:20px;
+}
 
-/* الشريط العلوي */
-.top-bar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:25px }
-.back{ background:#ff8c1a; color:#fff; padding:8px 15px; border-radius:25px; text-decoration:none }
+.product{
+  background:#f6fff7;
+  color:#333;
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+}
 
-/* السلة */
-.cart{ position:fixed; top:20px; left:20px; width:60px; height:60px; background:#ff8c1a; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,.25); z-index:9999; transition:.3s }
-#cartCount{ position:absolute; top:-6px; right:-6px; background:red; color:white; width:22px; height:22px; font-size:12px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold }
-.shake{ animation:shake .4s }
-@keyframes shake{ 0%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(.9)}75%{transform:scale(1.2)}100%{transform:scale(1)} }
+.product img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:10px;
+}
 
-/* نافذة السلة */
-.modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.6); z-index:1000 }
-.modal-content{ background:#fff; color:#333; max-width:400px; margin:60px auto; padding:20px; border-radius:15px; display:flex; flex-direction:column; max-height:85vh }
-.cart-item{ display:flex; align-items:center; margin-bottom:10px }
-.cart-item img{ width:40px; height:40px; border-radius:8px; margin-left:10px }
-.cart-item button{ margin-right:auto; background:red; color:#fff; border:none; border-radius:10px; padding:5px 10px; cursor:pointer }
-.payments{ display:flex; gap:10px; justify-content:center; margin-top:15px }
-.pay{ background:#0b5fa5; color:#fff; padding:10px 15px; border-radius:15px; cursor:pointer }
-.close{ margin-top:15px; width:100% }
+.product button{
+  background:#4caf50;
+  color:#fff;
+  border:none;
+  padding:8px 15px;
+  border-radius:20px;
+  margin-top:10px;
+  cursor:pointer;
+}
 
-/* حركة الطيران */
-.fly-img{ position:fixed; z-index:9999; width:60px; height:60px; border-radius:10px; transition: all 0.8s ease-in-out; pointer-events:none }
+.top-bar{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:fixed;
+  top:15px;
+  padding:0 15px;
+  z-index:1000;
+}
 
-/* الفوتر */
-.copyright-bar { background: #062c4d; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 14px; letter-spacing: 0.5px; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000 }
-@media (max-width:768px){ .copyright-bar{ font-size:11px; padding:12px 5px } }
+.back{
+  background:#ff8c1a;
+  color:#fff;
+  padding:8px 15px;
+  border-radius:25px;
+  text-decoration:none;
+  font-size:16px;
+}
 
+.cart{
+  background:#ffffff;
+  padding:8px 12px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  position:relative;
+  cursor:pointer;
+  color:#333;
+  font-size:14px;
+}
+
+#cartCount{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:red;
+  color:white;
+  font-size:12px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,.6);
+  z-index:1000;
+}
+
+.modal-content{
+  background:#fff;
+  color:#333;
+  width:90%;
+  max-width:420px;
+  border-radius:18px;
+  padding:20px;
+  margin:60px auto;
+  max-height:85vh;
+  display:flex;
+  flex-direction:column;
+}
+
+#cartItems{
+  overflow-y:auto;
+  max-height:55vh;
+  margin:10px 0;
+}
+
+.cart-item{
+  display:flex;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.cart-item img{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  margin-left:10px;
+}
+
+.cart-item button{
+  margin-right:auto;
+  background:red;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:5px 10px;
+  cursor:pointer;
+}
+
+.payments{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:15px;
+}
+
+.pay{
+  background:#0b5fa5;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:15px;
+  cursor:pointer;
+}
+
+.close{
+  margin-top:15px;
+  width:100%;
+  padding:8px;
+  cursor:pointer;
+}
+
+.site-footer{
+  background:#0b3d3d;
+  color:#fff;
+  text-align:center;
+  padding:14px;
+  font-size:14px;
+  margin-top:auto;
+  border-top:3px solid #ff8c1a;
+}
 </style>
-
-
 </head>
-<body>
 
-<div class="container">
+<body>
 
 <div class="top-bar">
 <a href="index.html" class="back">⬅ الرجوع للرئيسية</a>
-</div>
-
-<!-- السلة -->
 <div class="cart" onclick="openCart()">
-🛒
-<span id="cartCount">0</span>
+🛒 <span id="cartCount">0</span> | المجموع: <span id="cartTotal">0.00</span> JOD
+</div>
 </div>
 
-<!-- نافذة السلة -->
+<div class="container">
+<h1>🛒 المنتجات المتوفرة</h1>
+
+<div class="products">
+
+<div class="product"><img src="images/بندوره.jpg"><strong>بندورة</strong><p>0.80 JOD</p><button onclick="addToCart('بندورة',0.80,'images/بندوره.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/خيار.jpg"><strong>خيار</strong><p>0.75 JOD</p><button onclick="addToCart('خيار',0.75,'images/خيار.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/تفاح.jpg"><strong>تفاح</strong><p>1.20 JOD</p><button onclick="addToCart('تفاح',1.20,'images/تفاح.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/موز.jpg"><strong>موز</strong><p>1.50 JOD</p><button onclick="addToCart('موز',1.50,'images/موز.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/برتقال.jpg"><strong>برتقال</strong><p>0.80 JOD</p><button onclick="addToCart('برتقال',0.80,'images/برتقال.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/بطاطا.jpg"><strong>بطاطا</strong><p>0.80 JOD</p><button onclick="addToCart('بطاطا',0.80,'images/بطاطا.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/بصل.jpg"><strong>بصل</strong><p>0.80 JOD</p><button onclick="addToCart('بصل',0.80,'images/بصل.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/جزر.jpg"><strong>جزر</strong><p>0.80 JOD</p><button onclick="addToCart('جزر',0.80,'images/جزر.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/ثوم.jpg"><strong>ثوم</strong><p>0.80 JOD</p><button onclick="addToCart('ثوم',0.80,'images/ثوم.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/كيوي.jpg"><strong>كيوي</strong><p>0.80 JOD</p><button onclick="addToCart('كيوي',0.80,'images/كيوي.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/فروله.jpg"><strong>فراولة</strong><p>0.80 JOD</p><button onclick="addToCart('فراولة',0.80,'images/فروله.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/بطاطحلوه.jpg"><strong>بطاطا حلوة</strong><p>0.80 JOD</p><button onclick="addToCart('بطاطا حلوة',0.80,'images/بطاطحلوه.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/كرفس.jpg"><strong>كرفس</strong><p>0.80 JOD</p><button onclick="addToCart('كرفس',0.80,'images/كرفس.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/منجا.jpg"><strong>منجا</strong><p>0.80 JOD</p><button onclick="addToCart('منجا',0.80,'images/منجا.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/زهره.jpg"><strong>زهرة</strong><p>0.80 JOD</p><button onclick="addToCart('زهرة',0.80,'images/زهره.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/ليمون.jpg"><strong>ليمون</strong><p>0.80 JOD</p><button onclick="addToCart('ليمون',0.80,'images/ليمون.jpg',this)">أضف للسلة</button></div>
+<div class="product"><img src="images/بيتنجان.jpg"><strong>باذنجان</strong><p>0.80 JOD</p><button onclick="addToCart('باذنجان',0.80,'images/بيتنجان.jpg',this)">أضف للسلة</button></div>
+
+</div>
+</div>
+
 <div id="cartModal" class="modal">
 <div class="modal-content">
 <h3>🧺 محتويات السلة</h3>
@@ -78,96 +231,110 @@ h1{text-align:center; margin-bottom:30px; color:#8bdc65}
 </div>
 </div>
 
-<h1>🛒 المنتجات المتوفرة</h1>
-<div id="productsContainer" class="products"></div>
-
-</div>
-
-<div class="copyright-bar">
-  © 2026 جميع الحقوق محفوظة - أسواق دير العسل للخضار والفواكه
-</div>
+<footer class="site-footer">
+جميع الحقوق محفوظة © 2026 | أسواق دير العسل للخضار والفواكه
+</footer>
 
 <script>
-
-
-// المنتجات
-const products = [
-["بندورة","بندوره.jpg",0.80],
-["خيار","خيار.jpg",0.75],
-["تفاح","تفاح.jpg",1.20],
-["موز","موز.jpg",1.50],
-["برتقال","برتقال.jpg",0.80],
-["بطاطا","بطاطا.jpg",0.80],
-["بصل","بصل.jpg",0.80],
-["جزر","جزر.jpg",0.80],
-["ثوم","ثوم.jpg",0.80],
-["كيوي","كيوي.jpg",0.80],
-["فرولة","فروله.jpg",0.80],
-["بطاطا حلوة","بطاطحلوه.jpg",0.80],
-["كرفس","كرفس.jpg",0.80],
-["منجا","منجا.jpg",0.80],
-["زهرة","زهره.jpg",0.80],
-["ليمون","ليمون.jpg",0.80],
-["باذنجان","بيتنجان.jpg",0.80]
-];
-
-
-
-let cart = [];
-
-function addToCart(name, price, img, btn){
-  cart.push({name, price, img});
-  updateCart();
-
-  // حركة الطيران
-  const productImg=btn.closest(".product").querySelector("img");
-  const cartIcon=document.querySelector(".cart");
-  const flyingImg=productImg.cloneNode(true);
-  flyingImg.classList.add("fly-img");
-  flyingImg.style.left=productImg.getBoundingClientRect().left+"px";
-  flyingImg.style.top=productImg.getBoundingClientRect().top+"px";
-  document.body.appendChild(flyingImg);
-  const end=cartIcon.getBoundingClientRect();
-  setTimeout(()=>{
-    flyingImg.style.left=end.left+"px";
-    flyingImg.style.top=end.top+"px";
-    flyingImg.style.width="20px";
-    flyingImg.style.height="20px";
-    flyingImg.style.opacity="0.3";
-  },50);
-  setTimeout(()=>{ flyingImg.remove(); cartIcon.style.transform="scale(1.2)"; setTimeout(()=>cartIcon.style.transform="scale(1)",200); },800);
-}
+let cart=[];
+const phone="962789119926";
 
 function updateCart(){
-  document.getElementById("cartCount").textContent = cart.length;
+document.getElementById("cartCount").textContent=cart.length;
+const total=cart.reduce((s,i)=>s+i.price,0);
+document.getElementById("cartTotal").textContent=total.toFixed(2);
 }
 
 function openCart(){
-  if(cart.length===0) return alert("السلة فارغة");
-  saveOrder(cart);
-  const itemsDiv=document.getElementById("cartItems");
-  itemsDiv.innerHTML="";
-  cart.forEach((item,index)=>{
-    itemsDiv.innerHTML+=`
-    <div class="cart-item">
-      <img src="${item.img}">
-      <span>${item.name} - ${item.price} JOD</span>
-      <button onclick="removeItem(${index})">✖</button>
-    </div>`;
-  });
-  document.getElementById("modalTotal").textContent=cart.reduce((s,i)=>s+i.price,0).toFixed(2);
-  document.getElementById("cartModal").style.display="block";
+const itemsDiv=document.getElementById("cartItems");
+itemsDiv.innerHTML="";
+cart.forEach((item,index)=>{
+itemsDiv.innerHTML+=`
+<div class="cart-item">
+<img src="${item.img}">
+<span>${item.name} - ${item.price} JOD</span>
+<button onclick="removeItem(${index})">✖</button>
+</div>`;
+});
+document.getElementById("modalTotal").textContent=
+cart.reduce((s,i)=>s+i.price,0).toFixed(2);
+document.getElementById("cartModal").style.display="block";
 }
 
-function closeCart(){ document.getElementById("cartModal").style.display="none"; }
+function closeCart(){
+document.getElementById("cartModal").style.display="none";
+}
 
-function removeItem(index){ cart.splice(index,1); updateCart(); openCart(); }
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+openCart();
+}
 
-function payCOD(){ if(cart.length===0) return alert("السلة فارغة"); sendOrder("الدفع عند الاستلام"); }
-function payOnline(){ if(cart.length===0) return alert("السلة فارغة"); sendOrder("دفع إلكتروني"); }
-function requestDelivery(){ if(cart.length===0) return alert("السلة فارغة"); let address=prompt("أدخل العنوان"); if(!address) return; sendOrder("طلب توصيل - "+address); }
+function payCOD(){
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+sendOrder("💵 الدفع عند الاستلام");
+}
 
+function payOnline(){
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+let msg=`💳 طلب دفع إلكتروني\n\n`;
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
 
+function sendOrder(method){
+let msg=`🛒 طلب جديد\n${method}\n\n`;
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
+function requestDelivery(){
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+let address=prompt("🏠 الرجاء إدخال عنوان التوصيل:");
+if(!address) return;
+let msg=`🛒 طلب توصيل\n🚚 العنوان: ${address}\n\n`;
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
+function addToCart(name,price,img,btn){
+cart.push({name,price,img});
+updateCart();
+
+const productImg=btn.closest(".product").querySelector("img");
+const cartIcon=document.querySelector(".cart");
+
+const flyingImg=productImg.cloneNode(true);
+flyingImg.style.position="fixed";
+flyingImg.style.zIndex="9999";
+flyingImg.style.width="80px";
+flyingImg.style.height="80px";
+flyingImg.style.borderRadius="10px";
+flyingImg.style.transition="all 0.8s ease-in-out";
+
+const start=productImg.getBoundingClientRect();
+const end=cartIcon.getBoundingClientRect();
+
+flyingImg.style.left=start.left+"px";
+flyingImg.style.top=start.top+"px";
+
+document.body.appendChild(flyingImg);
+
+setTimeout(()=>{
+flyingImg.style.left=end.left+"px";
+flyingImg.style.top=end.top+"px";
+flyingImg.style.width="20px";
+flyingImg.style.height="20px";
+flyingImg.style.opacity="0.3";
+},50);
+
+setTimeout(()=>{flyingImg.remove();},800);
+}
 </script>
+
 </body>
 </html>
