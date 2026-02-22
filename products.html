@@ -234,7 +234,6 @@ h1{
 </footer>
 
 <script>
-/* نفس الجافاسكربت تبعك كامل بدون أي حذف */
 let cart=[];
 const phone="962789119926";
 
@@ -244,12 +243,118 @@ const total=cart.reduce((s,i)=>s+i.price,0);
 document.getElementById("cartTotal").textContent=total.toFixed(2);
 }
 
-function addToCart(name,price,img){
+function openCart(){
+const itemsDiv=document.getElementById("cartItems");
+if(!itemsDiv) return;
+
+itemsDiv.innerHTML="";
+
+cart.forEach((item,index)=>{
+itemsDiv.innerHTML+=`
+<div class="cart-item">
+<img src="${item.img}">
+<span>${item.name} - ${item.price} JOD</span>
+<button onclick="removeItem(${index})">✖</button>
+</div>`;
+});
+
+document.getElementById("modalTotal").textContent=
+cart.reduce((s,i)=>s+i.price,0).toFixed(2);
+
+document.getElementById("cartModal").style.display="block";
+}
+
+function closeCart(){
+document.getElementById("cartModal").style.display="none";
+}
+
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+openCart();
+}
+
+function addToCart(name,price,img,btn){
+
 cart.push({name,price,img});
 updateCart();
-alert("تمت الإضافة للسلة");
+
+/* 🔥 حركة الطيران */
+const productImg=btn.closest(".product").querySelector("img");
+const cartIcon=document.querySelector(".cart");
+
+if(!productImg || !cartIcon) return;
+
+const flyingImg=productImg.cloneNode(true);
+flyingImg.style.position="fixed";
+flyingImg.style.zIndex="9999";
+flyingImg.style.width="80px";
+flyingImg.style.height="80px";
+flyingImg.style.borderRadius="10px";
+flyingImg.style.transition="all 0.8s ease-in-out";
+
+const start=productImg.getBoundingClientRect();
+const end=cartIcon.getBoundingClientRect();
+
+flyingImg.style.left=start.left+"px";
+flyingImg.style.top=start.top+"px";
+
+document.body.appendChild(flyingImg);
+
+setTimeout(()=>{
+flyingImg.style.left=end.left+"px";
+flyingImg.style.top=end.top+"px";
+flyingImg.style.width="20px";
+flyingImg.style.height="20px";
+flyingImg.style.opacity="0.3";
+},50);
+
+setTimeout(()=>flyingImg.remove(),800);
+
+}
+
+function payCOD(){
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+sendOrder("💵 الدفع عند الاستلام");
+}
+
+function payOnline(){
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+
+let msg=`💳 طلب دفع إلكتروني\n\n`;
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
+function sendOrder(method){
+
+let msg=`🛒 طلب جديد\n${method}\n\n`;
+
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+}
+
+function requestDelivery(){
+
+if(cart.length===0) return alert("⚠️ السلة فارغة");
+
+let address=prompt("🏠 الرجاء إدخال عنوان التوصيل:");
+if(!address) return;
+
+let msg=`🛒 طلب توصيل\n🚚 العنوان: ${address}\n\n`;
+
+cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+
+msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)} JOD`;
+
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 </script>
-
 </body>
 </html>
