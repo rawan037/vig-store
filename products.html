@@ -47,10 +47,6 @@ h1{text-align:center; margin-bottom:30px; color:#8bdc65}
 
 </style>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 </head>
 <body>
@@ -190,25 +186,6 @@ function payCOD(){ if(cart.length===0) return alert("السلة فارغة"); se
 function payOnline(){ if(cart.length===0) return alert("السلة فارغة"); sendOrder("دفع إلكتروني"); }
 function requestDelivery(){ if(cart.length===0) return alert("السلة فارغة"); let address=prompt("أدخل العنوان"); if(!address) return; sendOrder("طلب توصيل - "+address); }
 
-function sendOrder(method){
-  saveOrder(cart); // حفظ الطلب للمستخدم
-  let msg=`طلب جديد\n${method}\n\n`;
-  cart.forEach(i=>msg+=`- ${i.name} (${i.price})\n`);
-  const phone="962789119926";
-  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
-}
-
-function saveOrder(cart){
-  const user = auth.currentUser;
-  if(!user){ alert("يجب تسجيل الدخول أولاً"); return; }
-  db.collection("orders").add({
-    userId: user.uid,
-    items: cart,
-    createdAt: new Date()
-  });
-  cart=[]; document.getElementById("cartCount").textContent=0;
-  alert("تم إرسال الطلب وحفظه بنجاح!");
-}
 
 </script>
 </body>
