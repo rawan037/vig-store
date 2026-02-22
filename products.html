@@ -312,7 +312,11 @@ flyingImg.style.opacity="0.3";
 setTimeout(()=>flyingImg.remove(),800);
 
 }
-
+function addToCart(product){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
 function payCOD(){
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 sendOrder("💵 الدفع عند الاستلام");
