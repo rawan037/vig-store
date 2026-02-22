@@ -21,6 +21,28 @@
     .btn-delete { background:#f44336; color:#fff; }
     .btn-add { background:#0b5fa5; color:#fff; margin-top:10px; display:inline-block; }
     .report { margin-top:30px; }
+    .invoice {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.invoice th, .invoice td {
+  border: 1px solid #0fa36b;
+  padding: 8px;
+}
+
+.invoice th {
+  background-color: #0fa36b;
+  color: #fff;
+}
+
+.invoice tfoot td {
+  background-color: #6bcf63;
+  color: #fff;
+}
   </style>
 </head>
 <body>
@@ -88,13 +110,29 @@
   </div>
 
   <!-- التقارير اليومية -->
-  <h2>📊 التقارير اليومية</h2>
-  <div class="card report">
-    <p>إجمالي المبيعات اليوم: <span id="totalSales">0.00</span> JOD</p>
-    <p>عدد الطلبات اليوم: <span id="totalOrders">0</span></p>
-    <p>المنتجات الأكثر مبيعاً: <span id="topProducts">-</span></p>
-  </div>
-
+  <h2>📊فاتورة العميل</h2>
+  <div class="card">
+  <h3>فاتورة العميل</h3>
+  <table class="invoice" id="invoiceTable">
+    <thead>
+      <tr>
+        <th>المنتج</th>
+        <th>الكمية (كغ)</th>
+        <th>السعر/كغ (د.أ)</th>
+        <th>الإجمالي (د.أ)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- سيتم ملؤها ديناميكياً -->
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3"><strong>المجموع النهائي</strong></td>
+        <td id="totalAmount"><strong>0 د.أ</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 </div>
 
 <script>
@@ -163,6 +201,33 @@ function deleteOrder(id) {
   updateOrdersTable();
 }
 </script>
+<script>
+  // بيانات العميل - يمكن تعديلها حسب الطلب الفعلي
+  const order = [
+    { product: "طماطم", quantity: 2, pricePerKg: 1.5 },
+    { product: "خيار", quantity: 1.5, pricePerKg: 1.2 },
+    { product: "فلفل", quantity: 1, pricePerKg: 2.0 },
+  ];
 
+  const tbody = document.querySelector("#invoiceTable tbody");
+  let total = 0;
+
+  order.forEach(item => {
+    const row = document.createElement("tr");
+
+    const totalPrice = (item.quantity * item.pricePerKg).toFixed(2);
+    total += parseFloat(totalPrice);
+
+    row.innerHTML = `
+      <td>${item.product}</td>
+      <td>${item.quantity}</td>
+      <td>${item.pricePerKg.toFixed(2)}</td>
+      <td>${totalPrice}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  document.getElementById("totalAmount").innerHTML = `<strong>${total.toFixed(2)} د.أ</strong>`;
+</script>
 </body>
 </html>
