@@ -6,13 +6,12 @@
   <title>لوحة تحكم المتجر</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
     body { background:#f4f7f6; color:#333; }
     header { background:#0b5fa5; color:#fff; padding:20px; text-align:center; font-size:24px; font-weight:bold; }
     .container { max-width:1200px; margin:auto; padding:20px; }
     h2 { margin:20px 0 10px; color:#0b5fa5; }
-    .dashboard { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; }
-    .card { background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    .card { background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:30px; }
     table { width:100%; border-collapse: collapse; margin-top:10px; }
     th, td { border:1px solid #ddd; padding:8px; text-align:center; }
     th { background:#0b5fa5; color:#fff; }
@@ -20,35 +19,16 @@
     .btn-edit { background:#4caf50; color:#fff; }
     .btn-delete { background:#f44336; color:#fff; }
     .btn-add { background:#0b5fa5; color:#fff; margin-top:10px; display:inline-block; }
-    .report { margin-top:30px; }
-    .invoice {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.invoice th, .invoice td {
-  border: 1px solid #0fa36b;
-  padding: 8px;
-}
-
-.invoice th {
-  background-color: #0fa36b;
-  color: #fff;
-}
-
-.invoice tfoot td {
-  background-color: #6bcf63;
-  color: #fff;
-}
+    .invoice { width:100%; border-collapse: collapse; margin-top:15px; font-size:14px; text-align:center; }
+    .invoice th, .invoice td { border:1px solid #0fa36b; padding:8px; }
+    .invoice th { background-color:#0fa36b; color:#fff; }
+    .invoice tfoot td { background-color:#6bcf63; color:#fff; }
+    td.clickable { cursor:pointer; color:#0b5fa5; text-decoration:underline; }
   </style>
 </head>
 <body>
 
 <header>لوحة تحكم كاملة</header>
-
 <div class="container">
 
   <!-- إدارة الطلبات -->
@@ -60,15 +40,13 @@
           <th>رقم الطلب</th>
           <th>العميل</th>
           <th>المنتجات</th>
-          <th>المجموع (JOD)</th>
+          <th>المجموع (د.أ)</th>
           <th>طريقة الدفع</th>
           <th>الحالة</th>
           <th>إجراءات</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- الطلبات ستضاف هنا ديناميكياً -->
-      </tbody>
+      <tbody></tbody>
     </table>
     <button class="btn-add" onclick="addOrder()">➕ إضافة طلب تجريبي</button>
   </div>
@@ -81,7 +59,7 @@
         <tr>
           <th>الصورة</th>
           <th>اسم المنتج</th>
-          <th>السعر (JOD)</th>
+          <th>السعر/كغ (د.أ)</th>
           <th>إجراءات</th>
         </tr>
       </thead>
@@ -109,65 +87,77 @@
     <button class="btn-add" onclick="alert('إضافة منتج جديد')">➕ إضافة منتج</button>
   </div>
 
-  <!-- التقارير اليومية -->
-  <h2>📊فاتورة العميل</h2>
+  <!-- فاتورة العميل -->
+  <h2>📊 فاتورة العميل</h2>
   <div class="card">
-  <h3>فاتورة العميل</h3>
-  <table class="invoice" id="invoiceTable">
-    <thead>
-      <tr>
-        <th>المنتج</th>
-        <th>الكمية (كغ)</th>
-        <th>السعر/كغ (د.أ)</th>
-        <th>الإجمالي (د.أ)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- سيتم ملؤها ديناميكياً -->
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3"><strong>المجموع النهائي</strong></td>
-        <td id="totalAmount"><strong>0 د.أ</strong></td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+    <h3>فاتورة العميل</h3>
+    <table class="invoice" id="invoiceTable">
+      <thead>
+        <tr>
+          <th>المنتج</th>
+          <th>الكمية (كغ)</th>
+          <th>السعر/كغ (د.أ)</th>
+          <th>الإجمالي (د.أ)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>المجموع النهائي</strong></td>
+          <td id="totalAmount"><strong>0 د.أ</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
+</div>
 
 <script>
 let orders = [];
 let orderCounter = 1;
 
+// بيانات المنتجات التجريبية مع السعر لكل كيلو
+const productsData = [
+  { name:"بندورة", price:0.80 },
+  { name:"تفاح", price:1.20 },
+  { name:"خيار", price:1.00 },
+  { name:"فلفل", price:2.00 }
+];
+
+// إضافة طلب تجريبي
 function addOrder() {
-  const sampleProducts = ["بندورة","تفاح"];
-  const sampleTotal = 2.0;
-  const paymentMethods = ["الدفع عند الاستلام","الدفع الإلكتروني"];
-  const payment = paymentMethods[Math.floor(Math.random()*paymentMethods.length)];
-  const status = "جديد";
+  const selectedProducts = [];
+  const count = Math.floor(Math.random()*3)+1;
+  for(let i=0;i<count;i++){
+    const p = productsData[Math.floor(Math.random()*productsData.length)];
+    selectedProducts.push({...p, quantity:(Math.random()*2+1).toFixed(2)});
+  }
+
+  const total = selectedProducts.reduce((sum,p)=>sum + p.quantity*p.price,0).toFixed(2);
 
   const order = {
     id: orderCounter++,
     customer: "عميل تجريبي",
-    products: sampleProducts.join(", "),
-    total: sampleTotal.toFixed(2),
-    payment: payment,
-    status: status
+    products: selectedProducts,
+    total: total,
+    payment: Math.random()>0.5 ? "الدفع عند الاستلام" : "الدفع الإلكتروني",
+    status: "جديد"
   };
 
   orders.push(order);
   updateOrdersTable();
 }
 
+// تحديث جدول الطلبات
 function updateOrdersTable() {
   const tbody = document.querySelector("#ordersTable tbody");
   tbody.innerHTML = "";
-  orders.forEach(o => {
+  orders.forEach(o=>{
     tbody.innerHTML += `
       <tr>
-        <td>${o.id}</td>
+        <td class="clickable" onclick="showInvoice(${o.id})">${o.id}</td>
         <td>${o.customer}</td>
-        <td>${o.products}</td>
+        <td>${o.products.map(p=>p.name).join(", ")}</td>
         <td>${o.total}</td>
         <td>${o.payment}</td>
         <td>${o.status}</td>
@@ -178,56 +168,42 @@ function updateOrdersTable() {
       </tr>
     `;
   });
-
-  // تحديث التقارير
-  document.getElementById("totalOrders").textContent = orders.length;
-  const totalSales = orders.reduce((sum,o)=>sum+parseFloat(o.total),0);
-  document.getElementById("totalSales").textContent = totalSales.toFixed(2);
-  const allProducts = orders.flatMap(o => o.products.split(", "));
-  const topProducts = allProducts.reduce((acc,p)=>{
-    acc[p] = (acc[p]||0)+1;
-    return acc;
-  }, {});
-  const top = Object.keys(topProducts).sort((a,b)=>topProducts[b]-topProducts[a]).join(", ");
-  document.getElementById("topProducts").textContent = top || "-";
 }
 
-function editOrder(id) {
-  alert("تعديل الطلب #" + id);
-}
-
-function deleteOrder(id) {
+function editOrder(id){ alert("تعديل الطلب #" + id); }
+function deleteOrder(id){
   orders = orders.filter(o=>o.id!==id);
   updateOrdersTable();
 }
-</script>
-<script>
-  // بيانات العميل - يمكن تعديلها حسب الطلب الفعلي
-  const order = [
-    { product: "طماطم", quantity: 2, pricePerKg: 1.5 },
-    { product: "خيار", quantity: 1.5, pricePerKg: 1.2 },
-    { product: "فلفل", quantity: 1, pricePerKg: 2.0 },
-  ];
+
+// --- عرض فاتورة الطلب عند الضغط على رقم الطلب ---
+function showInvoice(orderId){
+  const order = orders.find(o=>o.id===orderId);
+  if(!order) return;
 
   const tbody = document.querySelector("#invoiceTable tbody");
+  tbody.innerHTML = "";
+
   let total = 0;
-
-  order.forEach(item => {
+  order.products.forEach(item=>{
     const row = document.createElement("tr");
-
-    const totalPrice = (item.quantity * item.pricePerKg).toFixed(2);
+    const totalPrice = (item.quantity*item.price).toFixed(2);
     total += parseFloat(totalPrice);
-
     row.innerHTML = `
-      <td>${item.product}</td>
+      <td>${item.name}</td>
       <td>${item.quantity}</td>
-      <td>${item.pricePerKg.toFixed(2)}</td>
+      <td>${item.price.toFixed(2)}</td>
       <td>${totalPrice}</td>
     `;
     tbody.appendChild(row);
   });
 
   document.getElementById("totalAmount").innerHTML = `<strong>${total.toFixed(2)} د.أ</strong>`;
+}
+
+// عند تحميل الصفحة: فاتورة فارغة
+showInvoice(0);
 </script>
+
 </body>
 </html>
