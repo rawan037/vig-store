@@ -234,78 +234,82 @@ h1{
 </footer>
 
 <script>
-<script>
 
-let cart=[];
 const phone="962789119926";
 
-/* =========================
-   قراءة السلة
-========================= */
+/* ========================= */
+/* التخزين */
+/* ========================= */
 
 function getCart(){
 return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
-/* =========================
-   تحديث السلة
-========================= */
+function saveCart(cart){
+localStorage.setItem("cart",JSON.stringify(cart));
+}
+
+/* ========================= */
+/* تحديث السلة */
+/* ========================= */
 
 function updateCart(){
 
-let cart=getCart();
+const cart=getCart();
 
-const count = cart.reduce((sum,item)=>sum+(item.quantity||1),0);
+const count=cart.reduce((s,i)=>s+(i.quantity||1),0);
 document.getElementById("cartCount").textContent=count;
 
-const total = cart.reduce((sum,item)=>sum+(item.price*(item.quantity||1)),0);
+const total=cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0);
 document.getElementById("cartTotal").textContent=total.toFixed(2);
 
 }
 
-/* =========================
-   حركة الطيران
-========================= */
+/* ========================= */
+/* حركة الطيران */
+/* ========================= */
 
 function flyToCart(btn){
 
-const productImg = btn.closest(".product").querySelector("img");
-const cartIcon = document.querySelector(".cart");
+const productImg=btn.closest(".product").querySelector("img");
+const cartIcon=document.querySelector(".cart");
 
 if(!productImg || !cartIcon) return;
 
-const flyingImg = productImg.cloneNode(true);
+const clone=productImg.cloneNode(true);
 
-flyingImg.style.position="fixed";
-flyingImg.style.zIndex="9999";
-flyingImg.style.width="80px";
-flyingImg.style.height="80px";
-flyingImg.style.borderRadius="10px";
-flyingImg.style.transition="all 0.8s ease";
+clone.style.position="fixed";
+clone.style.zIndex="9999";
+clone.style.width="80px";
+clone.style.height="80px";
+clone.style.borderRadius="10px";
+clone.style.transition="0.8s ease";
+clone.style.pointerEvents="none";
 
-const start = productImg.getBoundingClientRect();
-const end = cartIcon.getBoundingClientRect();
+const start=productImg.getBoundingClientRect();
+const end=cartIcon.getBoundingClientRect();
 
-flyingImg.style.left=(start.left+window.scrollX)+"px";
-flyingImg.style.top=(start.top+window.scrollY)+"px";
+clone.style.left=(start.left+window.scrollX)+"px";
+clone.style.top=(start.top+window.scrollY)+"px";
 
-document.body.appendChild(flyingImg);
+document.body.appendChild(clone);
 
 setTimeout(()=>{
-flyingImg.style.left=(end.left+window.scrollX)+"px";
-flyingImg.style.top=(end.top+window.scrollY)+"px";
-flyingImg.style.width="25px";
-flyingImg.style.height="25px";
-flyingImg.style.opacity="0.3";
+clone.style.left=(end.left+window.scrollX)+"px";
+clone.style.top=(end.top+window.scrollY)+"px";
+clone.style.width="25px";
+clone.style.height="25px";
+clone.style.opacity="0.3";
 },50);
 
-setTimeout(()=>flyingImg.remove(),800);
+setTimeout(()=>clone.remove(),800);
 
 }
 
-/* =========================
-   إضافة للسلة
-========================= */
+/* ========================= */
+/* إضافة للسلة */
+/* ========================= */
+
 function addToCart(name,price,img,btn){
 
 let cart=getCart();
@@ -323,24 +327,25 @@ updateCart();
 flyToCart(btn);
 
 }
-/* =========================
-   السلة المنبثقة
-========================= */
+
+/* ========================= */
+/* فتح السلة */
+/* ========================= */
 
 function openCart(){
 
-let cart=getCart();
+const cart=getCart();
+const div=document.getElementById("cartItems");
 
-const itemsDiv=document.getElementById("cartItems");
-if(!itemsDiv) return;
+if(!div) return;
 
-itemsDiv.innerHTML="";
+div.innerHTML="";
 
 cart.forEach((item,index)=>{
-itemsDiv.innerHTML+=`
+div.innerHTML+=`
 <div class="cart-item">
 <img src="${item.img}">
-<span>${item.name} × ${item.quantity} - ${(item.price*item.quantity).toFixed(2)} JOD</span>
+<span>${item.name} × ${item.quantity} - ${(item.price*(item.quantity||1)).toFixed(2)} JOD</span>
 <button onclick="removeItem(${index})">✖</button>
 </div>
 `;
@@ -353,17 +358,13 @@ document.getElementById("cartModal").style.display="block";
 
 }
 
-/* =========================
-   إغلاق السلة
-========================= */
+/* ========================= */
 
 function closeCart(){
 document.getElementById("cartModal").style.display="none";
 }
 
-/* =========================
-   حذف عنصر
-========================= */
+/* ========================= */
 
 function removeItem(index){
 
@@ -371,45 +372,47 @@ let cart=getCart();
 
 cart.splice(index,1);
 
-localStorage.setItem("cart",JSON.stringify(cart));
+saveCart(cart);
 
 updateCart();
 openCart();
 
 }
 
-/* =========================
-   الدفع والتوصيل
-========================= */
+/* ========================= */
 
 function payCOD(){
-let cart=getCart();
+const cart=getCart();
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 sendOrder("💵 الدفع عند الاستلام");
 }
 
+/* ========================= */
+
 function payOnline(){
 
-let cart=getCart();
+const cart=getCart();
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 
 let msg="💳 طلب دفع إلكتروني\n\n";
 
-cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+cart.forEach(i=>msg+=`- ${i.name} (${i.price} JOD)\n`);
 
 msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
 window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 
 }
+
+/* ========================= */
 
 function sendOrder(method){
 
-let cart=getCart();
+const cart=getCart();
 
 let msg=`🛒 طلب جديد\n${method}\n\n`;
 
-cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+cart.forEach(i=>msg+=`- ${i.name} (${i.price} JOD)\n`);
 
 msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
@@ -417,9 +420,11 @@ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 
 }
 
+/* ========================= */
+
 function requestDelivery(){
 
-let cart=getCart();
+const cart=getCart();
 
 if(cart.length===0) return alert("⚠️ السلة فارغة");
 
@@ -428,7 +433,7 @@ if(!address) return;
 
 let msg=`🛒 طلب توصيل\n🚚 العنوان: ${address}\n\n`;
 
-cart.forEach(i=> msg+=`- ${i.name} (${i.price} JOD)\n`);
+cart.forEach(i=>msg+=`- ${i.name} (${i.price} JOD)\n`);
 
 msg+=`\n💰 المجموع: ${cart.reduce((s,i)=>s+(i.price*(i.quantity||1)),0).toFixed(2)} JOD`;
 
@@ -436,11 +441,11 @@ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 
 }
 
-/* =========================
-   تحميل الصفحة
-========================= */
+/* ========================= */
 
-window.onload=updateCart;
+window.onload=function(){
+updateCart();
+};
 
 </script>
 </body>
