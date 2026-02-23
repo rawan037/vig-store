@@ -306,25 +306,23 @@ setTimeout(()=>flyingImg.remove(),800);
 /* =========================
    إضافة للسلة
 ========================= */
-
-function addToCart(name, price, img, btn){
+function addToCart(name,price,img,btn){
 
 let cart=getCart();
 
 cart.push({
-name:name,
-price:price,
-img:img,
+name,
+price,
+img,
 quantity:1
 });
 
-localStorage.setItem("cart",JSON.stringify(cart));
+saveCart(cart);
 
 updateCart();
 flyToCart(btn);
 
 }
-
 /* =========================
    السلة المنبثقة
 ========================= */
