@@ -1,23 +1,15 @@
-// Splash logic
-window.onload = () => {
-    setTimeout(() => {
-        document.getElementById("authContainer").style.display = "block";
-    }, 2500);
+// إذا المستخدم مسجل دخول يروح مباشرة على home
+if(localStorage.getItem("user")){
+    window.location.href = "home.html";
+}
 
-    // إذا المستخدم مسجل دخول
-    if(localStorage.getItem("user")){
-        window.location.href = "home.html";
-    }
-};
-
-// تبديل تسجيل الدخول / إنشاء حساب
+// تسجيل دخول أو إنشاء حساب
+const authForm = document.getElementById("authForm");
 const formTitle = document.getElementById("formTitle");
 const toggleText = document.getElementById("toggleText");
-const authForm = document.getElementById("authForm");
 
 let isLogin = true;
 
-if(toggleText){
 toggleText.addEventListener("click", function(e){
     if(e.target.id === "toggleBtn"){
         isLogin = !isLogin;
@@ -33,10 +25,7 @@ toggleText.addEventListener("click", function(e){
         }
     }
 });
-}
 
-// تسجيل أو دخول
-if(authForm){
 authForm.addEventListener("submit", function(e){
     e.preventDefault();
 
@@ -56,10 +45,3 @@ authForm.addEventListener("submit", function(e){
         window.location.href = "home.html";
     }
 });
-}
-
-// تسجيل خروج
-function logout(){
-    localStorage.removeItem("user");
-    window.location.href = "index.html";
-}
