@@ -6,13 +6,33 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
- background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden;
+}
+
+/* Splash */
+#splash {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #1e88e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 28px;
+    z-index: 1000;
+    animation: fadeOut 2s forwards;
+    animation-delay: 2s;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
 }
 
 .container {
     width: 100%;
     max-width: 400px;
     padding: 20px;
+    display: none;
 }
 
 .card {
@@ -21,11 +41,12 @@ body {
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     text-align: center;
+    animation: slideUp 0.8s ease;
 }
 
-h2 {
-    margin-bottom: 20px;
-    color: #1e88e5;
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 input {
@@ -34,7 +55,6 @@ input {
     margin: 10px 0;
     border-radius: 12px;
     border: 1px solid #ddd;
-    font-size: 16px;
 }
 
 button {
@@ -46,15 +66,9 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    background: #1565c0;
-}
-
-#toggleBtn {
-    color: #1e88e5;
-    cursor: pointer;
-    font-weight: bold;
+.home {
+    text-align: center;
+    color: white;
 }
