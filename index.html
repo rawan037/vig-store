@@ -11,9 +11,67 @@
 <style>
 /* === أساسي === */
 * { box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; }
-body { background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden;
-     }
 
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+ background: linear-gradient(180deg,#0b5fa5,#0f8f6e); color:#fff; overflow-x:hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #1e88e5;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #1e88e5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1565c0;
+}
+
+#toggleBtn {
+    color: #1e88e5;
+    cursor: pointer;
+    font-weight: bold;
+}
 .hero { position:relative; text-align:center; background: linear-gradient(to bottom,#0b5f87 0%,#0b5f87 55%,#2fbf71 100%); padding:100px 20px 60px; overflow:hidden; }
 .subtitle { color:#7CFF6B; font-size:clamp(18px,3vw,26px); margin-bottom:15px; }
 .title { font-size:clamp(26px,4vw,42px); margin-bottom:25px; }
