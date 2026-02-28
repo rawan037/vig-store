@@ -1,11 +1,8 @@
 body {
-    margin: 0;
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(180deg,#0b5fa5,#0f8f6e);
+  color:#fff;
 }
 
 /* Splash */
